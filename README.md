@@ -1,6 +1,6 @@
 # rainy - a tiny tool for iot data collection and monitoring
 rainy is a tiny tool for IoT data collection and monitoring.
-rainy supports [TI SensorTag CC2650](http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide) and [MH-Z19B](https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf) as IoT devices, communicates with CC2650 by [bluez-dbus](https://github.com/hypfvieh/bluez-dbus), and communicates with MH-Z19B by [java-simple-serial-connector](https://code.google.com/archive/p/java-simple-serial-connector/), and acquires each data.
+rainy supports [TI SensorTag CC2650](http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide) and [MH-Z19B](https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf) as IoT devices, communicates with CC2650 by [bluez-dbus](https://github.com/hypfvieh/bluez-dbus), and communicates with MH-Z19B by [jSerialComm](https://github.com/Fazecast/jSerialComm), and acquires each data.
 These data can be sent to [InfluxDB](https://www.influxdata.com/) (Time Series Database) for visualization, or sent to MQTT Broker to be used as a data source for any other purposes.
 
 rainy runs on [Apache Felix](https://felix.apache.org/) (OSGi). I think that rainy can be embedded in the environment without OSGi.
@@ -235,23 +235,23 @@ START LEVEL 1
 [   5] [Active     ] [    1] cron4j-osgi (2.2.5)
 [   6] [Active     ] [    1] dbus-java-with-java-utils-osgi (3.0.2)
 [   7] [Active     ] [    1] Java client for InfluxDB (2.15)
-[   8] [Active     ] [    1] Jackson-annotations (2.9.9)
-[   9] [Active     ] [    1] Jackson-core (2.9.9)
-[  10] [Active     ] [    1] jackson-databind (2.9.9.1)
-[  11] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.0)
-[  12] [Active     ] [    1] A modern JSON library for Kotlin and Java (1.7.0)
-[  13] [Active     ] [    1] MessagePack serializer implementation for Java (0.8.17)
-[  14] [Active     ] [    1] Apache Felix Shell Service (1.4.3)
-[  15] [Active     ] [    1] Apache Felix Shell TUI (1.4.1)
-[  16] [Active     ] [    1] Apache ServiceMix :: Bundles :: jsr305 (3.0.2.1)
-[  17] [Active     ] [    1] Apache ServiceMix :: Bundles :: okhttp (3.14.1.1)
-[  18] [Active     ] [    1] Apache ServiceMix :: Bundles :: okio (1.15.0.1)
-[  19] [Active     ] [    1] Apache ServiceMix :: Bundles :: retrofit (2.5.0.2)
-[  20] [Active     ] [    1] Paho MQTT Client (1.2.1)
-[  21] [Active     ] [    1] jSSC (Java Simple Serial Connector) (2.8.0)
+[   8] [Active     ] [    1] jSerialComm (2.5.1)
+[   9] [Active     ] [    1] Jackson-annotations (2.9.9)
+[  10] [Active     ] [    1] Jackson-core (2.9.9)
+[  11] [Active     ] [    1] jackson-databind (2.9.9.1)
+[  12] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.1)
+[  13] [Active     ] [    1] A modern JSON library for Kotlin and Java (1.7.0)
+[  14] [Active     ] [    1] MessagePack serializer implementation for Java (0.8.17)
+[  15] [Active     ] [    1] Apache Felix Shell Service (1.4.3)
+[  16] [Active     ] [    1] Apache Felix Shell TUI (1.4.1)
+[  17] [Active     ] [    1] Apache ServiceMix :: Bundles :: jsr305 (3.0.2.1)
+[  18] [Active     ] [    1] Apache ServiceMix :: Bundles :: okhttp (3.14.1.1)
+[  19] [Active     ] [    1] Apache ServiceMix :: Bundles :: okio (1.15.0.1)
+[  20] [Active     ] [    1] Apache ServiceMix :: Bundles :: retrofit (2.5.0.2)
+[  21] [Active     ] [    1] Paho MQTT Client (1.2.1)
 [  22] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
 [  23] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.0)
-[  24] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.0)
+[  24] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.1)
 [  25] [Active     ] [    1] slf4j-api (1.7.26)
 [  26] [Resolved   ] [    1] slf4j-jdk14 (1.7.26)
 -> 
@@ -365,7 +365,7 @@ Please check each license for the following bundles used in addition to these.
 - [OkHttp 3.14.1](https://mvnrepository.com/artifact/org.apache.servicemix.bundles/org.apache.servicemix.bundles.okhttp/3.14.1_1)
 - [Retrofit 2.5.0](https://mvnrepository.com/artifact/org.apache.servicemix.bundles/org.apache.servicemix.bundles.retrofit/2.5.0_2)
 - [Eclipse Paho Client Mqttv3 1.2.1](https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.2.1)
-- [JSSC (Java Simple Serial Connector) 2.8.0](https://mvnrepository.com/artifact/org.everit.osgi.bundles/org.everit.osgi.bundles.org.scream3r.jssc/2.8.0)
+- [jSerialComm 2.5.1](https://mvnrepository.com/artifact/com.fazecast/jSerialComm/2.5.1)
 
 I would like to thank the authors of these very useful codes, and all the contributors.
 
