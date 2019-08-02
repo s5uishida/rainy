@@ -250,7 +250,7 @@ START LEVEL 1
 [  20] [Active     ] [    1] Apache ServiceMix :: Bundles :: retrofit (2.5.0.2)
 [  21] [Active     ] [    1] Paho MQTT Client (1.2.1)
 [  22] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
-[  23] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.0)
+[  23] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.1)
 [  24] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.1)
 [  25] [Active     ] [    1] slf4j-api (1.7.26)
 [  26] [Resolved   ] [    1] slf4j-jdk14 (1.7.26)
@@ -343,9 +343,9 @@ Client mosqsub|2239-u1804 received PUBLISH (d0, q0, r0, m0, 'rainy/B0_B4_48_B9_9
 The following bundles I created follow the MIT license.
 - [bluetooth-scanner 0.1.0](https://github.com/s5uishida/bluetooth-scanner)
 - [cc2650-driver 0.1.0](https://github.com/s5uishida/cc2650-driver)
-- [mh-z19b-driver 0.1.0](https://github.com/s5uishida/mh-z19b-driver)
-- [rainy-activator 0.1.0](https://github.com/s5uishida/rainy-activator)
-- [rainy 0.1.0](https://github.com/s5uishida/rainy)
+- [mh-z19b-driver 0.1.1](https://github.com/s5uishida/mh-z19b-driver)
+- [rainy-activator 0.1.1](https://github.com/s5uishida/rainy-activator)
+- [rainy 0.1.1](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
