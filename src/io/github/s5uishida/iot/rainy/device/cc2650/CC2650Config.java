@@ -49,7 +49,7 @@ public class CC2650Config extends AbstractConfig {
 	public static CC2650Config getInstance() {
 		if (config == null) {
 			config = new CC2650Config(ConfigParams.CONFIG_DIR_PARAM, ConfigParams.CC2650_CONFIG_FILE);
-			devices = Arrays.asList(config.getConfig("devices", "").split("\\s+"));
+			devices = Arrays.asList(config.getConfig(DEVICES_KEY, "").split("\\s+"));
 		}
 		return config;
 	}
