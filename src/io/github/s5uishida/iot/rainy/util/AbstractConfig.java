@@ -21,11 +21,13 @@ public class AbstractConfig {
 	private final String filePath;
 	private final Properties prop;
 
+	private String dir;
+
 	public AbstractConfig(String dirParam, String fileName) {
 		this.dirParam = Objects.requireNonNull(dirParam);
 		this.fileName = Objects.requireNonNull(fileName);
 
-		String dir = System.getProperty(this.dirParam);
+		dir = System.getProperty(this.dirParam);
 		dir = (dir == null || dir.isEmpty()) ? "" : dir + "/";
 
 		prop = new Properties();
@@ -37,6 +39,14 @@ public class AbstractConfig {
 		} catch (IOException e) {
 			throw new IllegalStateException(e);
 		}
+	}
+
+	public String getDir() {
+		return dir;
+	}
+
+	public String getFileName() {
+		return fileName;
 	}
 
 	public String getFilePath() {
