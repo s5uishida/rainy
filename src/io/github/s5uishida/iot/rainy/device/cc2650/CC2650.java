@@ -326,7 +326,7 @@ class CC2650ReadScheduledTask implements Runnable {
 	private static final Logger LOG = LoggerFactory.getLogger(CC2650ReadScheduledTask.class);
 	private static final CC2650Config config = CC2650Config.getInstance();
 
-	private static final String dateFormat = "yyyy-MM-dd hh:mm:ss.SSS";
+	private static final String dateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
 	private static final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 
 	private final ConcurrentMap<String, CC2650Driver> deviceMap;
@@ -508,7 +508,7 @@ class CC2650ReadScheduledTask implements Runnable {
 class CC2650PropertiesChangedHandler extends AbstractPropertiesChangedHandler {
 	private static final Logger LOG = LoggerFactory.getLogger(CC2650PropertiesChangedHandler.class);
 
-	private static final String dateFormat = "yyyy-MM-dd hh:mm:ss.SSS";
+	private static final String dateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
 	private static final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 
 	private final ConcurrentMap<String, CC2650Driver> deviceMap;

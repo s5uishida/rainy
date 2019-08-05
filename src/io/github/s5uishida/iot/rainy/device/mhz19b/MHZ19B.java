@@ -93,7 +93,7 @@ public class MHZ19B implements IDevice {
 class MHZ19BReadScheduledTask implements Runnable {
 	private static final Logger LOG = LoggerFactory.getLogger(MHZ19BReadScheduledTask.class);
 
-	private static final String dateFormat = "yyyy-MM-dd hh:mm:ss.SSS";
+	private static final String dateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
 	private static final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 
 	private final MHZ19BDriver mhz19b;
