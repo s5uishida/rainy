@@ -228,8 +228,8 @@ WARNING: All illegal access operations will be denied in a future release
 START LEVEL 1
    ID   State         Level  Name
 [   0] [Active     ] [    0] System Bundle (6.0.3)
-[   1] [Active     ] [    1] bluetooth scanner (0.1.0)
-[   2] [Active     ] [    1] bluez-dbus-osgi (0.1.2.201907161543)
+[   1] [Active     ] [    1] bluetooth scanner (0.1.1)
+[   2] [Active     ] [    1] bluez-dbus-osgi (0.1.2.201908052042)
 [   3] [Active     ] [    1] java driver for ti sensortag cc2650 (0.1.0)
 [   4] [Active     ] [    1] Apache Commons Lang (3.9.0)
 [   5] [Active     ] [    1] cron4j-osgi (2.2.5)
@@ -251,7 +251,7 @@ START LEVEL 1
 [  21] [Active     ] [    1] Paho MQTT Client (1.2.1)
 [  22] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
 [  23] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.1)
-[  24] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.1)
+[  24] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.2)
 [  25] [Active     ] [    1] slf4j-api (1.7.26)
 [  26] [Resolved   ] [    1] slf4j-jdk14 (1.7.26)
 -> 
@@ -341,11 +341,11 @@ Client mosqsub|2239-u1804 received PUBLISH (d0, q0, r0, m0, 'rainy/B0_B4_48_B9_9
 <h2 id="bundle_list">Bundle list</h2>
 
 The following bundles I created follow the MIT license.
-- [bluetooth-scanner 0.1.0](https://github.com/s5uishida/bluetooth-scanner)
+- [bluetooth-scanner 0.1.1](https://github.com/s5uishida/bluetooth-scanner)
 - [cc2650-driver 0.1.0](https://github.com/s5uishida/cc2650-driver)
 - [mh-z19b-driver 0.1.1](https://github.com/s5uishida/mh-z19b-driver)
 - [rainy-activator 0.1.1](https://github.com/s5uishida/rainy-activator)
-- [rainy 0.1.1](https://github.com/s5uishida/rainy)
+- [rainy 0.1.2](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
