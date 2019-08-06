@@ -8,6 +8,7 @@ public class Config extends AbstractConfig {
 	public static final String CLIENT_ID_KEY		= "clientID";
 	public static final String CC2650_KEY		= "cc2650";
 	public static final String MHZ19B_KEY		= "mhz19b";
+	public static final String OPCUA_KEY			= "opcua";
 
 	private static Config config;
 
@@ -32,5 +33,9 @@ public class Config extends AbstractConfig {
 
 	public boolean getMHZ19B() {
 		return getConfig(MHZ19B_KEY, false);
+	}
+
+	public boolean getOPCUA() {
+		return getConfig(OPCUA_KEY, false);
 	}
 }
