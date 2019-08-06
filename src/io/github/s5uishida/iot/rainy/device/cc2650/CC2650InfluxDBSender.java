@@ -17,7 +17,7 @@ public class CC2650InfluxDBSender extends AbstractInfluxDBSender implements IDat
 	private Builder setCC2650CommonFields(String field, CC2650Data cc2650) {
 		Builder builder = setCommonFields(field, cc2650);
 		if (!dataOnly) {
-			builder.addField(field, cc2650.firmwareVersion);
+			builder.addField("firmwareVersion", cc2650.firmwareVersion);
 		}
 		return builder;
 	}

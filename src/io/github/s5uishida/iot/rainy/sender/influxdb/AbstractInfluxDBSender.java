@@ -91,10 +91,10 @@ public class AbstractInfluxDBSender {
 	protected Builder setCommonFields(String field, CommonData commonData) {
 		Builder builder = Point.measurement(field).tag(tagName, tagValue);
 		if (!dataOnly) {
-			builder.addField(field, commonData.clientID);
-			builder.addField(field, commonData.samplingDate);
+			builder.addField("clientID", commonData.clientID);
+			builder.addField("samplingDate", commonData.samplingDate);
 		}
-		builder.addField(field, commonData.samplingTimeMillis);
+		builder.addField("samplingTimeMillis", commonData.samplingTimeMillis);
 		builder.time(commonData.samplingTimeMillis, TimeUnit.MILLISECONDS);
 		return builder;
 	}
