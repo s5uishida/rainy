@@ -29,14 +29,18 @@ public class AbstractConfig {
 
 		dir = System.getProperty(this.dirParam);
 		dir = (dir == null || dir.isEmpty()) ? "" : dir + "/";
+		filePath = dir + this.fileName;
 
 		prop = new Properties();
 		try {
-			filePath = dir + this.fileName;
+			LOG.info("loading {}...", filePath);
 			prop.load(new File(filePath).toURI().toURL().openStream());
+			LOG.info("loaded {}.", filePath);
 		} catch (MalformedURLException e) {
+			LOG.warn("failed to load {}.", filePath);
 			throw new IllegalStateException(e);
 		} catch (IOException e) {
+			LOG.warn("failed to load {}.", filePath);
 			throw new IllegalStateException(e);
 		}
 	}
