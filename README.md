@@ -1,6 +1,8 @@
 # rainy - a tiny tool for iot data collection and monitoring
 rainy is a tiny tool for IoT data collection and monitoring.
 rainy supports [TI SensorTag CC2650](http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide) and [MH-Z19B](https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf) as IoT devices, communicates with CC2650 by [bluez-dbus](https://github.com/hypfvieh/bluez-dbus), and communicates with MH-Z19B by [jSerialComm](https://github.com/Fazecast/jSerialComm), and acquires each data.
+And it corresponds to OPC-UA which is a protocol of industrial automation.
+I use [Eclipse Milo](https://github.com/eclipse/milo) for the OPC-UA Protocol Stack and SDK (Java).
 These data can be sent to [InfluxDB](https://www.influxdata.com/) (Time Series Database) for visualization, or sent to MQTT Broker to be used as a data source for any other purposes.
 
 rainy runs on [Apache Felix](https://felix.apache.org/) (OSGi). I think that rainy can be embedded in the environment without OSGi.
@@ -30,6 +32,8 @@ The following figure is overview of rainy.
   - [Setting sensors](#setting_sensors)
     - [CC2650 - cc2650.properties](#cc2650_properties)
     - [MH-Z19B - mhz19b.properties](#mhz19b_properties)
+    - [OPC-UA - opcua.properties](#opcua_properties)
+      - [OPC-UA server - conf/opcua/milo-example.properties](#opcua_server_properties)
 - [Run rainy](#run_rainy)
   - [Output sensor values to the log file](#output_sensor_value)
   - [Check the database name for each device created in InfluxDB](#check_database)
@@ -107,6 +111,8 @@ I am using [Chronograf](https://www.influxdata.com/time-series-platform/chronogr
   Set to true when using CC2650. default is `false`.
 - **`mhz19b`**  
   Set to true when using MH-Z19B. default is `false`.
+- **`opcua`**  
+  Set to true when using OPC-UA. default is `false`.
 
 <h3 id="setting_connection_sending_data">Setting the connection for sending data</h3>
   
@@ -130,7 +136,7 @@ I am using [Chronograf](https://www.influxdata.com/time-series-platform/chronogr
 - `topic`  
   Topic when publishing data to MQTT broker. default is `rainy`.
 
-<h3 id="setting_sensors">Setting sensors<h3>
+<h3 id="setting_sensors">Setting sensors and protocols<h3>
 
 <h4 id="cc2650_properties">CC2650 - cc2650.properties</h4>
 
@@ -212,6 +218,62 @@ After launching `hcitool` command, press the power button of CC2650 and the scan
 - `readCrontab`  
   Set the schedule for sensing data in crontab format. default is every minute.
 
+<h4 id="opcua_properties">OPC-UA - opcua.properties</h4>
+
+- **`influxDB`**  
+  Set to true when sending data to InfluxDB. default is `false`.
+- **`mqtt`**  
+  Set to true when sending data to MQTT broker. default is `false`.
+- `prettyPrinting`  
+  Set to true when indenting the log output of JSON format data. default is `false`.
+- `keyStoreType`
+- `keyStoreAlias`
+- `keyStorePassword`
+- `certificate`
+
+<h5 id="opcua_server_properties">OPC-UA server - conf/opcua/milo-example.properties</h5>
+
+The following is an example of [Public Demo Server of Eclipse Milo](https://github.com/eclipse/milo).
+- **`use`**  
+  Set to true to use this server. default is `false`.
+- **`serverName`**  
+  Set the OPC-UA server name.
+- **`endpointIP`**  
+  Set the OPC-UA server address.
+- **`endpointPort`**  
+  Set the OPC-UA server port number.
+- `securityPolicy`  
+  Set one of Basic128Rsa15, Basic256, Basic256Sha256, or None in securityPolicy. default is `None`.
+- `securityMode`  
+  Set one of Sign, SignAndEncrypt, or None to securityMode. default is `None`.
+- `userName`
+- `password`
+- `requestTimeout`  
+  default is `1000` (msec).
+- `sessionTimeout`  
+  default is `1000` (msec).
+- `publishingInterval`  
+  Set publishingInterval (msec). default is `1000` (msec).
+- `samplingInterval`  
+  Set samplingInterval (msec). default is `500` (msec).
+- `queueSize`  
+  Set queueSize. default is `10`.
+- `dataChangeTrigger`  
+  Set one of 0[DataChangeTrigger.Status], 1[DataChangeTrigger.StatusValue] or 2[DataChangeTrigger.StatusValueTimestamp] to dataChangeTrigger. default is `1`[DataChangeTrigger.StatusValue].
+- **`nodeIDs`**  
+  List the target node ID. The format is as follows.
+  ```
+  <namespaceIndex>,<identifier>,<depth>
+  ```
+  ```
+  nodeIDs=2,Dynamic/RandomInt32,0 \
+	  2,Dynamic/RandomInt64,0 \
+	  2,Dynamic,-1
+  ```
+  In the above example, specify `2,Dynamic/RandomInt32` and `2,Dynamic/RandomInt64` uniquely, and search for the NodeID to be monitored from `2,Dynamic` at an infinite depth. In this case, only `2,Dynamic,-1` should be specified, but I wrote it for explanation of the format.  
+  
+For reference, there is [toem impulse (Eclipse pulug-in)](https://toem.de/index.php/projects/impulse) as a tool for easily checking the address space of OPC-UA server.
+
 <h2 id="run_rainy">Run rainy</h2>
 
 - start  
@@ -228,32 +290,55 @@ WARNING: All illegal access operations will be denied in a future release
 START LEVEL 1
    ID   State         Level  Name
 [   0] [Active     ] [    0] System Bundle (6.0.3)
-[   1] [Active     ] [    1] bluetooth scanner (0.1.1)
-[   2] [Active     ] [    1] bluez-dbus-osgi (0.1.2.201908052042)
-[   3] [Active     ] [    1] java driver for ti sensortag cc2650 (0.1.0)
-[   4] [Active     ] [    1] Apache Commons Lang (3.9.0)
-[   5] [Active     ] [    1] cron4j-osgi (2.2.5)
-[   6] [Active     ] [    1] dbus-java-with-java-utils-osgi (3.0.2)
-[   7] [Active     ] [    1] Java client for InfluxDB (2.15)
-[   8] [Active     ] [    1] jSerialComm (2.5.1)
-[   9] [Active     ] [    1] Jackson-annotations (2.9.9)
-[  10] [Active     ] [    1] Jackson-core (2.9.9)
-[  11] [Active     ] [    1] jackson-databind (2.9.9.1)
-[  12] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.1)
-[  13] [Active     ] [    1] A modern JSON library for Kotlin and Java (1.7.0)
-[  14] [Active     ] [    1] MessagePack serializer implementation for Java (0.8.17)
-[  15] [Active     ] [    1] Apache Felix Shell Service (1.4.3)
-[  16] [Active     ] [    1] Apache Felix Shell TUI (1.4.1)
-[  17] [Active     ] [    1] Apache ServiceMix :: Bundles :: jsr305 (3.0.2.1)
-[  18] [Active     ] [    1] Apache ServiceMix :: Bundles :: okhttp (3.14.1.1)
-[  19] [Active     ] [    1] Apache ServiceMix :: Bundles :: okio (1.15.0.1)
-[  20] [Active     ] [    1] Apache ServiceMix :: Bundles :: retrofit (2.5.0.2)
-[  21] [Active     ] [    1] Paho MQTT Client (1.2.1)
-[  22] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
-[  23] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.1)
-[  24] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.2)
-[  25] [Active     ] [    1] slf4j-api (1.7.26)
-[  26] [Resolved   ] [    1] slf4j-jdk14 (1.7.26)
+[   1] [Active     ] [    1] bcpkix (1.62)
+[   2] [Active     ] [    1] bcprov (1.62)
+[   3] [Active     ] [    1] bluetooth scanner (0.1.1)
+[   4] [Active     ] [    1] bluez-dbus-osgi (0.1.2.201908052042)
+[   5] [Active     ] [    1] bsd-parser-core-osgi (0.3.2)
+[   6] [Active     ] [    1] bsd-parser-gson-osgi (0.3.2)
+[   7] [Active     ] [    1] java driver for ti sensortag cc2650 (0.1.0)
+[   8] [Active     ] [    1] Apache Commons Lang (3.9.0)
+[   9] [Active     ] [    1] cron4j-osgi (2.2.5)
+[  10] [Active     ] [    1] dbus-java-with-java-utils-osgi (3.0.2)
+[  11] [Active     ] [    1] Gson (2.8.5)
+[  12] [Active     ] [    1] Guava: Google Core Libraries for Java (26.0.0.jre)
+[  13] [Active     ] [    1] Java client for InfluxDB (2.15)
+[  14] [Active     ] [    1] jSerialComm (2.5.1)
+[  15] [Active     ] [    1] Jackson-annotations (2.9.9)
+[  16] [Active     ] [    1] Jackson-core (2.9.9)
+[  17] [Active     ] [    1] jackson-databind (2.9.9.1)
+[  18] [Active     ] [    1] JavaBeans Activation Framework (1.2.0)
+[  19] [Active     ] [    1] jaxb-api (2.4.0.b1808300359)
+[  20] [Active     ] [    1] file:/home/pi/rainy-felix/bundle/jaxb-runtime-2.4.0-b180830.0438.jar
+[  21] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.1)
+[  22] [Active     ] [    1] A modern JSON library for Kotlin and Java (1.7.0)
+[  23] [Active     ] [    1] MessagePack serializer implementation for Java (0.8.17)
+[  24] [Active     ] [    1] Netty/Buffer (4.1.38.Final)
+[  25] [Active     ] [    1] netty-channel-fsm-osgi (0.3.0)
+[  26] [Active     ] [    1] Netty/Codec (4.1.38.Final)
+[  27] [Active     ] [    1] Netty/Codec/HTTP (4.1.38.Final)
+[  28] [Active     ] [    1] Netty/Common (4.1.38.Final)
+[  29] [Active     ] [    1] Netty/Handler (4.1.38.Final)
+[  30] [Active     ] [    1] Netty/Resolver (4.1.38.Final)
+[  31] [Active     ] [    1] Netty/Transport (4.1.38.Final)
+[  32] [Active     ] [    1] Apache Felix Shell Service (1.4.3)
+[  33] [Active     ] [    1] Apache Felix Shell TUI (1.4.1)
+[  34] [Active     ] [    1] Apache ServiceMix :: Bundles :: jsr305 (3.0.2.1)
+[  35] [Active     ] [    1] Apache ServiceMix :: Bundles :: okhttp (3.14.1.1)
+[  36] [Active     ] [    1] Apache ServiceMix :: Bundles :: okio (1.15.0.1)
+[  37] [Active     ] [    1] Apache ServiceMix :: Bundles :: retrofit (2.5.0.2)
+[  38] [Active     ] [    1] Paho MQTT Client (1.2.1)
+[  39] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
+[  40] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.2)
+[  41] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.0)
+[  42] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.3)
+[  43] [Active     ] [    1] sdk-client-osgi (0.3.2)
+[  44] [Active     ] [    1] sdk-core-osgi (0.3.2)
+[  45] [Active     ] [    1] slf4j-api (1.7.26)
+[  46] [Resolved   ] [    1] slf4j-jdk14 (1.7.26)
+[  47] [Active     ] [    1] stack-client-osgi (0.3.2)
+[  48] [Active     ] [    1] stack-core-osgi (0.3.2)
+[  49] [Active     ] [    1] strict-machine-osgi (0.1.0)
 -> 
 ```
 
@@ -292,13 +377,15 @@ In order to reduce writing to the SD card, it is usually recommended to set it t
 
 <h3 id="check_database">Check the database name for each device created in InfluxDB</h3>
 
-Check from the log file `logs/rainy.log.0`. In the following example, databases `RP3B_01__dev_ttyAMA0` for MH-Z19B, `B0_B4_48_B9_92_86` and `B0_B4_48_ED_B6_04` for CC2650 were created. Note that InfluxDB will not do anything if the database already exists.
+Check from the log file `logs/rainy.log.0`. In the following example, databases `RP3B_01__dev_ttyAMA0` for MH-Z19B, `B0_B4_48_B9_92_86` and `B0_B4_48_ED_B6_04` for CC2650 and `milo_digitalpetri_com_62541_milo` for Public Demo Server of Eclipse Milo were created. Note that InfluxDB will not do anything if the database already exists.
 ```
 execute - CREATE DATABASE RP3B_01__dev_ttyAMA0
 ...
 execute - CREATE DATABASE B0_B4_48_B9_92_86
 ...
 execute - CREATE DATABASE B0_B4_48_ED_B6_04
+...
+execute - CREATE DATABASE milo_digitalpetri_com_62541_milo
 ```
 These database names are required for the visualization tools Grafana and Chronograf to connect to InfluxDB.
 
@@ -310,13 +397,27 @@ Visualization tools can be connected to InfluxDB to monitor time-series sensor d
 
 Please refer to Getting started of [Grafana site](https://grafana.com/docs/) for how to use Grafana.  
 The following figure is a sample image of a dashboard.
+
 <img src="./images/rainy_grafana_0.png" title="./images/rainy_grafana_0.png" width=800px></img>
 
 <h3 id="case_chronograf">Case Chronograf</h3>
 
 Please refer to Getting started of [Chronograf site](https://docs.influxdata.com/chronograf/v1.7/) for how to use Chronograf.  
 The following figure is a sample image of a dashboard.
+
 <img src="./images/rainy_chronograf_0.png" title="./images/rainy_chronograf_0.png" width=800px></img>
+
+The following figure is a sample dashboard for the following NodeIDs on Public Demo Server of Eclipse Milo.  
+- `2,Dynamic/RandomInt32`
+- `2,Dynamic/RandomInt64`
+- `2,Dynamic/RandomFloat`
+- `2,Dynamic/RandomDouble`  
+
+<img src="./images/rainy_opcua_0.png" title="./images/rainy_opcua_0.png" width=800px></img>
+
+The upper displays `2,Dynamic/RandomFloat` and `2,Dynamic/RandomDouble` superimposed. The middle displays`2,Dynamic/RandomInt32` and the lower displays `2,Dynamic/RandomInt64` as time series graphs.
+
+If you put data into InfluxDB which is a time series DB, you can easily create a dashboard using Grafana or Chronograf.
 
 <h2 id="check_mqtt_data">Check the data sent to MQTT broker</h2>
 
@@ -337,6 +438,7 @@ Client mosqsub|2239-u1804 received PUBLISH (d0, q0, r0, m0, 'rainy/B0_B4_48_B9_9
 - Only one Bluetooth adapter can be used.
 - Only a few CC2650 (Bluetooth devices) can be used at the same time. (Restriction of Bluetooth chip)
 - When the connection with CC2650 is lost, it may not recover automatically.
+- Depending on the combination of the number of monitored items of OPC-UA servers and the publishing interval, the load on InfluxDB may become too large.
 
 <h2 id="bundle_list">Bundle list</h2>
 
@@ -344,8 +446,9 @@ The following bundles I created follow the MIT license.
 - [bluetooth-scanner 0.1.1](https://github.com/s5uishida/bluetooth-scanner)
 - [cc2650-driver 0.1.0](https://github.com/s5uishida/cc2650-driver)
 - [mh-z19b-driver 0.1.1](https://github.com/s5uishida/mh-z19b-driver)
-- [rainy-activator 0.1.1](https://github.com/s5uishida/rainy-activator)
-- [rainy 0.1.2](https://github.com/s5uishida/rainy)
+- [rainy-activator 0.1.2](https://github.com/s5uishida/rainy-activator)
+- [rainy-opcua 0.1.0](https://github.com/s5uishida/rainy-opcua)
+- [rainy 0.1.3](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
@@ -366,6 +469,22 @@ Please check each license for the following bundles used in addition to these.
 - [Retrofit 2.5.0](https://mvnrepository.com/artifact/org.apache.servicemix.bundles/org.apache.servicemix.bundles.retrofit/2.5.0_2)
 - [Eclipse Paho Client Mqttv3 1.2.1](https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.2.1)
 - [jSerialComm 2.5.1](https://mvnrepository.com/artifact/com.fazecast/jSerialComm/2.5.1)
+- [Netty 4.1.38](https://netty.io/index.html) netty-buffer-4.1.38.Final.jar, netty-codec-4.1.38.Final.jar, netty-codec-http-4.1.38.Final.jar, netty-common-4.1.38.Final.jar, netty-handler-4.1.38.Final.jar, netty-resolver-4.1.38.Final.jar, netty-transport-4.1.38.Final.jar
+- [JAXB API 2.4.0](https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api/2.4.0-b180830.0359)
+- [JAXB Runtime 2.4.0](https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime/2.4.0-b180830.0438)
+- [JavaBeans Activation Framework (JAF) 1.2.0](https://mvnrepository.com/artifact/com.sun.activation/javax.activation/1.2.0)
+- [strict-machine-osgi 0.1](https://github.com/s5uishida/strict-machine-osgi)
+- [netty-channel-fsm-osgi 0.3](https://github.com/s5uishida/netty-channel-fsm-osgi)
+- [bsd-parser-core-osgi 0.3.2](https://github.com/s5uishida/bsd-parser-core-osgi)
+- [bsd-parser-gson-osgi 0.3.2](https://github.com/s5uishida/bsd-parser-gson-osgi)
+- [stack-core-osgi 0.3.2](https://github.com/s5uishida/stack-core-osgi)
+- [stack-client-osgi 0.3.2](https://github.com/s5uishida/stack-client-osgi)
+- [sdk-core-osgi 0.3.2](https://github.com/s5uishida/sdk-core-osgi)
+- [sdk-client-osgi 0.3.2](https://github.com/s5uishida/sdk-client-osgi)
+- [Gson 2.8.5](https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.5)
+- [Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs 1.62](https://www.bouncycastle.org/download/bcpkix-jdk15on-162.jar)
+- [Bouncy Castle Provider 1.62](https://www.bouncycastle.org/download/bcprov-jdk15on-162.jar)
+- [Guava: Google Core Libraries for Java 26.0](https://repo1.maven.org/maven2/com/google/guava/guava/26.0-jre/guava-26.0-jre.jar)
 
 I would like to thank the authors of these very useful codes, and all the contributors.
 
