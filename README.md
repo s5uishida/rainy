@@ -249,9 +249,9 @@ The following is an example of [Public Demo Server of Eclipse Milo](https://gith
 - `userName`
 - `password`
 - `requestTimeout`  
-  default is `1000` (msec).
+  default is `10000` (msec).
 - `sessionTimeout`  
-  default is `1000` (msec).
+  default is `10000` (msec).
 - `publishingInterval`  
   Set publishingInterval (msec). default is `1000` (msec).
 - `samplingInterval`  
