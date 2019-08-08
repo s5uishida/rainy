@@ -330,7 +330,7 @@ START LEVEL 1
 [  38] [Active     ] [    1] Paho MQTT Client (1.2.1)
 [  39] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
 [  40] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.2)
-[  41] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.1)
+[  41] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.2)
 [  42] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.4)
 [  43] [Active     ] [    1] sdk-client-osgi (0.3.2)
 [  44] [Active     ] [    1] sdk-core-osgi (0.3.2)
@@ -447,7 +447,7 @@ The following bundles I created follow the MIT license.
 - [cc2650-driver 0.1.0](https://github.com/s5uishida/cc2650-driver)
 - [mh-z19b-driver 0.1.1](https://github.com/s5uishida/mh-z19b-driver)
 - [rainy-activator 0.1.2](https://github.com/s5uishida/rainy-activator)
-- [rainy-opcua 0.1.1](https://github.com/s5uishida/rainy-opcua)
+- [rainy-opcua 0.1.2](https://github.com/s5uishida/rainy-opcua)
 - [rainy 0.1.4](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
