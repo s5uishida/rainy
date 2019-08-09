@@ -94,8 +94,9 @@ public class AbstractInfluxDBSender {
 			builder.addField("clientID", commonData.clientID);
 			builder.addField("samplingDate", commonData.samplingDate);
 		}
-		builder.addField("samplingTimeMillis", commonData.samplingTimeMillis);
-		builder.time(commonData.samplingTimeMillis, TimeUnit.MILLISECONDS);
+		long samplingTime = commonData.samplingTimeMillis * 1000000 + commonData.samplingTimeNanos;
+		builder.addField("samplingTime", samplingTime);
+		builder.time(samplingTime, TimeUnit.NANOSECONDS);
 		return builder;
 	}
 

@@ -9,4 +9,5 @@ public class CommonData {
 	public String clientID;
 	public String samplingDate;
 	public long samplingTimeMillis;
+	public long samplingTimeNanos; // 6 digits total of microseconds and nanoseconds
 }
