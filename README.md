@@ -330,8 +330,8 @@ START LEVEL 1
 [  38] [Active     ] [    1] Paho MQTT Client (1.2.1)
 [  39] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
 [  40] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.2)
-[  41] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.2)
-[  42] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.4)
+[  41] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.3)
+[  42] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.5)
 [  43] [Active     ] [    1] sdk-client-osgi (0.3.2)
 [  44] [Active     ] [    1] sdk-core-osgi (0.3.2)
 [  45] [Active     ] [    1] slf4j-api (1.7.26)
@@ -423,14 +423,14 @@ If you put data into InfluxDB which is a time series DB, you can easily create a
 
 Check the data sent to the MQTT broker using the MQTT client command as follows:
 ```
-# mosquitto_sub -d -t rainy/B0_B4_48_B9_92_86
-Client mosqsub|2239-u1804 sending CONNECT
-Client mosqsub|2239-u1804 received CONNACK
-Client mosqsub|2239-u1804 sending SUBSCRIBE (Mid: 1, Topic: rainy/B0_B4_48_B9_92_86, QoS: 0)
-Client mosqsub|2239-u1804 received SUBACK
+# mosquitto_sub -d -t rainy/B0_B4_48_ED_B6_04
+Client mosqsub|2095-u1804 sending CONNECT
+Client mosqsub|2095-u1804 received CONNACK
+Client mosqsub|2095-u1804 sending SUBSCRIBE (Mid: 1, Topic: rainy/B0_B4_48_ED_B6_04, QoS: 0)
+Client mosqsub|2095-u1804 received SUBACK
 Subscribed (mid: 1): 0
-Client mosqsub|2239-u1804 received PUBLISH (d0, q0, r0, m0, 'rainy/B0_B4_48_B9_92_86', ... (649 bytes))
-{"deviceID":"B0:B4:48:B9:92:86","clientID":"RP3B-01","samplingDate":"2019-07-31 01:06:00.035","samplingTimeMillis":1564574760035,"firmwareVersion":"1.33 (Nov  9 2016)","batteryLevel":{"value":75,"unit":"%"},"objectTemperature":{"value":26.34375,"unit":"deg C"},"ambientTemperature":{"value":30.46875,"unit":"deg C"},"humidity":{"value":53.363037,"unit":"%"},"pressure":{"value":1012.78,"unit":"hPa"},"optical":{"value":232.4,"unit":"lux"},"gyroscope":{"x":-1.4495848,"y":-0.2975464,"z":0.67901605,"unit":"deg/s"},"accelerometer":{"x":0.0056152344,"y":-0.010009766,"z":0.9680176,"unit":"G"},"magnetometer":{"x":107.0,"y":431.0,"z":305.0,"unit":"uT"}}
+Client mosqsub|2095-u1804 received PUBLISH (d0, q0, r0, m0, 'rainy/B0_B4_48_ED_B6_04', ... (670 bytes))
+{"deviceID":"B0:B4:48:ED:B6:04","clientID":"RP3B-01","samplingDate":"2019-08-09 12:56:00.009","samplingTimeMillis":1565351760009,"samplingTimeNanos":0,"firmwareVersion":"1.30 (May 23 2016)","batteryLevel":{"value":72,"unit":"%"},"objectTemperature":{"value":27.46875,"unit":"deg C"},"ambientTemperature":{"value":32.03125,"unit":"deg C"},"humidity":{"value":34.61914,"unit":"%"},"pressure":{"value":1009.16,"unit":"hPa"},"optical":{"value":203.84,"unit":"lux"},"gyroscope":{"x":-10.589599,"y":-7.8887935,"z":-2.281189,"unit":"deg/s"},"accelerometer":{"x":-0.029785156,"y":-0.06347656,"z":1.1887207,"unit":"G"},"magnetometer":{"x":138.0,"y":125.0,"z":-199.0,"unit":"uT"}}
 ```
 
 <h2 id="limitations">Limitations</h2>
@@ -447,8 +447,8 @@ The following bundles I created follow the MIT license.
 - [cc2650-driver 0.1.0](https://github.com/s5uishida/cc2650-driver)
 - [mh-z19b-driver 0.1.1](https://github.com/s5uishida/mh-z19b-driver)
 - [rainy-activator 0.1.2](https://github.com/s5uishida/rainy-activator)
-- [rainy-opcua 0.1.2](https://github.com/s5uishida/rainy-opcua)
-- [rainy 0.1.4](https://github.com/s5uishida/rainy)
+- [rainy-opcua 0.1.3](https://github.com/s5uishida/rainy-opcua)
+- [rainy 0.1.5](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
