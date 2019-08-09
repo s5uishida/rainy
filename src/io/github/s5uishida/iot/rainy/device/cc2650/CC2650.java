@@ -144,7 +144,12 @@ public class CC2650 implements IDevice {
 		while (it.hasNext()) {
 			Entry<String, CC2650Driver> entry = it.next();
 			CC2650Driver cc2650 = entry.getValue();
-			cc2650.disconnect();
+			try {
+				cc2650.disconnect();
+			} catch (DBusExecutionException e) {
+				String logPrefix = "[" + cc2650.getAdapterDeviceName() + "] " + cc2650.getAddress() + " ";
+				LOG.warn(logPrefix + "caught - {}", e.toString());
+			}
 		}
 		LOG.info("sensing CC2650 stopped.");
 	}
@@ -315,7 +320,11 @@ class CC2650SetupThread extends Thread {
 			} catch (DBusExecutionException e) {
 				LOG.warn(logPrefix + "caught - {}", e.toString());
 				if (cc2650 != null) {
-					cc2650.disconnect();
+					try {
+						cc2650.disconnect();
+					} catch (DBusExecutionException e1) {
+						LOG.warn(logPrefix + "caught - {}", e1.toString());
+					}
 				}
 			}
 		}
@@ -362,7 +371,12 @@ class CC2650ReadScheduledTask implements Runnable {
 			cc2650Data.samplingDate = dateString;
 			cc2650Data.samplingTimeMillis = date.getTime();
 
-			cc2650Data.firmwareVersion = cc2650.getFirmwareVersion();
+			try {
+				cc2650Data.firmwareVersion = cc2650.getFirmwareVersion();
+			} catch (UnsupportedOperationException e) {
+				LOG.warn(logPrefix + "caught - {}", e.toString());
+				continue;
+			}
 
 			boolean isData = false;
 
@@ -499,7 +513,11 @@ class CC2650ReadScheduledTask implements Runnable {
 				LOG.warn(logPrefix + "caught - {}", e.toString());
 			} catch (DBusExecutionException e) {
 				LOG.warn(logPrefix + "caught - {}", e.toString());
-				cc2650.disconnect();
+				try {
+					cc2650.disconnect();
+				} catch (DBusExecutionException e1) {
+					LOG.warn(logPrefix + "caught - {}", e1.toString());
+				}
 			}
 		}
 	}
