@@ -16,4 +16,12 @@ public class ConfigParams {
 	public static final String CC2650_CONFIG_FILE		= "cc2650.properties";
 	public static final String MHZ19B_CONFIG_FILE		= "mhz19b.properties";
 	public static final String OPCUA_CONFIG_FILE		= "opcua.properties";
+
+	public static String getName() {
+		return NAME;
+	}
+
+	public static String getVersion() {
+		return VERSION;
+	}
 }
