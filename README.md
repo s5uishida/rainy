@@ -268,9 +268,10 @@ The following is an example of [Public Demo Server of Eclipse Milo](https://gith
   ```
   nodeIDs=2,Dynamic/RandomInt32,0 \
 	  2,Dynamic/RandomInt64,0 \
-	  2,Dynamic,-1
+	  2,Dynamic,-1 \
+	  0,2295,-1
   ```
-  In the above example, specify `2,Dynamic/RandomInt32` and `2,Dynamic/RandomInt64` uniquely, and search for the NodeID to be monitored from `2,Dynamic` at an infinite depth. In this case, only `2,Dynamic,-1` should be specified, but I wrote it for explanation of the format.  
+  In the above example, specify `2,Dynamic/RandomInt32` and `2,Dynamic/RandomInt64` uniquely, and search for the NodeID to be monitored from `2,Dynamic` and `0,2295`(VendorServerInfo) at an infinite depth. In this case, only `2,Dynamic,-1` and `0,2295,-1` should be specified, but I wrote it for explanation of the format.  
   
 For reference, there is [toem impulse (Eclipse pulug-in)](https://toem.de/index.php/projects/impulse) as a tool for easily checking the address space of OPC-UA server.
 
@@ -408,14 +409,17 @@ The following figure is a sample image of a dashboard.
 <img src="./images/rainy_chronograf_0.png" title="./images/rainy_chronograf_0.png" width=800px></img>
 
 The following figure is a sample dashboard for the following NodeIDs on Public Demo Server of Eclipse Milo.  
+- `1,VendorServerInfo/ProcessCpuLoad`
+- `1,VendorServerInfo/SystemCpuLoad`
+- `1, VendorServerInfo/UsedMemory`
+- `2,Dynamic/RandomDouble`
+- `2,Dynamic/RandomFloat`
 - `2,Dynamic/RandomInt32`
 - `2,Dynamic/RandomInt64`
-- `2,Dynamic/RandomFloat`
-- `2,Dynamic/RandomDouble`  
 
-<img src="./images/rainy_opcua_0.png" title="./images/rainy_opcua_0.png" width=800px></img>
+<img src="./images/rainy_opcua_1.png" title="./images/rainy_opcua_1.png" width=800px></img>
 
-The upper displays `2,Dynamic/RandomFloat` and `2,Dynamic/RandomDouble` superimposed. The middle displays`2,Dynamic/RandomInt32` and the lower displays `2,Dynamic/RandomInt64` as time series graphs.
+The upper displays `1,VendorServerInfo/ProcessCpuLoad`, `1,VendorServerInfo/SystemCpuLoad` and `1, VendorServerInfo/UsedMemory`. The middle displays `2,Dynamic/RandomDouble` and `2,Dynamic/RandomFloat` superimposed and the lower displays `2,Dynamic/RandomInt32` and `2,Dynamic/RandomInt64` as time series graphs.
 
 If you put data into InfluxDB which is a time series DB, you can easily create a dashboard using Grafana or Chronograf.
 
