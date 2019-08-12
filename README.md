@@ -411,7 +411,7 @@ The following figure is a sample image of a dashboard.
 The following figure is a sample dashboard for the following NodeIDs on Public Demo Server of Eclipse Milo.  
 - `1,VendorServerInfo/ProcessCpuLoad`
 - `1,VendorServerInfo/SystemCpuLoad`
-- `1, VendorServerInfo/UsedMemory`
+- `1,VendorServerInfo/UsedMemory`
 - `2,Dynamic/RandomDouble`
 - `2,Dynamic/RandomFloat`
 - `2,Dynamic/RandomInt32`
