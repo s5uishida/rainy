@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.influxdb.BatchOptions;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.BatchPoints;
@@ -60,6 +61,8 @@ public class AbstractInfluxDBSender {
 		try {
 			LOG.info("connecting to {}...", influxDBUrl);
 			client = InfluxDBFactory.connect(influxDBUrl, userName, password);
+			BatchOptions options = BatchOptions.DEFAULTS.actions(config.getActions()).flushDuration(config.getFlushDuration());
+			client.enableBatch(options);
 			LOG.info("connected to {} version:{}", influxDBUrl, client.version());
 		} catch (Exception e) {
 			LOG.warn("failed to connect to {}", influxDBUrl);

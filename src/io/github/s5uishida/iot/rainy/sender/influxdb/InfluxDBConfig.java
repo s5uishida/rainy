@@ -8,10 +8,12 @@ import io.github.s5uishida.iot.rainy.util.ConfigParams;
  *
  */
 public class InfluxDBConfig extends AbstractConfig {
-	public static final String INFLUXDB_URL_KEY	= "influxDBUrl";
-	public static final String USER_NAME_KEY		= "userName";
-	public static final String PASSWORD_KEY		= "password";
-	public static final String DATA_ONLY_KEY		= "dataOnly";
+	public static final String INFLUXDB_URL_KEY		= "influxDBUrl";
+	public static final String USER_NAME_KEY			= "userName";
+	public static final String PASSWORD_KEY			= "password";
+	public static final String ACTIONS_KEY			= "actions";
+	public static final String FLUSH_DURATION_KEY	= "flushDuration";
+	public static final String DATA_ONLY_KEY			= "dataOnly";
 
 	private static InfluxDBConfig config;
 
@@ -36,6 +38,14 @@ public class InfluxDBConfig extends AbstractConfig {
 
 	public String getPassword() {
 		return getConfig(PASSWORD_KEY, null);
+	}
+
+	public int getActions() {
+		return getConfig(ACTIONS_KEY, 1000);
+	}
+
+	public int getFlushDuration() {
+		return getConfig(FLUSH_DURATION_KEY, 1000);
 	}
 
 	public boolean getDataOnly() {

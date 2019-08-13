@@ -6,7 +6,7 @@ package io.github.s5uishida.iot.rainy.util;
  */
 public class ConfigParams {
 	public static final String NAME						= "rainy - a tiny tool for iot data collection and monitoring";
-	public static final String VERSION					= "0.1.6";
+	public static final String VERSION					= "0.1.7";
 
 	public static final String CONFIG_DIR_PARAM			= "config.dir";
 	public static final String CONFIG_FILE				= "rainy.properties";
