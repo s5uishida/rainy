@@ -121,6 +121,10 @@ I am using [Chronograf](https://www.influxdata.com/time-series-platform/chronogr
 - **`influxDBUrl`**
 - **`userName`**
 - **`password`**
+- `actions`  
+  Set the number of actions to collect. default is `1000`.
+- `flushDuration`  
+  Set the time to wait at most (msec). default is `1000`.
 - `dataOnly`  
   Set to true when collecting only data. default is `true`.
 
