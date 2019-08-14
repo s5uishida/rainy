@@ -153,7 +153,7 @@ See [here](https://grafana.com/docs/installation/configuration/) for details.
  ;socket =
 ```
 
-- Restart Grafana and connect to `https://hostAddrss:3000/` with a browser  
+- Restart Grafana and connect to `https://hostAddress:3000/` with a browser  
 ```
 # systemctl restart grafana-server.service
 ```
@@ -168,7 +168,7 @@ TLS_CERTIFICATE=/etc/rainy/cert.pem
 TLS_PRIVATE_KEY=/etc/rainy/cert.key
 ```
 
-- Restart Chronograf and connect to `https://hostAddrss:8888/` with a browser  
+- Restart Chronograf and connect to `https://hostAddress:8888/` with a browser  
 ```
 # systemctl restart chronograf.service
 ```
