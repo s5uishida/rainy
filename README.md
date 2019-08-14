@@ -353,7 +353,11 @@ The following is an example of [Public Demo Server of Eclipse Milo](https://gith
 - `queueSize`  
   Set queueSize. default is `10`.
 - `dataChangeTrigger`  
-  Set one of 0[DataChangeTrigger.Status], 1[DataChangeTrigger.StatusValue] or 2[DataChangeTrigger.StatusValueTimestamp] to dataChangeTrigger. default is `1`[DataChangeTrigger.StatusValue].
+  Set one of the following to dataChangeTrigger:  
+  - `0` for DataChangeTrigger.Status
+  - `1` for DataChangeTrigger.StatusValue
+  - `2` for DataChangeTrigger.StatusValueTimestamp  
+  default is `1`.
 - **`nodeIDs`**  
   List the target node ID. The format is as follows.
   ```
