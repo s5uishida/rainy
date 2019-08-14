@@ -245,6 +245,12 @@ hci0:   Type: Primary  Bus: UART
   Set to true when sending data to MQTT broker. default is `false`.
 - `prettyPrinting`  
   Set to true when indenting the log output of JSON format data. default is `false`.
+  It is also necessary to change the following log level of `conf/logging.properties`.  
+  ```
+  #io.github.s5uishida.level=INFO
+  -->
+  io.github.s5uishida.level=FINE
+  ```
 - `readCrontab`  
   Set the schedule for sensing data in crontab format. default is every minute.
 - `batteryLevel`  
@@ -291,6 +297,12 @@ After launching `hcitool` command, press the power button of CC2650 and the scan
   Set to true when sending data to MQTT broker. default is `false`.
 - `prettyPrinting`  
   Set to true when indenting the log output of JSON format data. default is `false`.
+  It is also necessary to change the following log level of `conf/logging.properties`.  
+  ```
+  #io.github.s5uishida.level=INFO
+  -->
+  io.github.s5uishida.level=FINE
+  ```
 - `readCrontab`  
   Set the schedule for sensing data in crontab format. default is every minute.
 
@@ -302,6 +314,12 @@ After launching `hcitool` command, press the power button of CC2650 and the scan
   Set to true when sending data to MQTT broker. default is `false`.
 - `prettyPrinting`  
   Set to true when indenting the log output of JSON format data. default is `false`.
+  It is also necessary to change the following log level of `conf/logging.properties`.  
+  ```
+  #io.github.s5uishida.level=INFO
+  -->
+  io.github.s5uishida.level=FINE
+  ```
 - `keyStoreType`
 - `keyStoreAlias`
 - `keyStorePassword`
