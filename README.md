@@ -26,7 +26,7 @@ The following figure is overview of rainy.
   - [Install Chronograf and startup](#install_chronograf)
   - [Testing HTTPS connection with self-signed certificate](#test_https_connection)
     - [Create a self-signed certificate and private key with file names cert.pem and cert.key](#create_self_signed_cert)
-    - [Create an /etc/rainy directory and place these files there](#create_directory)
+    - [Create /etc/rainy directory and place these files there](#create_directory)
     - [Setting Grafana HTTPS connetion](#set_grafana_https)
     - [Setting Chronograf HTTPS connetion](#set_chronograf_https)
 - [Configuration - rainy/conf](#configuration)
@@ -116,7 +116,7 @@ In general, it is not recommended to use a self-signed certificate for formal op
 # openssl req -x509 -newkey rsa:4096 -sha256 -nodes -keyout cert.key -out cert.pem -subj "/CN=localhost" -days 365
 ```
 
-<h4 id="create_directory">Create an /etc/rainy directory and place these files there</h4>
+<h4 id="create_directory">Create /etc/rainy directory and place these files there</h4>
 
 ```
 # mkdir /etc/rainy
