@@ -484,7 +484,7 @@ The following figure is a sample image of a dashboard.
 
 <img src="./images/rainy_chronograf_0.png" title="./images/rainy_chronograf_0.png" width=800px></img>
 
-The following figure is a sample dashboard for the following NodeIDs on Public Demo Server of Eclipse Milo.  
+The following figure is a sample dashboard for the following NodeIDs on OPC-UA Public Demo Server of Eclipse Milo.  
 - `1,VendorServerInfo/ProcessCpuLoad`
 - `1,VendorServerInfo/SystemCpuLoad`
 - `1,VendorServerInfo/UsedMemory`
