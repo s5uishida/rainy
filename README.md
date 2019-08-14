@@ -7,7 +7,7 @@ These data can be sent to [InfluxDB](https://www.influxdata.com/) (Time Series D
 
 rainy runs on [Apache Felix](https://felix.apache.org/) (OSGi). I think that rainy can be embedded in the environment without OSGi.
 
-I releases this in the form of the Eclipse plug-in project and zip file. You need Java 8 or higher.
+I releases this in the form of the Eclipse plug-in project and [zip](https://github.com/s5uishida/rainy/releases) file. You need Java 8 or higher.
 I have confirmed that it works in Raspberry Pi 3B ([Raspbian Buster Lite OS](https://www.raspberrypi.org/downloads/raspbian/) (2019-07-10)).
 
 The following figure is overview of rainy.
@@ -21,9 +21,14 @@ The following figure is overview of rainy.
 - [Setup sending data](#setup_sending_data)
   - [Install InfluxDB and startup](#install_influxdb)
   - [Install Mosquitto (MQTT Broker) and startup](#install_mosquitto)
-- [Install visualization tools](#install_visualization)
+- [Setup visualization tools](#install_visualization)
   - [Install Grafana and startup](#install_grafana)
   - [Install Chronograf and startup](#install_chronograf)
+  - [Testing HTTPS connection with self-signed certificate](#test_https_connection)
+    - [Create a self-signed certificate and private key with file names cert.pem and cert.key](#create_self_signed_cert)
+    - [Create an /etc/rainy directory and place these files there](#create_directory)
+    - [Setting Grafana HTTPS connetion](#set_grafana_https)
+    - [Setting Chronograf HTTPS connetion](#set_chronograf_https)
 - [Configuration - rainy/conf](#configuration)
   - [rainy.properties](#rainy_properties)
   - [Setting the connection for sending data](#setting_connection_sending_data)
@@ -79,7 +84,7 @@ The installation is as follows.
 # systemctl start mosquitto.service
 ```
 
-<h2 id="install_visualization">Install visualization tools</h2>
+<h2 id="install_visualization">Setup visualization tools</h2>
 
 <h3 id="install_grafana">Install Grafana and startup</h3>
 
@@ -99,6 +104,73 @@ I am using [Chronograf](https://www.influxdata.com/time-series-platform/chronogr
 # dpkg -i chronograf_1.7.12_amd64.deb
 # systemctl enable chronograf.service
 # systemctl start chronograf.service
+```
+
+<h3 id="test_https_connection">Testing HTTPS connection with self-signed certificate</h3>
+
+In general, it is not recommended to use a self-signed certificate for formal operation, but it is sufficient for testing purposes.
+
+<h4 id="create_self_signed_cert">Create a self-signed certificate and private key with file names cert.pem and cert.key</h4>
+
+```
+# openssl req -x509 -newkey rsa:4096 -sha256 -nodes -keyout cert.key -out cert.pem -subj "/CN=localhost" -days 365
+```
+
+<h4 id="create_directory">Create an /etc/rainy directory and place these files there</h4>
+
+```
+# mkdir /etc/rainy
+# cp cert.pem cert.key /etc/rainy/
+# cd /etc/rainy
+# chmod 0644 cert.pem cert.key
+```
+
+<h4 id="set_grafana_https">Setting Grafana HTTPS connetion</h4>
+
+See [here](https://grafana.com/docs/installation/configuration/) for details.
+
+- Edit `/etc/grafana/grafana.ini`  
+```
+@@ -29,7 +29,7 @@
+ #################################### Server ####################################
+ [server]
+ # Protocol (http, https, socket)
+-;protocol = http
++protocol = https
+ 
+ # The ip address to bind to, empty will bind to all interfaces
+ ;http_addr =
+@@ -58,8 +58,8 @@
+ ;enable_gzip = false
+ 
+ # https certs & key file
+-;cert_file =
+-;cert_key =
++cert_file = /etc/rainy/cert.pem
++cert_key = /etc/rainy/cert.key
+ 
+ # Unix socket path
+ ;socket =
+```
+
+- Restart Grafana and connect to `https://hostAddrss:3000/` with a browser  
+```
+# systemctl restart grafana-server.service
+```
+
+<h4 id="set_chronograf_https">Setting Chronograf HTTPS connetion</h4>
+
+See [here](https://docs.influxdata.com/chronograf/v1.7/administration/managing-security/) for details.
+
+- Edit `/etc/default/chronograf`  
+```
+TLS_CERTIFICATE=/etc/rainy/cert.pem
+TLS_PRIVATE_KEY=/etc/rainy/cert.key
+```
+
+- Restart Chronograf and connect to `https://hostAddrss:8888/` with a browser  
+```
+# systemctl restart chronograf.service
 ```
 
 <h2 id="configuration">Configuration - rainy/conf</h2>
