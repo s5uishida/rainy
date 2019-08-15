@@ -337,9 +337,9 @@ The following is an example of [Public Demo Server of Eclipse Milo](https://gith
 - **`endpointPort`**  
   Set the OPC-UA server port number.
 - `securityPolicy`  
-  Set one of `Basic128Rsa15`, `Basic256`, `Basic256Sha256`, or `None` in securityPolicy. default is `None`.
+  Set one of `Basic128Rsa15`, `Basic256`, `Basic256Sha256` or `None` in securityPolicy. default is `None`.
 - `securityMode`  
-  Set one of `Sign`, `SignAndEncrypt`, or `None` to securityMode. default is `None`.
+  Set one of `Sign`, `SignAndEncrypt` or `None` to securityMode. default is `None`.
 - `userName`
 - `password`
 - `requestTimeout`  
