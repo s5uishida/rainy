@@ -63,8 +63,7 @@ The purpose of this tool is briefly as follows.
 - Real-time monitoring and convert these information to MQTT as a data source for any other purposes.
 - Runs as Java / OSGi application on Raspberry Pi 3B (arm) and Ubuntu machine (amd64).
 
-There is demand for just simply visualizing equipment running information.
-Therefore, in addition to monitoring, I created a trial tool that can be used via MQTT too.
+Although I think the functionality and performance of this tool are not sufficient for formal operation, it may be an easy-to-try tool.
 
 <h2 id="setup_os">Setup OS</h2>
 
