@@ -19,6 +19,7 @@ The following figure is overview of rainy.
 ---
 <h2>Table of Contents</h2>
 
+- [Purpose](#purpose)
 - [Setup OS](#setup_os)
 - [Setup sending data](#setup_sending_data)
   - [Install InfluxDB and startup](#install_influxdb)
@@ -53,6 +54,17 @@ The following figure is overview of rainy.
 - [P.S.](#ps)
 
 ---
+
+<h2 id="purpose">Purpose</h2>
+
+The purpose of this tool is briefly as follows.
+
+- For private / office / factory room, easily collect general environmental information and industrial / factory equipment running information via OPC-UA.
+- Real-time monitoring and convert these information to MQTT as a data source for any other purposes.
+- Runs as Java / OSGi application on Raspberry Pi 3B (arm) and Ubuntu machine (amd64).
+
+There is demand for just simply visualizing equipment running information.
+Therefore, in addition to monitoring, I created a trial tool that can be used via MQTT too.
 
 <h2 id="setup_os">Setup OS</h2>
 
