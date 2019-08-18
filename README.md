@@ -1,6 +1,7 @@
 # rainy - a tiny tool for iot data collection and monitoring
 rainy is a tiny tool for IoT data collection and monitoring.
-rainy supports [TI SensorTag CC2650](http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide) and [MH-Z19B](https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf) as IoT devices, communicates with CC2650 by [bluez-dbus](https://github.com/hypfvieh/bluez-dbus), and communicates with MH-Z19B by [jSerialComm](https://github.com/Fazecast/jSerialComm), and acquires each data.
+rainy supports [TI SensorTag CC2650](http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide), [MH-Z19B](https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf) and [PPD42NS](http://wiki.seeedstudio.com/Grove-Dust_Sensor/) as IoT devices, communicates with CC2650 by [bluez-dbus](https://github.com/hypfvieh/bluez-dbus), and communicates with MH-Z19B by [jSerialComm](https://github.com/Fazecast/jSerialComm),
+and communicates with PPD42NS by [Pi4J](https://pi4j.com/) and acquires each data.
 And it corresponds to OPC-UA which is a protocol of industrial automation.
 I use [Eclipse Milo](https://github.com/eclipse/milo) for the OPC-UA Protocol Stack and SDK (Java).
 These data can be sent to [InfluxDB](https://www.influxdata.com/) (Time Series Database) for visualization, or sent to MQTT Broker to be used as a data source for any other purposes.
@@ -40,6 +41,7 @@ The following figure is overview of rainy.
   - [Setting sensors](#setting_sensors)
     - [CC2650 - cc2650.properties](#cc2650_properties)
     - [MH-Z19B - mhz19b.properties](#mhz19b_properties)
+    - [PPD42NS - ppd42ns.properties](#ppd42ns_properties)
     - [OPC-UA - opcua.properties](#opcua_properties)
       - [OPC-UA server - conf/opcua/milo-example.properties](#opcua_server_properties)
 - [Run rainy](#run_rainy)
@@ -67,8 +69,9 @@ Although I think the functionality and performance of this tool are not sufficie
 
 <h2 id="setup_os">Setup OS</h2>
 
-Please refer to [here](https://github.com/s5uishida/mh-z19b-driver) for setting RaspberryPi 3B as an environment for running rainy.
-Both Bluetooth and serial communication can be enabled.
+Please refer to [here1](https://github.com/s5uishida/mh-z19b-driver) and
+[here2](https://github.com/s5uishida/ppd42ns-driver) for setting RaspberryPi 3B as an environment for running rainy.
+Both Bluetooth and serial communication / GPIO can be enabled.
 
 <h2 id="setup_sending_data">Setup sending data</h2>
 
@@ -196,6 +199,8 @@ TLS_PRIVATE_KEY=/etc/rainy/cert.key
   Set to true when using CC2650. default is `false`.
 - **`mhz19b`**  
   Set to true when using MH-Z19B. default is `false`.
+- **`ppd42ns`**  
+  Set to true when using PPD42NS. default is `false`.
 - **`opcua`**  
   Set to true when using OPC-UA. default is `false`.
 
@@ -302,8 +307,28 @@ After launching `hcitool` command, press the power button of CC2650 and the scan
 
 <h4 id="mhz19b_properties">MH-Z19B - mhz19b.properties</h4>
 
+When using PPD42NS, use GPIO of Raspberry Pi 3B for PPD42NS.
+Please use **DSD TECH SH-U09C USB to TTL Serial Adapter with FTDI FT232RL Chip** etc for serial communication of MH-Z19B.
+In that case, you should specify `/dev/ttyUSB0` for the port name.
 - **`portName`**  
   Set the serial port name. default is `/dev/ttyAMA0`.
+- **`influxDB`**  
+  Set to true when sending data to InfluxDB. default is `false`.
+- **`mqtt`**  
+  Set to true when sending data to MQTT broker. default is `false`.
+- `prettyPrinting`  
+  Set to true when indenting the log output of JSON format data. default is `false`.
+  It is also necessary to change the following log level of `conf/logging.properties`.  
+  ```
+  #io.github.s5uishida.level=INFO
+  -->
+  io.github.s5uishida.level=FINE
+  ```
+- `readCrontab`  
+  Set the schedule for sensing data in crontab format. default is every minute.
+
+<h4 id="ppd42ns_properties">PPD42NS - ppd42ns.properties</h4>
+
 - **`influxDB`**  
   Set to true when sending data to InfluxDB. default is `false`.
 - **`mqtt`**  
@@ -441,16 +466,18 @@ START LEVEL 1
 [  37] [Active     ] [    1] Apache ServiceMix :: Bundles :: retrofit (2.5.0.2)
 [  38] [Active     ] [    1] Paho MQTT Client (1.2.1)
 [  39] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
-[  40] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.3)
-[  41] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
-[  42] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.7)
-[  43] [Active     ] [    1] sdk-client-osgi (0.3.2)
-[  44] [Active     ] [    1] sdk-core-osgi (0.3.2)
-[  45] [Active     ] [    1] slf4j-api (1.7.26)
-[  46] [Resolved   ] [    1] slf4j-jdk14 (1.7.26)
-[  47] [Active     ] [    1] stack-client-osgi (0.3.2)
-[  48] [Active     ] [    1] stack-core-osgi (0.3.2)
-[  49] [Active     ] [    1] strict-machine-osgi (0.1.0)
+[  40] [Active     ] [    1] Pi4J :: Java Library (Core) (1.2)
+[  41] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.0)
+[  42] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
+[  43] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
+[  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.8)
+[  45] [Active     ] [    1] sdk-client-osgi (0.3.2)
+[  46] [Active     ] [    1] sdk-core-osgi (0.3.2)
+[  47] [Active     ] [    1] slf4j-api (1.7.26)
+[  48] [Resolved   ] [    1] slf4j-jdk14 (1.7.26)
+[  49] [Active     ] [    1] stack-client-osgi (0.3.2)
+[  50] [Active     ] [    1] stack-core-osgi (0.3.2)
+[  51] [Active     ] [    1] strict-machine-osgi (0.1.0)
 -> 
 ```
 
@@ -484,12 +511,13 @@ The sample of the output log is as follows.
 [hci0] B0:B4:48:B9:92:86 mag[x]:127.0 
 [hci0] B0:B4:48:B9:92:86 mag[y]:420.0 
 [hci0] B0:B4:48:B9:92:86 mag[z]:302.0
+[GPIO_14] pcs:1373.6702 ugm3:2.1420693
 ```
 In order to reduce writing to the SD card, it is usually recommended to set it to `INFO`.
 
 <h3 id="check_database">Check the database name for each device created in InfluxDB</h3>
 
-Check from the log file `logs/rainy.log.0`. In the following example, databases `RP3B_01__dev_ttyAMA0` for MH-Z19B, `B0_B4_48_B9_92_86` and `B0_B4_48_ED_B6_04` for CC2650 and `milo_digitalpetri_com_62541_milo` for Public Demo Server of Eclipse Milo were created. Note that InfluxDB will not do anything if the database already exists.
+Check from the log file `logs/rainy.log.0`. In the following example, databases `RP3B_01__dev_ttyAMA0` for MH-Z19B, `B0_B4_48_B9_92_86` and `B0_B4_48_ED_B6_04` for CC2650, `milo_digitalpetri_com_62541_milo` for Public Demo Server of Eclipse Milo and `RP3B_01_GPIO_14` for PPD42NS were created. Note that InfluxDB will not do anything if the database already exists.
 ```
 execute - CREATE DATABASE RP3B_01__dev_ttyAMA0
 ...
@@ -498,6 +526,8 @@ execute - CREATE DATABASE B0_B4_48_B9_92_86
 execute - CREATE DATABASE B0_B4_48_ED_B6_04
 ...
 execute - CREATE DATABASE milo_digitalpetri_com_62541_milo
+...
+execute - CREATE DATABASE RP3B_01_GPIO_14
 ```
 These database names are required for the visualization tools Grafana and Chronograf to connect to InfluxDB.
 
@@ -561,9 +591,10 @@ The following bundles I created follow the MIT license.
 - [bluetooth-scanner 0.1.1](https://github.com/s5uishida/bluetooth-scanner)
 - [cc2650-driver 0.1.0](https://github.com/s5uishida/cc2650-driver)
 - [mh-z19b-driver 0.1.1](https://github.com/s5uishida/mh-z19b-driver)
-- [rainy-activator 0.1.3](https://github.com/s5uishida/rainy-activator)
+- [ppd42ns-driver 0.1.0](https://github.com/s5uishida/ppd42ns-driver)
+- [rainy-activator 0.1.4](https://github.com/s5uishida/rainy-activator)
 - [rainy-opcua 0.1.4](https://github.com/s5uishida/rainy-opcua)
-- [rainy 0.1.7](https://github.com/s5uishida/rainy)
+- [rainy 0.1.8](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
@@ -600,6 +631,7 @@ Please check each license for the following bundles used in addition to these.
 - [Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs 1.62](https://www.bouncycastle.org/download/bcpkix-jdk15on-162.jar)
 - [Bouncy Castle Provider 1.62](https://www.bouncycastle.org/download/bcprov-jdk15on-162.jar)
 - [Guava: Google Core Libraries for Java 26.0](https://repo1.maven.org/maven2/com/google/guava/guava/26.0-jre/guava-26.0-jre.jar)
+- [Pi4J 1.2 (pi4j-core.jar)](https://pi4j.com/download/pi4j-1.2.zip)
 
 I would like to thank the authors of these very useful codes, and all the contributors.
 
