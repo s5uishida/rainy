@@ -470,7 +470,7 @@ START LEVEL 1
 [  39] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
 [  40] [Active     ] [    1] Pi4J :: Java Library (Core) (1.2)
 [  41] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.1)
-[  42] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.5)
+[  42] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.6)
 [  43] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
 [  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.9)
 [  45] [Active     ] [    1] sdk-client-osgi (0.3.2)
@@ -594,7 +594,7 @@ The following bundles I created follow the MIT license.
 - [cc2650-driver 0.1.0](https://github.com/s5uishida/cc2650-driver)
 - [mh-z19b-driver 0.1.1](https://github.com/s5uishida/mh-z19b-driver)
 - [ppd42ns-driver 0.1.1](https://github.com/s5uishida/ppd42ns-driver)
-- [rainy-activator 0.1.5](https://github.com/s5uishida/rainy-activator)
+- [rainy-activator 0.1.6](https://github.com/s5uishida/rainy-activator)
 - [rainy-opcua 0.1.4](https://github.com/s5uishida/rainy-opcua)
 - [rainy 0.1.9](https://github.com/s5uishida/rainy)
 
