@@ -109,7 +109,7 @@ public class AbstractInfluxDBSender {
 			return;
 		}
 		if (!dbNamesSet.contains(dbName)) {
-			client.query(new Query("CREATE DATABASE " + dbName));
+			client.query(new Query("CREATE DATABASE \"" + dbName + "\""));
 			LOG.info("CREATE DATABASE {}", dbName);
 			dbNamesSet.add(dbName);
 		}

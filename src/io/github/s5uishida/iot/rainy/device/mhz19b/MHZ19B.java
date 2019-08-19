@@ -79,7 +79,12 @@ public class MHZ19B implements IDevice {
 				LOG.warn("caught - {}", e.toString());
 			}
 		}
-		LOG.info("sensing MH-Z19B stopped.");
+		try {
+			mhz19b.close();
+			LOG.info("sensing MH-Z19B stopped.");
+		} catch (IOException e) {
+			LOG.warn("caught - {}", e.toString());
+		}
 	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {

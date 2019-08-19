@@ -80,6 +80,7 @@ public class PPD42NS implements IDevice {
 				LOG.warn("caught - {}", e.toString());
 			}
 		}
+		ppd42ns.close();
 		LOG.info("sensing PPD42NS stopped.");
 	}
 
