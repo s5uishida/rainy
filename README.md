@@ -17,6 +17,10 @@ The following figure is overview of rainy.
 
 <img src="./images/rainy_overview_0.png" title="./images/rainy_overview_0.png" width=800px></img>
 
+The following image shows the hardware configuration.
+
+<img src="./images/rainy_hardware_0.png" title="./images/rainy_hardware_0.png" width=600px></img>
+
 ---
 <h2>Table of Contents</h2>
 
