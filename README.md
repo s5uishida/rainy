@@ -196,15 +196,14 @@ TLS_PRIVATE_KEY=/etc/rainy/cert.key
 - **`clientID`**  
   Set a unique client identifier for running rainy.
 - **`cc2650`**  
-  Set to true when using CC2650. default is `false`.
+  Set to `true` when using CC2650. default is `false`.
 - **`mhz19b`**  
-  Set to true when using MH-Z19B. default is `false`.
+  Set to `true` when using MH-Z19B. default is `false`.
 - **`ppd42ns`**  
-  Set to true when using PPD42NS. default is `false`.  
-  **Note. PPD42NS uses Pi4J. For this reason, PPD42NS can only be used with the Raspberry Pi series (arm).
-  Please set it to `false` because it does not work on amd64 Linux machines.**  
+  Set to `true` when using PPD42NS. default is `false`.  
+  **Note. This tool uses Pi4J for PPD42NS, so PPD42NS can only be used with Raspberry Pi series (arm). Therefore, the PPD42NS feature of this tool does not work on amd64 Linux machines, so set it to `false` on amd64 Linux machines.**  
 - **`opcua`**  
-  Set to true when using OPC-UA. default is `false`.
+  Set to `true` when using OPC-UA. default is `false`.
 
 <h3 id="setting_connection_sending_data">Setting the connection for sending data</h3>
   
@@ -218,7 +217,7 @@ TLS_PRIVATE_KEY=/etc/rainy/cert.key
 - `flushDuration`  
   Set the time to wait at most (msec). default is `1000`.
 - `dataOnly`  
-  Set to true when collecting only data. default is `true`.
+  Set to `true` when collecting only data. default is `true`.
 
 <h4 id="mqtt_properties">MQTT - mqtt.properties</h4>
 
@@ -260,11 +259,11 @@ hci0:   Type: Primary  Bus: UART
         Manufacturer: Broadcom Corporation (15)
 ```
 - **`influxDB`**  
-  Set to true when sending data to InfluxDB. default is `false`.
+  Set to `true` when sending data to InfluxDB. default is `false`.
 - **`mqtt`**  
-  Set to true when sending data to MQTT broker. default is `false`.
+  Set to `true` when sending data to MQTT broker. default is `false`.
 - `prettyPrinting`  
-  Set to true when indenting the log output of JSON format data. default is `false`.
+  Set to `true` when indenting the log output of JSON format data. default is `false`.
   It is also necessary to change the following log level of `conf/logging.properties`.  
   ```
   #io.github.s5uishida.level=INFO
@@ -274,27 +273,27 @@ hci0:   Type: Primary  Bus: UART
 - `readCrontab`  
   Set the schedule for sensing data in crontab format. default is every minute.
 - `batteryLevel`  
-  Set to true when getting battery level. default is `false`.
+  Set to `true` when getting battery level. default is `false`.
 - Example of setting Temperature sensor
   - **`temperature`**  
-    Set to true when using a Temperature sensor. default is `false`.
+    Set to `true` when using a Temperature sensor. default is `false`.
   - `temperatureNotify`  
-    Set to true when using the notification function. default is `false`. When the notification function is enabled, the readCrontab schedule for Temperature sensor is disabled.
+    Set to `true` when using the notification function. default is `false`. When the notification function is enabled, the readCrontab schedule for Temperature sensor is disabled.
   - `temperatureNotificationPeriod`  
     Set the notification time interval in milliseconds. default is `1000`.
 - Movement
   - `gyroscope`  
-    Set to true when using a Gyroscope sensor. default is `false`.
+    Set to `true` when using a Gyroscope sensor. default is `false`.
   - `accelerometer`  
-    Set to true when using a Accelerometer sensor. default is `false`.
+    Set to `true` when using a Accelerometer sensor. default is `false`.
   - `magnetometer`  
-    Set to true when using a Magnetometer sensor. default is `false`.
+    Set to `true` when using a Magnetometer sensor. default is `false`.
   - `movementNotify`  
-    Set to true when using the notification function. default is `false`. When the notification function is enabled, the readCrontab schedule for Movement sensor is disabled.
+    Set to `true` when using the notification function. default is `false`. When the notification function is enabled, the readCrontab schedule for Movement sensor is disabled.
   - `movementNotificationPeriod`  
     Set the notification time interval in milliseconds. default is `1000`.
   - `wakeOnMotion`  
-    Set to true when sending movement data when a shake is detected. It sends `Movement` data at a time interval specified by notification for 10 seconds. default is `false`.
+    Set to `true` when sending movement data when a shake is detected. It sends `Movement` data at a time interval specified by notification for 10 seconds. default is `false`.
   - `accelerometerRange`  
     Set Accelerometer range. default is `2`.
 - **`devices`**  
@@ -315,11 +314,11 @@ In that case, you should specify `/dev/ttyUSB0` for the port name.
 - **`portName`**  
   Set the serial port name. default is `/dev/ttyAMA0`.
 - **`influxDB`**  
-  Set to true when sending data to InfluxDB. default is `false`.
+  Set to `true` when sending data to InfluxDB. default is `false`.
 - **`mqtt`**  
-  Set to true when sending data to MQTT broker. default is `false`.
+  Set to `true` when sending data to MQTT broker. default is `false`.
 - `prettyPrinting`  
-  Set to true when indenting the log output of JSON format data. default is `false`.
+  Set to `true` when indenting the log output of JSON format data. default is `false`.
   It is also necessary to change the following log level of `conf/logging.properties`.  
   ```
   #io.github.s5uishida.level=INFO
@@ -332,11 +331,11 @@ In that case, you should specify `/dev/ttyUSB0` for the port name.
 <h4 id="ppd42ns_properties">PPD42NS - ppd42ns.properties</h4>
 
 - **`influxDB`**  
-  Set to true when sending data to InfluxDB. default is `false`.
+  Set to `true` when sending data to InfluxDB. default is `false`.
 - **`mqtt`**  
-  Set to true when sending data to MQTT broker. default is `false`.
+  Set to `true` when sending data to MQTT broker. default is `false`.
 - `prettyPrinting`  
-  Set to true when indenting the log output of JSON format data. default is `false`.
+  Set to `true` when indenting the log output of JSON format data. default is `false`.
   It is also necessary to change the following log level of `conf/logging.properties`.  
   ```
   #io.github.s5uishida.level=INFO
@@ -349,11 +348,11 @@ In that case, you should specify `/dev/ttyUSB0` for the port name.
 <h4 id="opcua_properties">OPC-UA - opcua.properties</h4>
 
 - **`influxDB`**  
-  Set to true when sending data to InfluxDB. default is `false`.
+  Set to `true` when sending data to InfluxDB. default is `false`.
 - **`mqtt`**  
-  Set to true when sending data to MQTT broker. default is `false`.
+  Set to `true` when sending data to MQTT broker. default is `false`.
 - `prettyPrinting`  
-  Set to true when indenting the log output of JSON format data. default is `false`.
+  Set to `true` when indenting the log output of JSON format data. default is `false`.
   It is also necessary to change the following log level of `conf/logging.properties`.  
   ```
   #io.github.s5uishida.level=INFO
@@ -369,7 +368,7 @@ In that case, you should specify `/dev/ttyUSB0` for the port name.
 
 The following is an example of [Public Demo Server of Eclipse Milo](https://github.com/eclipse/milo).
 - **`use`**  
-  Set to true to use this server. default is `false`.
+  Set to `true` to use this server. default is `false`.
 - **`serverName`**  
   Set the OPC-UA server name.
 - **`endpointIP`**  
@@ -433,8 +432,8 @@ START LEVEL 1
 [   2] [Active     ] [    1] bcprov (1.62)
 [   3] [Active     ] [    1] bluetooth scanner (0.1.1)
 [   4] [Active     ] [    1] bluez-dbus-osgi (0.1.2.201908052042)
-[   5] [Active     ] [    1] bsd-parser-core-osgi (0.3.2)
-[   6] [Active     ] [    1] bsd-parser-gson-osgi (0.3.2)
+[   5] [Active     ] [    1] bsd-parser-core (0.3.3)
+[   6] [Active     ] [    1] bsd-parser-gson (0.3.3)
 [   7] [Active     ] [    1] java driver for ti sensortag cc2650 (0.1.0)
 [   8] [Active     ] [    1] Apache Commons Lang (3.9.0)
 [   9] [Active     ] [    1] cron4j-osgi (2.2.5)
@@ -472,13 +471,13 @@ START LEVEL 1
 [  41] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.1)
 [  42] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.6)
 [  43] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
-[  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.9)
-[  45] [Active     ] [    1] sdk-client-osgi (0.3.2)
-[  46] [Active     ] [    1] sdk-core-osgi (0.3.2)
+[  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.10)
+[  45] [Active     ] [    1] sdk-client (0.3.3)
+[  46] [Active     ] [    1] sdk-core (0.3.3)
 [  47] [Active     ] [    1] slf4j-api (1.7.26)
 [  48] [Resolved   ] [    1] slf4j-jdk14 (1.7.26)
-[  49] [Active     ] [    1] stack-client-osgi (0.3.2)
-[  50] [Active     ] [    1] stack-core-osgi (0.3.2)
+[  49] [Active     ] [    1] stack-client (0.3.3)
+[  50] [Active     ] [    1] stack-core (0.3.3)
 [  51] [Active     ] [    1] strict-machine-osgi (0.1.0)
 -> 
 ```
@@ -585,6 +584,7 @@ Client mosqsub|2095-u1804 received PUBLISH (d0, q0, r0, m0, 'rainy/B0_B4_48_ED_B
 - Only one Bluetooth adapter can be used.
 - Only a few CC2650 (Bluetooth devices) can be used at the same time. (Restriction of Bluetooth chip)
 - When the connection with CC2650 is lost, it may not recover automatically.
+- This tool uses Pi4J for PPD42NS, so PPD42NS can only be used with Raspberry Pi series (arm). Therefore, the PPD42NS feature of this tool does not work on amd64 Linux machines.
 - Depending on the combination of the number of monitored items of OPC-UA servers and the publishing interval, the load on InfluxDB may become too large.
 
 <h2 id="bundle_list">Bundle list</h2>
@@ -596,7 +596,7 @@ The following bundles I created follow the MIT license.
 - [ppd42ns-driver 0.1.1](https://github.com/s5uishida/ppd42ns-driver)
 - [rainy-activator 0.1.6](https://github.com/s5uishida/rainy-activator)
 - [rainy-opcua 0.1.4](https://github.com/s5uishida/rainy-opcua)
-- [rainy 0.1.9](https://github.com/s5uishida/rainy)
+- [rainy 0.1.10](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
@@ -623,12 +623,12 @@ Please check each license for the following bundles used in addition to these.
 - [JavaBeans Activation Framework (JAF) 1.2.0](https://mvnrepository.com/artifact/com.sun.activation/javax.activation/1.2.0)
 - [strict-machine-osgi 0.1](https://github.com/s5uishida/strict-machine-osgi)
 - [netty-channel-fsm-osgi 0.3](https://github.com/s5uishida/netty-channel-fsm-osgi)
-- [bsd-parser-core-osgi 0.3.2](https://github.com/s5uishida/bsd-parser-core-osgi)
-- [bsd-parser-gson-osgi 0.3.2](https://github.com/s5uishida/bsd-parser-gson-osgi)
-- [stack-core-osgi 0.3.2](https://github.com/s5uishida/stack-core-osgi)
-- [stack-client-osgi 0.3.2](https://github.com/s5uishida/stack-client-osgi)
-- [sdk-core-osgi 0.3.2](https://github.com/s5uishida/sdk-core-osgi)
-- [sdk-client-osgi 0.3.2](https://github.com/s5uishida/sdk-client-osgi)
+- [bsd-parser-core 0.3.3](https://mvnrepository.com/artifact/org.eclipse.milo/bsd-parser-core/0.3.3)
+- [bsd-parser-gson 0.3.3](https://mvnrepository.com/artifact/org.eclipse.milo/bsd-parser-gson/0.3.3)
+- [stack-core 0.3.3](https://mvnrepository.com/artifact/org.eclipse.milo/stack-core/0.3.3)
+- [stack-client 0.3.3](https://mvnrepository.com/artifact/org.eclipse.milo/stack-client/0.3.3)
+- [sdk-core 0.3.3](https://mvnrepository.com/artifact/org.eclipse.milo/sdk-core/0.3.3)
+- [sdk-client 0.3.3](https://mvnrepository.com/artifact/org.eclipse.milo/sdk-client/0.3.3)
 - [Gson 2.8.5](https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.5)
 - [Bouncy Castle PKIX, CMS, EAC, TSP, PKCS, OCSP, CMP, and CRMF APIs 1.62](https://www.bouncycastle.org/download/bcpkix-jdk15on-162.jar)
 - [Bouncy Castle Provider 1.62](https://www.bouncycastle.org/download/bcprov-jdk15on-162.jar)
