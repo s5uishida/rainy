@@ -502,7 +502,7 @@ io.github.s5uishida.level=FINE
 ```
 The sample of the output log is as follows.
 ```
-[/dev/ttyAMA0] co2:850 
+[/dev/ttyUSB0] co2:850 
 [hci0] B0:B4:48:B9:92:86 obj:28.28125 amb:32.28125 
 [hci0] B0:B4:48:B9:92:86 humidity:59.362793 
 [hci0] B0:B4:48:B9:92:86 pressure:1012.27 
@@ -522,9 +522,9 @@ In order to reduce writing to the SD card, it is usually recommended to set it t
 
 <h3 id="check_database">Check the database name for each device created in InfluxDB</h3>
 
-Check from the log file `logs/rainy.log.0`. In the following example, databases `RP3B_01__dev_ttyAMA0` for MH-Z19B, `B0_B4_48_B9_92_86` and `B0_B4_48_ED_B6_04` for CC2650, `milo_digitalpetri_com_62541_milo` for Public Demo Server of Eclipse Milo and `RP3B_01_GPIO_14` for PPD42NS were created. Note that InfluxDB will not do anything if the database already exists.
+Check from the log file `logs/rainy.log.0`. In the following example, databases `RP3B_01__dev_ttyUSB0` for MH-Z19B, `B0_B4_48_B9_92_86` and `B0_B4_48_ED_B6_04` for CC2650, `milo_digitalpetri_com_62541_milo` for Public Demo Server of Eclipse Milo and `RP3B_01_GPIO_14` for PPD42NS were created. Note that InfluxDB will not do anything if the database already exists.
 ```
-execute - CREATE DATABASE RP3B_01__dev_ttyAMA0
+execute - CREATE DATABASE RP3B_01__dev_ttyUSB0
 ...
 execute - CREATE DATABASE B0_B4_48_B9_92_86
 ...
