@@ -17,6 +17,10 @@ The following figure is overview of rainy.
 
 <img src="./images/rainy_overview_0.png" title="./images/rainy_overview_0.png" width=800px></img>
 
+The following figure is overview which the monitoring and MQTT broker are running together with rainy on same Raspberry Pi 3B.
+
+<img src="./images/rainy_overview_1.png" title="./images/rainy_overview_1.png" width=800px></img>
+
 The following image shows the hardware configuration.
 
 <img src="./images/rainy_hardware_0.png" title="./images/rainy_hardware_0.png" width=600px></img>
@@ -91,6 +95,13 @@ The installation is as follows from [here](https://portal.influxdata.com/downloa
 # systemctl enable influxdb.service
 # systemctl start influxdb.service
 ```
+In addition, the step to install InfluxDB on Raspberry Pi 3B is as follows.
+```
+# wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.7_armhf.deb
+# dpkg -i influxdb_1.7.7_armhf.deb
+# systemctl enable influxdb.service
+# systemctl start influxdb.service
+```
 
 <h3 id="install_mosquitto">Install Mosquitto (MQTT Broker) and startup</h3>
 
@@ -103,6 +114,7 @@ The installation is as follows.
 # systemctl enable mosquitto.service
 # systemctl start mosquitto.service
 ```
+In addition, the step to install Mosquitto on Raspberry Pi 3B is the same as above.
 
 <h2 id="install_visualization">Setup visualization tools</h2>
 
@@ -110,8 +122,15 @@ The installation is as follows.
 
 I am using [Grafana](https://grafana.com/) on Ubuntu 18.04. The installation is as follows from [here](https://grafana.com/grafana/download?platform=linux).
 ```
-# wget https://dl.grafana.com/oss/release/grafana_6.2.5_amd64.deb
-# dpkg -i grafana_6.2.5_amd64.deb
+# wget https://dl.grafana.com/oss/release/grafana_6.3.3_amd64.deb
+# dpkg -i grafana_6.3.3_amd64.deb
+# systemctl enable grafana-server.service
+# systemctl start grafana-server.service
+```
+In addition, the step to install Grafana on Raspberry Pi 3B is as follows.
+```
+# wget https://dl.grafana.com/oss/release/grafana_6.3.3_armhf.deb
+# dpkg -i grafana_6.3.3_armhf.deb
 # systemctl enable grafana-server.service
 # systemctl start grafana-server.service
 ```
@@ -122,6 +141,13 @@ I am using [Chronograf](https://www.influxdata.com/time-series-platform/chronogr
 ```
 # wget https://dl.influxdata.com/chronograf/releases/chronograf_1.7.12_amd64.deb
 # dpkg -i chronograf_1.7.12_amd64.deb
+# systemctl enable chronograf.service
+# systemctl start chronograf.service
+```
+In addition, the step to install Chronograf on Raspberry Pi 3B is as follows.
+```
+# wget https://dl.influxdata.com/chronograf/releases/chronograf_1.7.12_armhf.deb
+# dpkg -i chronograf_1.7.12_armhf.deb
 # systemctl enable chronograf.service
 # systemctl start chronograf.service
 ```
@@ -643,5 +669,5 @@ I would like to thank the authors of these very useful codes, and all the contri
 
 <h2 id="ps">P.S.</h2>
 
-With Raspberry Pi 4B (4GB memory model), InfluxDB and Grafana may be able to run on one with rainy.
-In this case, it is not necessary to prepare the other machine for InfluxDB and Grafana, and I hope that one RP4 can perform from sensor data collection to visualization.
+If Raspberry Pi 4B (4GB memory model), InfluxDB and Grafana may be able to run together with rainy in enough resources.
+In this case, from sensor data collection to monitoring, it may be possible to run with one RP4.
