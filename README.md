@@ -573,6 +573,10 @@ The following figure is a sample image of a dashboard.
 
 <img src="./images/rainy_grafana_1.png" title="./images/rainy_grafana_1.png" width=800px></img>
 
+The following figure is a sample graph of Magnetometer using the Plotly panel.
+
+<img src="./images/rainy_grafana_1_1.png" title="./images/rainy_grafana_1_1.png" width=800px></img>
+
 <h3 id="case_chronograf">Case Chronograf</h3>
 
 Please refer to Getting started of [Chronograf site](https://docs.influxdata.com/chronograf/v1.7/) for how to use Chronograf.  
