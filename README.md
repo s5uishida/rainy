@@ -17,7 +17,7 @@ The following figure is overview of rainy.
 
 <img src="./images/rainy_overview_0.png" title="./images/rainy_overview_0.png" width=800px></img>
 
-The following figure is overview which the monitoring and MQTT broker are running together with rainy on same Raspberry Pi 3B.
+The following figure is overview which the monitoring is running together with rainy on same Raspberry Pi 3B.
 
 <img src="./images/rainy_overview_2.png" title="./images/rainy_overview_2.png" width=800px></img>
 
