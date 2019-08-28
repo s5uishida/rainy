@@ -447,7 +447,7 @@ For reference, there is [toem impulse (Eclipse pulug-in)](https://toem.de/index.
 - start  
   Start rainy as follows.
 ```
-# cd /path/to/rainy/bin
+# cd /path/to/rainy-felix/bin
 # sh rainy-start.sh
 WARNING: An illegal reflective access operation has occurred
 WARNING: Illegal reflective access by org.apache.felix.framework.ext.ClassPathExtenderFactory$DefaultClassLoaderExtender (file:/path/to/rainy-felix/bin/felix.jar) to method java.net.URLClassLoader.addURL(java.net.URL)
