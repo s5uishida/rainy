@@ -90,15 +90,15 @@ rainy supports InfluxDB and MQTT broker as sending data.
 I am using [InfluxDB](https://www.influxdata.com/) on Ubuntu 18.04.
 The installation is as follows from [here](https://portal.influxdata.com/downloads/).
 ```
-# wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.7_amd64.deb
-# dpkg -i influxdb_1.7.7_amd64.deb
+# wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.8_amd64.deb
+# dpkg -i influxdb_1.7.8_amd64.deb
 # systemctl enable influxdb.service
 # systemctl start influxdb.service
 ```
 In addition, the step to install InfluxDB on Raspberry Pi 3B is as follows.
 ```
-# wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.7_armhf.deb
-# dpkg -i influxdb_1.7.7_armhf.deb
+# wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.8_armhf.deb
+# dpkg -i influxdb_1.7.8_armhf.deb
 # systemctl enable influxdb.service
 # systemctl start influxdb.service
 ```
@@ -122,15 +122,15 @@ In addition, the step to install Mosquitto on Raspberry Pi 3B is the same as abo
 
 I am using [Grafana](https://grafana.com/) on Ubuntu 18.04. The installation is as follows from [here](https://grafana.com/grafana/download?platform=linux).
 ```
-# wget https://dl.grafana.com/oss/release/grafana_6.3.3_amd64.deb
-# dpkg -i grafana_6.3.3_amd64.deb
+# wget https://dl.grafana.com/oss/release/grafana_6.3.4_amd64.deb
+# dpkg -i grafana_6.3.4_amd64.deb
 # systemctl enable grafana-server.service
 # systemctl start grafana-server.service
 ```
 In addition, the step to install Grafana on Raspberry Pi 3B is as follows.
 ```
-# wget https://dl.grafana.com/oss/release/grafana_6.3.3_armhf.deb
-# dpkg -i grafana_6.3.3_armhf.deb
+# wget https://dl.grafana.com/oss/release/grafana_6.3.4_armhf.deb
+# dpkg -i grafana_6.3.4_armhf.deb
 # systemctl enable grafana-server.service
 # systemctl start grafana-server.service
 ```
@@ -139,15 +139,15 @@ In addition, the step to install Grafana on Raspberry Pi 3B is as follows.
 
 I am using [Chronograf](https://www.influxdata.com/time-series-platform/chronograf/) on Ubuntu 18.04. The installation is as follows from [here](https://portal.influxdata.com/downloads/).
 ```
-# wget https://dl.influxdata.com/chronograf/releases/chronograf_1.7.12_amd64.deb
-# dpkg -i chronograf_1.7.12_amd64.deb
+# wget https://dl.influxdata.com/chronograf/releases/chronograf_1.7.14_amd64.deb
+# dpkg -i chronograf_1.7.14_amd64.deb
 # systemctl enable chronograf.service
 # systemctl start chronograf.service
 ```
 In addition, the step to install Chronograf on Raspberry Pi 3B is as follows.
 ```
-# wget https://dl.influxdata.com/chronograf/releases/chronograf_1.7.12_armhf.deb
-# dpkg -i chronograf_1.7.12_armhf.deb
+# wget https://dl.influxdata.com/chronograf/releases/chronograf_1.7.14_armhf.deb
+# dpkg -i chronograf_1.7.14_armhf.deb
 # systemctl enable chronograf.service
 # systemctl start chronograf.service
 ```
