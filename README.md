@@ -573,7 +573,7 @@ The following figure is a sample image of a dashboard.
 
 <img src="./images/rainy_grafana_1.png" title="./images/rainy_grafana_1.png" width=800px></img>
 
-The following figure is a sample graph of Magnetometer using the Plotly panel.
+The following figure is a sample graph of Magnetometer using [Plotly](https://grafana.com/grafana/plugins/natel-plotly-panel) panel.
 
 <img src="./images/rainy_grafana_1_1.png" title="./images/rainy_grafana_1_1.png" width=800px></img>
 
