@@ -51,7 +51,7 @@ The following image shows the hardware configuration.
     - [MH-Z19B - mhz19b.properties](#mhz19b_properties)
     - [PPD42NS - ppd42ns.properties](#ppd42ns_properties)
     - [OPC-UA - opcua.properties](#opcua_properties)
-      - [OPC-UA server - conf/opcua/milo-example.properties](#opcua_server_properties)
+      - [OPC-UA server - conf/opcua/milo-public-demo.properties](#opcua_server_properties)
 - [Run rainy](#run_rainy)
   - [Output sensor values to the log file](#output_sensor_value)
   - [Check the database name for each device created in InfluxDB](#check_database)
@@ -394,7 +394,7 @@ In that case, you should specify `/dev/ttyUSB0` for the port name.
 - `keyStorePassword`
 - `certificate`
 
-<h5 id="opcua_server_properties">OPC-UA server - conf/opcua/milo-example.properties</h5>
+<h5 id="opcua_server_properties">OPC-UA server - conf/opcua/milo-public-demo.properties</h5>
 
 The following is an example of [Public Demo Server of Eclipse Milo](https://github.com/eclipse/milo).
 - **`use`**  
