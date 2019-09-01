@@ -582,7 +582,7 @@ The following figure is a sample graph of Magnetometer using [Plotly](https://gr
 
 The following figure is a sample monitoring image with environmental information on the floor map using [ImageIt](https://grafana.com/grafana/plugins/pierosavi-imageit-panel) panel.
 
-<img src="./images/rainy_floor_env_0.png" title="./images/rainy_floor_env_0.png" width=800px></img>
+<img src="./images/rainy_floor_env_1.png" title="./images/rainy_floor_env_1.png" width=800px></img>
 
 <h3 id="case_chronograf">Case Chronograf</h3>
 
