@@ -443,7 +443,7 @@ The following is an example of [Public Demo Server of Eclipse Milo](https://gith
 `conf/opcua` also contains a `milo-example.properties` file.
 This is an example server-properties file of connecting to the server ([milo-example-server](https://github.com/s5uishida/milo-example-server)) where the Milo sample server code is built almost as it is.
   
-For reference, there is [toem impulse (Eclipse pulug-in)](https://toem.de/index.php/projects/impulse) as a tool for easily checking the address space of OPC-UA server.
+For reference, there is [toem impulse OPC/UA Extension (Eclipse pulug-in)](https://toem.de/index.php/projects/impulse-opcua) as a tool for easily checking the address space of OPC-UA server.
 
 <h2 id="run_rainy">Run rainy</h2>
 
