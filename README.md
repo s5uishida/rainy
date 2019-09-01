@@ -438,7 +438,10 @@ The following is an example of [Public Demo Server of Eclipse Milo](https://gith
 	  2,Dynamic,-1 \
 	  0,2295,-1
   ```
-  In the above example, specify `2,Dynamic/RandomInt32` and `2,Dynamic/RandomInt64` uniquely, and search for the NodeID to be monitored from `2,Dynamic` and `0,2295`(VendorServerInfo) at an infinite depth. In this case, only `2,Dynamic,-1` and `0,2295,-1` should be specified, but I wrote it for explanation of the format.  
+  In the above example, specify `2,Dynamic/RandomInt32` and `2,Dynamic/RandomInt64` uniquely, and search for the NodeID to be monitored from `2,Dynamic` and `0,2295`(VendorServerInfo) at an infinite depth. In this case, only `2,Dynamic,-1` and `0,2295,-1` should be specified, but I wrote it for explanation of the format.
+
+`conf/opcua` also contains a `milo-example.properties` file.
+This is an example server-properties file of connecting to the server ([milo-example-server](https://github.com/s5uishida/milo-example-server)) where the Milo sample server code is built almost as it is.
   
 For reference, there is [toem impulse (Eclipse pulug-in)](https://toem.de/index.php/projects/impulse) as a tool for easily checking the address space of OPC-UA server.
 
