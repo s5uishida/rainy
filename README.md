@@ -565,7 +565,7 @@ execute - CREATE DATABASE RP3B_01_GPIO_14
 ```
 These database names are required for the visualization tools Grafana and Chronograf to connect to InfluxDB.
 
-<h2 id="create_dashboards">Create dashboards with visualization tools</h>
+<h2 id="create_dashboards">Create dashboards with visualization tools</h2>
 
 Visualization tools can be connected to InfluxDB to monitor time-series sensor data.
 
