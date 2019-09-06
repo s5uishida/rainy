@@ -46,7 +46,7 @@ The following image shows the hardware configuration.
   - [Setting the connection for sending data](#setting_connection_sending_data)
     - [InfluxDB - influxdb.properties](#influxdb_properties)
     - [MQTT - mqtt.properties](#mqtt_properties)
-  - [Setting sensors](#setting_sensors)
+  - [Setting sensors and protocols](#setting_sensors)
     - [CC2650 - cc2650.properties](#cc2650_properties)
     - [MH-Z19B - mhz19b.properties](#mhz19b_properties)
     - [PPD42NS - ppd42ns.properties](#ppd42ns_properties)
