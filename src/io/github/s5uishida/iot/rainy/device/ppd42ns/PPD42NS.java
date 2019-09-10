@@ -36,7 +36,7 @@ public class PPD42NS implements IDevice {
 	public PPD42NS(String clientID) throws IOException {
 		this.clientID = clientID;
 
-		ppd42ns = PPD42NSDriver.getInstance();
+		ppd42ns = PPD42NSDriver.getInstance(config.getGpioPin());
 		ppd42ns.open();
 
 		if (config.getInfluxDB()) {

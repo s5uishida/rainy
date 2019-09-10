@@ -23,6 +23,10 @@ The following figure is overview which the monitoring is running together with r
 
 The following image shows the hardware configuration.
 
+<img src="./images/rainy_hardware_1.png" title="./images/rainy_hardware_1.png" width=600px></img>
+
+The image of the hardware configuration when using a USB serial adapter for MH-Z19B is as follows.
+
 <img src="./images/rainy_hardware_0.png" title="./images/rainy_hardware_0.png" width=600px></img>
 
 ---
@@ -338,9 +342,12 @@ After launching `hcitool` command, press the power button of CC2650 and the scan
 
 <h4 id="mhz19b_properties">MH-Z19B - mhz19b.properties</h4>
 
-When using PPD42NS, use GPIO of Raspberry Pi 3B for PPD42NS.
-Please use **DSD TECH SH-U09C USB to TTL Serial Adapter with FTDI FT232RL Chip** etc for serial communication of MH-Z19B.
-In that case, you should specify `/dev/ttyUSB0` for the port name.
+[Here](https://github.com/s5uishida/mh-z19b-driver) is also helpful.
+
+**Note. When using with PPD42NS, please connect pin#4 (Yellow) of PPD42NS to pin#19 (GPIO10) of Raspberry Pi 3B.
+Or when connecting pin#4 (Yellow) of PPD42NS to pin#8 (GPIO14) of Raspberry Pi 3B, connect MH-Z19B to Raspberry Pi 3B via USB serial adapter
+(etc. DSD TECH SH-U09C USB to TTL Serial Adapter with FTDI FT232RL Chip).
+When connecting MH-Z19B to a USB serial adapter, you should specify `/dev/ttyUSB0` for the port name.**
 - **`portName`**  
   Set the serial port name. default is `/dev/ttyAMA0`.
 - **`influxDB`**  
@@ -360,6 +367,10 @@ In that case, you should specify `/dev/ttyUSB0` for the port name.
 
 <h4 id="ppd42ns_properties">PPD42NS - ppd42ns.properties</h4>
 
+[Here](https://github.com/s5uishida/ppd42ns-driver) is also helpful.
+
+- **`gpioPin`**  
+  Set to `GPIO_10` or `GPIO_14`. default is `GPIO_10`.
 - **`influxDB`**  
   Set to `true` when sending data to InfluxDB. default is `false`.
 - **`mqtt`**  
@@ -501,10 +512,10 @@ START LEVEL 1
 [  38] [Active     ] [    1] Paho MQTT Client (1.2.1)
 [  39] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
 [  40] [Active     ] [    1] Pi4J :: Java Library (Core) (1.2)
-[  41] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.1)
+[  41] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.3)
 [  42] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.6)
 [  43] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
-[  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.10)
+[  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.11)
 [  45] [Active     ] [    1] sdk-client (0.3.3)
 [  46] [Active     ] [    1] sdk-core (0.3.3)
 [  47] [Active     ] [    1] slf4j-api (1.7.26)
@@ -531,7 +542,7 @@ io.github.s5uishida.level=FINE
 ```
 The sample of the output log is as follows.
 ```
-[/dev/ttyUSB0] co2:850 
+[/dev/ttyAMA0] co2:850 
 [hci0] B0:B4:48:B9:92:86 obj:28.28125 amb:32.28125 
 [hci0] B0:B4:48:B9:92:86 humidity:59.362793 
 [hci0] B0:B4:48:B9:92:86 pressure:1012.27 
@@ -545,15 +556,15 @@ The sample of the output log is as follows.
 [hci0] B0:B4:48:B9:92:86 mag[x]:127.0 
 [hci0] B0:B4:48:B9:92:86 mag[y]:420.0 
 [hci0] B0:B4:48:B9:92:86 mag[z]:302.0
-[GPIO_14] pcs:1373.6702 ugm3:2.1420693
+[GPIO_10] pcs:1373.6702 ugm3:2.1420693
 ```
 In order to reduce writing to the SD card, it is usually recommended to set it to `INFO`.
 
 <h3 id="check_database">Check the database name for each device created in InfluxDB</h3>
 
-Check from the log file `logs/rainy.log.0`. In the following example, databases `RP3B_01__dev_ttyUSB0` for MH-Z19B, `B0_B4_48_B9_92_86` and `B0_B4_48_ED_B6_04` for CC2650, `milo_digitalpetri_com_62541_milo` for Public Demo Server of Eclipse Milo and `RP3B_01_GPIO_14` for PPD42NS were created. Note that InfluxDB will not do anything if the database already exists.
+Check from the log file `logs/rainy.log.0`. In the following example, databases `RP3B_01__dev_ttyAMA0` for MH-Z19B, `B0_B4_48_B9_92_86` and `B0_B4_48_ED_B6_04` for CC2650, `milo_digitalpetri_com_62541_milo` for Public Demo Server of Eclipse Milo and `RP3B_01_GPIO_10` for PPD42NS were created. Note that InfluxDB will not do anything if the database already exists.
 ```
-execute - CREATE DATABASE RP3B_01__dev_ttyUSB0
+execute - CREATE DATABASE RP3B_01__dev_ttyAMA0
 ...
 execute - CREATE DATABASE B0_B4_48_B9_92_86
 ...
@@ -561,7 +572,7 @@ execute - CREATE DATABASE B0_B4_48_ED_B6_04
 ...
 execute - CREATE DATABASE milo_digitalpetri_com_62541_milo
 ...
-execute - CREATE DATABASE RP3B_01_GPIO_14
+execute - CREATE DATABASE RP3B_01_GPIO_10
 ```
 These database names are required for the visualization tools Grafana and Chronograf to connect to InfluxDB.
 
@@ -634,10 +645,10 @@ The following bundles I created follow the MIT license.
 - [bluetooth-scanner 0.1.1](https://github.com/s5uishida/bluetooth-scanner)
 - [cc2650-driver 0.1.0](https://github.com/s5uishida/cc2650-driver)
 - [mh-z19b-driver 0.1.1](https://github.com/s5uishida/mh-z19b-driver)
-- [ppd42ns-driver 0.1.1](https://github.com/s5uishida/ppd42ns-driver)
+- [ppd42ns-driver 0.1.3](https://github.com/s5uishida/ppd42ns-driver)
 - [rainy-activator 0.1.6](https://github.com/s5uishida/rainy-activator)
 - [rainy-opcua 0.1.4](https://github.com/s5uishida/rainy-opcua)
-- [rainy 0.1.10](https://github.com/s5uishida/rainy)
+- [rainy 0.1.11](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: rainy - a tiny tool for iot data collection and monitoring
 Bundle-SymbolicName: rainy
-Bundle-Version: 0.1.10
+Bundle-Version: 0.1.11
 Automatic-Module-Name: rainy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Shigeru Ishida (s5uishida)
@@ -10,6 +10,7 @@ Import-Package: com.fasterxml.jackson.core;version="[2.9.9,3.0.0)",
  com.fasterxml.jackson.databind;version="[2.9.9,3.0.0)",
  com.github.hypfvieh.bluetooth;version="0.1.2",
  com.github.hypfvieh.bluetooth.wrapper;version="0.1.2",
+ com.pi4j.io.gpio;version="1.2.0",
  io.github.s5uishida.iot.bluetooth.scanner;version="[0.1.0,0.2.0]",
  io.github.s5uishida.iot.device.mhz19b.driver;version="[0.1.0,0.2.0]",
  io.github.s5uishida.iot.device.ppd42ns.driver;version="[0.1.0,0.2.0)",
@@ -25,15 +26,15 @@ Import-Package: com.fasterxml.jackson.core;version="[2.9.9,3.0.0)",
  org.influxdb;version="[2.15.0,3.0.0)",
  org.influxdb.dto;version="[2.15.0,3.0.0)",
  org.slf4j;version="[1.7.25,1.8.0)"
-Export-Package: io.github.s5uishida.iot.rainy.data;version="0.1.10",
- io.github.s5uishida.iot.rainy.device;version="0.1.10",
- io.github.s5uishida.iot.rainy.device.cc2650;version="0.1.10",
- io.github.s5uishida.iot.rainy.device.cc2650.data;version="0.1.10",
- io.github.s5uishida.iot.rainy.device.mhz19b;version="0.1.10",
- io.github.s5uishida.iot.rainy.device.mhz19b.data;version="0.1.10",
- io.github.s5uishida.iot.rainy.device.ppd42ns;version="0.1.10",
- io.github.s5uishida.iot.rainy.device.ppd42ns.data;version="0.1.10",
- io.github.s5uishida.iot.rainy.sender;version="0.1.10",
- io.github.s5uishida.iot.rainy.sender.influxdb;version="0.1.10",
- io.github.s5uishida.iot.rainy.sender.mqtt;version="0.1.10",
- io.github.s5uishida.iot.rainy.util;version="0.1.10"
+Export-Package: io.github.s5uishida.iot.rainy.data;version="0.1.11",
+ io.github.s5uishida.iot.rainy.device;version="0.1.11",
+ io.github.s5uishida.iot.rainy.device.cc2650;version="0.1.11",
+ io.github.s5uishida.iot.rainy.device.cc2650.data;version="0.1.11",
+ io.github.s5uishida.iot.rainy.device.mhz19b;version="0.1.11",
+ io.github.s5uishida.iot.rainy.device.mhz19b.data;version="0.1.11",
+ io.github.s5uishida.iot.rainy.device.ppd42ns;version="0.1.11",
+ io.github.s5uishida.iot.rainy.device.ppd42ns.data;version="0.1.11",
+ io.github.s5uishida.iot.rainy.sender;version="0.1.11",
+ io.github.s5uishida.iot.rainy.sender.influxdb;version="0.1.11",
+ io.github.s5uishida.iot.rainy.sender.mqtt;version="0.1.11",
+ io.github.s5uishida.iot.rainy.util;version="0.1.11"

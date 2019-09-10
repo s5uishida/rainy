@@ -1,5 +1,9 @@
 package io.github.s5uishida.iot.rainy.device.ppd42ns;
 
+import com.pi4j.io.gpio.Pin;
+import com.pi4j.io.gpio.RaspiPin;
+
+import io.github.s5uishida.iot.device.ppd42ns.driver.PPD42NSDriver;
 import io.github.s5uishida.iot.rainy.util.AbstractConfig;
 import io.github.s5uishida.iot.rainy.util.ConfigParams;
 
@@ -8,6 +12,7 @@ import io.github.s5uishida.iot.rainy.util.ConfigParams;
  *
  */
 public class PPD42NSConfig extends AbstractConfig {
+	public static final String GPIO_PIN_KEY								= "gpioPin";
 	public static final String INFLUXDB_KEY								= "influxDB";
 	public static final String MQTT_KEY									= "mqtt";
 	public static final String PRETTY_PRINTING_KEY						= "prettyPrinting";
@@ -24,6 +29,17 @@ public class PPD42NSConfig extends AbstractConfig {
 			config = new PPD42NSConfig(ConfigParams.CONFIG_DIR_PARAM, ConfigParams.PPD42NS_CONFIG_FILE);
 		}
 		return config;
+	}
+
+	public Pin getGpioPin() {
+		String gpioPin = getConfig(GPIO_PIN_KEY, PPD42NSDriver.getName(RaspiPin.GPIO_10));
+		if (gpioPin.equals(PPD42NSDriver.getName(RaspiPin.GPIO_10))) {
+			return RaspiPin.GPIO_10;
+		} else if (gpioPin.equals(PPD42NSDriver.getName(RaspiPin.GPIO_14))) {
+			return RaspiPin.GPIO_14;
+		} else {
+			return RaspiPin.GPIO_10;
+		}
 	}
 
 	public boolean getInfluxDB() {
