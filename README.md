@@ -515,7 +515,7 @@ START LEVEL 1
 [  41] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.3)
 [  42] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.6)
 [  43] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
-[  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.11)
+[  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.12)
 [  45] [Active     ] [    1] sdk-client (0.3.3)
 [  46] [Active     ] [    1] sdk-core (0.3.3)
 [  47] [Active     ] [    1] slf4j-api (1.7.26)
@@ -648,7 +648,7 @@ The following bundles I created follow the MIT license.
 - [ppd42ns-driver 0.1.3](https://github.com/s5uishida/ppd42ns-driver)
 - [rainy-activator 0.1.6](https://github.com/s5uishida/rainy-activator)
 - [rainy-opcua 0.1.4](https://github.com/s5uishida/rainy-opcua)
-- [rainy 0.1.11](https://github.com/s5uishida/rainy)
+- [rainy 0.1.12](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
