@@ -1,5 +1,7 @@
 package io.github.s5uishida.iot.rainy.device.ppd42ns;
 
+import java.io.IOException;
+
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;
 
@@ -31,14 +33,16 @@ public class PPD42NSConfig extends AbstractConfig {
 		return config;
 	}
 
-	public Pin getGpioPin() {
+	public Pin getGpioPin() throws IOException {
 		String gpioPin = getConfig(GPIO_PIN_KEY, PPD42NSDriver.getName(RaspiPin.GPIO_10));
 		if (gpioPin.equals(PPD42NSDriver.getName(RaspiPin.GPIO_10))) {
 			return RaspiPin.GPIO_10;
 		} else if (gpioPin.equals(PPD42NSDriver.getName(RaspiPin.GPIO_14))) {
 			return RaspiPin.GPIO_14;
 		} else {
-			return RaspiPin.GPIO_10;
+			throw new IOException("The set " + gpioPin + " is not " +
+					PPD42NSDriver.getName(RaspiPin.GPIO_10) + " or " +
+					PPD42NSDriver.getName(RaspiPin.GPIO_14) + ".");
 		}
 	}
 
