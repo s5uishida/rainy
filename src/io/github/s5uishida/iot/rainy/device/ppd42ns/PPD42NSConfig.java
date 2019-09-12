@@ -37,11 +37,14 @@ public class PPD42NSConfig extends AbstractConfig {
 		String gpioPin = getConfig(GPIO_PIN_KEY, PPD42NSDriver.getName(RaspiPin.GPIO_10));
 		if (gpioPin.equals(PPD42NSDriver.getName(RaspiPin.GPIO_10))) {
 			return RaspiPin.GPIO_10;
+		} else if (gpioPin.equals(PPD42NSDriver.getName(RaspiPin.GPIO_20))) {
+			return RaspiPin.GPIO_20;
 		} else if (gpioPin.equals(PPD42NSDriver.getName(RaspiPin.GPIO_14))) {
 			return RaspiPin.GPIO_14;
 		} else {
 			throw new IOException("The set " + gpioPin + " is not " +
-					PPD42NSDriver.getName(RaspiPin.GPIO_10) + " or " +
+					PPD42NSDriver.getName(RaspiPin.GPIO_10) + ", " +
+					PPD42NSDriver.getName(RaspiPin.GPIO_20) + " or " +
 					PPD42NSDriver.getName(RaspiPin.GPIO_14) + ".");
 		}
 	}

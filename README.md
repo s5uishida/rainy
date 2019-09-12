@@ -344,7 +344,7 @@ After launching `hcitool` command, press the power button of CC2650 and the scan
 
 [Here](https://github.com/s5uishida/mh-z19b-driver) is also helpful.
 
-**Note. When using with PPD42NS, please connect pin#4 (Yellow) of PPD42NS to pin#19 (GPIO10) of Raspberry Pi 3B.
+**Note. When using with PPD42NS, please connect pin#4 (Yellow) of PPD42NS to pin#19 (GPIO10) or pin#38 (GPIO20) of Raspberry Pi 3B.
 Or when connecting pin#4 (Yellow) of PPD42NS to pin#8 (GPIO14) of Raspberry Pi 3B, connect MH-Z19B to Raspberry Pi 3B via USB serial adapter
 (etc. DSD TECH SH-U09C USB to TTL Serial Adapter with FTDI FT232RL Chip).
 When connecting MH-Z19B to a USB serial adapter, you should specify `/dev/ttyUSB0` for the port name.**
@@ -370,7 +370,7 @@ When connecting MH-Z19B to a USB serial adapter, you should specify `/dev/ttyUSB
 [Here](https://github.com/s5uishida/ppd42ns-driver) is also helpful.
 
 - **`gpioPin`**  
-  Set to `GPIO_10` or `GPIO_14`. default is `GPIO_10`.
+  Set to `GPIO_10`, `GPIO_20` or `GPIO_14`. default is `GPIO_10`.
 - **`influxDB`**  
   Set to `true` when sending data to InfluxDB. default is `false`.
 - **`mqtt`**  
@@ -512,10 +512,10 @@ START LEVEL 1
 [  38] [Active     ] [    1] Paho MQTT Client (1.2.1)
 [  39] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
 [  40] [Active     ] [    1] Pi4J :: Java Library (Core) (1.2)
-[  41] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.3)
+[  41] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.4)
 [  42] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.6)
 [  43] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
-[  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.12)
+[  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.13)
 [  45] [Active     ] [    1] sdk-client (0.3.3)
 [  46] [Active     ] [    1] sdk-core (0.3.3)
 [  47] [Active     ] [    1] slf4j-api (1.7.26)
@@ -645,10 +645,10 @@ The following bundles I created follow the MIT license.
 - [bluetooth-scanner 0.1.1](https://github.com/s5uishida/bluetooth-scanner)
 - [cc2650-driver 0.1.0](https://github.com/s5uishida/cc2650-driver)
 - [mh-z19b-driver 0.1.1](https://github.com/s5uishida/mh-z19b-driver)
-- [ppd42ns-driver 0.1.3](https://github.com/s5uishida/ppd42ns-driver)
+- [ppd42ns-driver 0.1.4](https://github.com/s5uishida/ppd42ns-driver)
 - [rainy-activator 0.1.6](https://github.com/s5uishida/rainy-activator)
 - [rainy-opcua 0.1.4](https://github.com/s5uishida/rainy-opcua)
-- [rainy 0.1.12](https://github.com/s5uishida/rainy)
+- [rainy 0.1.13](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
