@@ -492,7 +492,7 @@ START LEVEL 1
 [  18] [Active     ] [    1] JavaBeans Activation Framework (1.2.0)
 [  19] [Active     ] [    1] jaxb-api (2.4.0.b1808300359)
 [  20] [Active     ] [    1] file:/home/pi/rainy-felix/bundle/jaxb-runtime-2.4.0-b180830.0438.jar
-[  21] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.1)
+[  21] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.2)
 [  22] [Active     ] [    1] A modern JSON library for Kotlin and Java (1.7.0)
 [  23] [Active     ] [    1] MessagePack serializer implementation for Java (0.8.17)
 [  24] [Active     ] [    1] Netty/Buffer (4.1.38.Final)
@@ -512,10 +512,10 @@ START LEVEL 1
 [  38] [Active     ] [    1] Paho MQTT Client (1.2.1)
 [  39] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
 [  40] [Active     ] [    1] Pi4J :: Java Library (Core) (1.2)
-[  41] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.4)
+[  41] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.5)
 [  42] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.6)
 [  43] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
-[  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.13)
+[  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.14)
 [  45] [Active     ] [    1] sdk-client (0.3.3)
 [  46] [Active     ] [    1] sdk-core (0.3.3)
 [  47] [Active     ] [    1] slf4j-api (1.7.26)
@@ -644,11 +644,11 @@ Client mosqsub|2095-u1804 received PUBLISH (d0, q0, r0, m0, 'rainy/B0_B4_48_ED_B
 The following bundles I created follow the MIT license.
 - [bluetooth-scanner 0.1.1](https://github.com/s5uishida/bluetooth-scanner)
 - [cc2650-driver 0.1.0](https://github.com/s5uishida/cc2650-driver)
-- [mh-z19b-driver 0.1.1](https://github.com/s5uishida/mh-z19b-driver)
-- [ppd42ns-driver 0.1.4](https://github.com/s5uishida/ppd42ns-driver)
+- [mh-z19b-driver 0.1.2](https://github.com/s5uishida/mh-z19b-driver)
+- [ppd42ns-driver 0.1.5](https://github.com/s5uishida/ppd42ns-driver)
 - [rainy-activator 0.1.6](https://github.com/s5uishida/rainy-activator)
 - [rainy-opcua 0.1.4](https://github.com/s5uishida/rainy-opcua)
-- [rainy 0.1.13](https://github.com/s5uishida/rainy)
+- [rainy 0.1.14](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
