@@ -9,6 +9,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pi4j.io.gpio.Pin;
+
 import io.github.s5uishida.iot.device.ppd42ns.driver.PPD42NSDriver;
 import io.github.s5uishida.iot.device.ppd42ns.driver.PPD42NSObservationData;
 import io.github.s5uishida.iot.rainy.device.IDevice;
@@ -27,17 +29,13 @@ public class PPD42NS implements IDevice {
 	private static final PPD42NSConfig config = PPD42NSConfig.getInstance();
 
 	private final String clientID;
-	private final PPD42NSDriver ppd42ns;
+	private final List<PPD42NSDriver> ppd42nsList = new ArrayList<PPD42NSDriver>();
 	private final List<IDataSender> senders = new ArrayList<IDataSender>();
-	private final String crontab;
-
-	private Scheduler ppd42nsReadScheduler;
+	private final String crontab = config.getReadCrontab();
+	private final Scheduler ppd42nsReadScheduler = new Scheduler();
 
 	public PPD42NS(String clientID) throws IOException {
 		this.clientID = clientID;
-
-		ppd42ns = PPD42NSDriver.getInstance(config.getGpioPin());
-		ppd42ns.open();
 
 		if (config.getInfluxDB()) {
 			senders.add(new PPD42NSInfluxDBSender());
@@ -48,9 +46,12 @@ public class PPD42NS implements IDevice {
 			LOG.info("registered sender - {}", PPD42NSMqttSender.class.getSimpleName());
 		}
 
-		ppd42nsReadScheduler = new Scheduler();
-		crontab = config.getReadCrontab();
-		ppd42nsReadScheduler.schedule(crontab, new PPD42NSReadScheduledTask(ppd42ns, senders, this.clientID));
+		for (Pin gpioPin : config.getGpioPin()) {
+			PPD42NSDriver ppd42ns = PPD42NSDriver.getInstance(gpioPin);
+			ppd42nsList.add(ppd42ns);
+			ppd42nsReadScheduler.schedule(crontab, new PPD42NSReadScheduledTask(ppd42ns, senders, this.clientID));
+		}
+
 		ppd42nsReadScheduler.setDaemon(true);
 		LOG.info("crontab of direct reading - {}", crontab);
 	}
@@ -67,12 +68,18 @@ public class PPD42NS implements IDevice {
 				LOG.warn("caught - {}", e.toString());
 			}
 		}
+		for (PPD42NSDriver ppd42ns : ppd42nsList) {
+			ppd42ns.open();
+		}
 		ppd42nsReadScheduler.start();
 		LOG.info("sensing PPD42NS started.");
 	}
 
 	public void stop() {
 		ppd42nsReadScheduler.stop();
+		for (PPD42NSDriver ppd42ns : ppd42nsList) {
+			ppd42ns.close();
+		}
 		for (IDataSender sender : senders) {
 			try {
 				sender.disconnect();
@@ -80,7 +87,6 @@ public class PPD42NS implements IDevice {
 				LOG.warn("caught - {}", e.toString());
 			}
 		}
-		ppd42ns.close();
 		LOG.info("sensing PPD42NS stopped.");
 	}
 
@@ -113,8 +119,6 @@ class PPD42NSReadScheduledTask implements Runnable {
 		Date date = new Date();
 		String dateString = sdf.format(date);
 
-		String logPrefix = "[" + ppd42ns.getName() + "] ";
-
 		PPD42NSData ppd42nsData = new PPD42NSData();
 
 		ppd42nsData.clientID = clientID;
@@ -124,7 +128,7 @@ class PPD42NSReadScheduledTask implements Runnable {
 
 		PPD42NSObservationData data = ppd42ns.read();
 		if (data == null) {
-			LOG.info(logPrefix + "read timeout.");
+			LOG.info(ppd42ns.getLogPrefix() + "read timeout.");
 			return;
 		}
 
@@ -134,7 +138,7 @@ class PPD42NSReadScheduledTask implements Runnable {
 		ppd42nsData.ugm3 = new Ugm3();
 		ppd42nsData.ugm3.value = data.getUgm3();
 
-		LOG.debug(logPrefix + "pcs:{} ugm3:{}", data.getPcs(), data.getUgm3());
+		LOG.debug(ppd42ns.getLogPrefix() + "pcs:{} ugm3:{}", data.getPcs(), data.getUgm3());
 
 		for (IDataSender sender : senders) {
 			try {
@@ -142,7 +146,7 @@ class PPD42NSReadScheduledTask implements Runnable {
 					sender.send(ppd42nsData);
 				}
 			} catch (IOException e) {
-				LOG.warn(logPrefix + "{} caught - {}", sender.getClass().getSimpleName(), e.toString());
+				LOG.warn(ppd42ns.getLogPrefix() + "{} caught - {}", sender.getClass().getSimpleName(), e.toString());
 			}
 		}
 	}

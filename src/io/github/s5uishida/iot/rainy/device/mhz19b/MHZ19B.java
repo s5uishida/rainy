@@ -25,18 +25,13 @@ public class MHZ19B implements IDevice {
 	private static final MHZ19BConfig config = MHZ19BConfig.getInstance();
 
 	private final String clientID;
-	private final MHZ19BDriver mhz19b;
+	private final List<MHZ19BDriver> mhz19bList = new ArrayList<MHZ19BDriver>();
 	private final List<IDataSender> senders = new ArrayList<IDataSender>();
-	private final String crontab;
+	private final String crontab = config.getReadCrontab();
+	private final Scheduler mhz19bReadScheduler = new Scheduler();
 
-	private Scheduler mhz19bReadScheduler;
-
-	public MHZ19B(String clientID) throws IOException, InterruptedException {
+	public MHZ19B(String clientID) throws IOException {
 		this.clientID = clientID;
-
-		mhz19b = MHZ19BDriver.getInstance(config.getPortName());
-		mhz19b.open();
-		mhz19b.setDetectionRange5000();
 
 		if (config.getInfluxDB()) {
 			senders.add(new MHZ19BInfluxDBSender());
@@ -47,9 +42,12 @@ public class MHZ19B implements IDevice {
 			LOG.info("registered sender - {}", MHZ19BMqttSender.class.getSimpleName());
 		}
 
-		mhz19bReadScheduler = new Scheduler();
-		crontab = config.getReadCrontab();
-		mhz19bReadScheduler.schedule(crontab, new MHZ19BReadScheduledTask(mhz19b, senders, this.clientID));
+		for (String portName : config.getPortName()) {
+			MHZ19BDriver mhz19b = MHZ19BDriver.getInstance(portName);
+			mhz19bList.add(mhz19b);
+		}
+
+		mhz19bReadScheduler.schedule(crontab, new MHZ19BReadScheduledTask(mhz19bList, senders, this.clientID));
 		mhz19bReadScheduler.setDaemon(true);
 		LOG.info("crontab of direct reading - {}", crontab);
 	}
@@ -66,12 +64,27 @@ public class MHZ19B implements IDevice {
 				LOG.warn("caught - {}", e.toString());
 			}
 		}
+		for (MHZ19BDriver mhz19b : mhz19bList) {
+			try {
+				mhz19b.open();
+				mhz19b.setDetectionRange5000();
+			} catch (IOException e) {
+				LOG.warn("caught - {}", e.toString());
+			}
+		}
 		mhz19bReadScheduler.start();
 		LOG.info("sensing MH-Z19B started.");
 	}
 
 	public void stop() {
 		mhz19bReadScheduler.stop();
+		for (MHZ19BDriver mhz19b : mhz19bList) {
+			try {
+				mhz19b.close();
+			} catch (IOException e) {
+				LOG.warn("caught - {}", e.toString());
+			}
+		}
 		for (IDataSender sender : senders) {
 			try {
 				sender.disconnect();
@@ -79,12 +92,7 @@ public class MHZ19B implements IDevice {
 				LOG.warn("caught - {}", e.toString());
 			}
 		}
-		try {
-			mhz19b.close();
-			LOG.info("sensing MH-Z19B stopped.");
-		} catch (IOException e) {
-			LOG.warn("caught - {}", e.toString());
-		}
+		LOG.info("sensing MH-Z19B stopped.");
 	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {
@@ -101,49 +109,53 @@ class MHZ19BReadScheduledTask implements Runnable {
 	private static final String dateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
 	private static final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 
-	private final MHZ19BDriver mhz19b;
+	private final List<MHZ19BDriver> mhz19bList;
 	private final List<IDataSender> senders;
 	private final String clientID;
 
-	public MHZ19BReadScheduledTask(MHZ19BDriver mhz19b, List<IDataSender> senders, String clientID) {
-		this.mhz19b = mhz19b;
+	public MHZ19BReadScheduledTask(List<MHZ19BDriver> mhz19bList, List<IDataSender> senders, String clientID) {
+		this.mhz19bList = mhz19bList;
 		this.senders = senders;
 		this.clientID = clientID;
 	}
 
 	@Override
 	public void run() {
-		Date date = new Date();
-		String dateString = sdf.format(date);
-
-		String logPrefix = "[" + mhz19b.getPortName() + "] ";
-
-		MHZ19BData mhz19bData = new MHZ19BData();
-
-		mhz19bData.clientID = clientID;
-		mhz19bData.deviceID = mhz19b.getPortName();
-		mhz19bData.samplingDate = dateString;
-		mhz19bData.samplingTimeMillis = date.getTime();
-
-		try {
-			int value = mhz19b.getGasConcentration();
-
-			mhz19bData.co2GasConcentration = new Co2GasConcentration();
-			mhz19bData.co2GasConcentration.value = value;
-
-			LOG.debug(logPrefix + "co2:{}", value);
-
-			for (IDataSender sender : senders) {
-				try {
-					if (sender.isConnected()) {
-						sender.send(mhz19bData);
-					}
-				} catch (IOException e) {
-					LOG.warn(logPrefix + "{} caught - {}", sender.getClass().getSimpleName(), e.toString());
-				}
+		for (MHZ19BDriver mhz19b : mhz19bList) {
+			if (!mhz19b.isOpened() ) {
+				continue;
 			}
-		} catch (IOException e) {
-			LOG.warn(logPrefix + "caught - {}", e.toString());
+
+			Date date = new Date();
+			String dateString = sdf.format(date);
+
+			MHZ19BData mhz19bData = new MHZ19BData();
+
+			mhz19bData.clientID = clientID;
+			mhz19bData.deviceID = mhz19b.getPortName();
+			mhz19bData.samplingDate = dateString;
+			mhz19bData.samplingTimeMillis = date.getTime();
+
+			try {
+				int value = mhz19b.getGasConcentration();
+
+				mhz19bData.co2GasConcentration = new Co2GasConcentration();
+				mhz19bData.co2GasConcentration.value = value;
+
+				LOG.debug(mhz19b.getLogPrefix() + "co2:{}", value);
+
+				for (IDataSender sender : senders) {
+					try {
+						if (sender.isConnected()) {
+							sender.send(mhz19bData);
+						}
+					} catch (IOException e) {
+						LOG.warn(mhz19b.getLogPrefix() + "{} caught - {}", sender.getClass().getSimpleName(), e.toString());
+					}
+				}
+			} catch (IOException e) {
+				LOG.warn(mhz19b.getLogPrefix() + "caught - {}", e.toString());
+			}
 		}
 	}
 }

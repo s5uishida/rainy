@@ -1,5 +1,9 @@
 package io.github.s5uishida.iot.rainy.device.mhz19b;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import io.github.s5uishida.iot.rainy.util.AbstractConfig;
 import io.github.s5uishida.iot.rainy.util.ConfigParams;
 
@@ -15,6 +19,7 @@ public class MHZ19BConfig extends AbstractConfig {
 	public static final String READ_CRONTAB_KEY							= "readCrontab";
 
 	private static MHZ19BConfig config;
+	private static List<String> portNameList = new ArrayList<String>();
 
 	private MHZ19BConfig(String dirParam, String fileName) {
 		super(dirParam, fileName);
@@ -23,12 +28,18 @@ public class MHZ19BConfig extends AbstractConfig {
 	public static MHZ19BConfig getInstance() {
 		if (config == null) {
 			config = new MHZ19BConfig(ConfigParams.CONFIG_DIR_PARAM, ConfigParams.MHZ19B_CONFIG_FILE);
+			List<String> portNames = Arrays.asList(config.getConfig(PORT_NAME_KEY, "/dev/ttyAMA0").split("\\s+"));
+			for (String portName : portNames) {
+				if (!portNameList.contains(portName)) {
+					portNameList.add(portName);
+				}
+			}
 		}
 		return config;
 	}
 
-	public String getPortName() {
-		return getConfig(PORT_NAME_KEY, "/dev/ttyAMA0");
+	public List<String> getPortName() {
+		return portNameList;
 	}
 
 	public boolean getInfluxDB() {
