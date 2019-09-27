@@ -1,7 +1,7 @@
 # rainy - a tiny tool for iot data collection and monitoring
 rainy is a tiny tool for IoT data collection and monitoring.
-rainy supports [TI SensorTag CC2650](http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide), [MH-Z19B](https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf) and [PPD42NS](http://wiki.seeedstudio.com/Grove-Dust_Sensor/) as IoT devices, communicates with CC2650 by [bluez-dbus](https://github.com/hypfvieh/bluez-dbus), and communicates with MH-Z19B by [jSerialComm](https://github.com/Fazecast/jSerialComm),
-and communicates with PPD42NS by [Pi4J](https://pi4j.com/) and acquires each data.
+rainy supports [TI SensorTag CC2650](http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide), [MH-Z19B](https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf), [PPD42NS](http://wiki.seeedstudio.com/Grove-Dust_Sensor/), [RCWL-0516](https://github.com/s5uishida/rcwl-0516-driver) and [HC-SR501](https://github.com/s5uishida/hc-sr501-driver) as IoT devices, communicates with CC2650 by [bluez-dbus](https://github.com/hypfvieh/bluez-dbus), and communicates with MH-Z19B by [jSerialComm](https://github.com/Fazecast/jSerialComm),
+and communicates with PPD42NS/RCWL-0516/HC-SR501 by [Pi4J](https://pi4j.com/) and acquires each data.
 And it corresponds to OPC-UA which is a protocol of industrial automation.
 I use [Eclipse Milo](https://github.com/eclipse/milo) for the OPC-UA Protocol Stack and SDK (Java).
 These data can be sent to [InfluxDB](https://www.influxdata.com/) (Time Series Database) for visualization, or sent to MQTT Broker to be used as a data source for any other purposes.
@@ -54,6 +54,8 @@ The image of the hardware configuration when using a USB serial adapter for MH-Z
     - [CC2650 - cc2650.properties](#cc2650_properties)
     - [MH-Z19B - mhz19b.properties](#mhz19b_properties)
     - [PPD42NS - ppd42ns.properties](#ppd42ns_properties)
+    - [RCWL-0516 - rcwl0516.properties](#rcwl0516_properties)
+    - [HC-SR501 - hcsr501.properties](#hcsr501_properties)
     - [OPC-UA - opcua.properties](#opcua_properties)
       - [OPC-UA server - conf/opcua/milo-public-demo.properties](#opcua_server_properties)
 - [Run rainy](#run_rainy)
@@ -235,9 +237,14 @@ TLS_PRIVATE_KEY=/etc/rainy/cert.key
   Set to `true` when using MH-Z19B. default is `false`.
 - **`ppd42ns`**  
   Set to `true` when using PPD42NS. default is `false`.  
-  **Note. This tool uses Pi4J for PPD42NS, so PPD42NS can only be used with Raspberry Pi series (arm). Therefore, the PPD42NS feature of this tool does not work on amd64 Linux machines, so set it to `false` on amd64 Linux machines.**  
+- **`rcwl0516`**  
+  Set to `true` when using RCWL-0516. default is `false`.  
+- **`hcsr501`**  
+  Set to `true` when using HC-SR501. default is `false`.  
 - **`opcua`**  
   Set to `true` when using OPC-UA. default is `false`.
+
+**Note. This tool uses Pi4J for PPD42NS/RCWL-0516/HC-SR501, so PPD42NS/RCWL-0516/HC-SR501 can only be used with Raspberry Pi series (arm). Therefore, their feature of this tool does not work on amd64 Linux machines, so set them to `false` on amd64 Linux machines.**  
 
 <h3 id="setting_connection_sending_data">Setting the connection for sending data</h3>
   
@@ -386,6 +393,44 @@ When connecting MH-Z19B to a USB serial adapter, you should specify `/dev/ttyUSB
 - `readCrontab`  
   Set the schedule for sensing data in crontab format. default is every minute.
 
+<h4 id="rcwl0516_properties">RCWL-0516 - rcwl0516.properties</h4>
+
+[Here](https://github.com/s5uishida/rcwl-0516-driver) is also helpful.
+
+- **`gpioPin`**  
+  Set to `GPIO_18`, `GPIO_19`, `GPIO_12` or `GPIO_13`. default is `GPIO_18`.
+- **`influxDB`**  
+  Set to `true` when sending data to InfluxDB. default is `false`.
+- **`mqtt`**  
+  Set to `true` when sending data to MQTT broker. default is `false`.
+- `prettyPrinting`  
+  Set to `true` when indenting the log output of JSON format data. default is `false`.
+  It is also necessary to change the following log level of `conf/logging.properties`.  
+  ```
+  #io.github.s5uishida.level=INFO
+  -->
+  io.github.s5uishida.level=FINE
+  ```
+
+<h4 id="hcsr501_properties">HC-SR501 - hcsr501.properties</h4>
+
+[Here](https://github.com/s5uishida/hc-sr501-driver) is also helpful.
+
+- **`gpioPin`**  
+  Set to `GPIO_18`, `GPIO_19`, `GPIO_12` or `GPIO_13`. default is `GPIO_12`.
+- **`influxDB`**  
+  Set to `true` when sending data to InfluxDB. default is `false`.
+- **`mqtt`**  
+  Set to `true` when sending data to MQTT broker. default is `false`.
+- `prettyPrinting`  
+  Set to `true` when indenting the log output of JSON format data. default is `false`.
+  It is also necessary to change the following log level of `conf/logging.properties`.  
+  ```
+  #io.github.s5uishida.level=INFO
+  -->
+  io.github.s5uishida.level=FINE
+  ```
+
 <h4 id="opcua_properties">OPC-UA - opcua.properties</h4>
 
 - **`influxDB`**  
@@ -484,45 +529,47 @@ START LEVEL 1
 [  10] [Active     ] [    1] dbus-java-with-java-utils-osgi (3.0.2)
 [  11] [Active     ] [    1] Gson (2.8.5)
 [  12] [Active     ] [    1] Guava: Google Core Libraries for Java (26.0.0.jre)
-[  13] [Active     ] [    1] Java client for InfluxDB (2.15)
-[  14] [Active     ] [    1] jSerialComm (2.5.1)
-[  15] [Active     ] [    1] Jackson-annotations (2.9.9)
-[  16] [Active     ] [    1] Jackson-core (2.9.9)
-[  17] [Active     ] [    1] jackson-databind (2.9.9.1)
-[  18] [Active     ] [    1] JavaBeans Activation Framework (1.2.0)
-[  19] [Active     ] [    1] jaxb-api (2.4.0.b1808300359)
-[  20] [Active     ] [    1] file:/home/pi/rainy-felix/bundle/jaxb-runtime-2.4.0-b180830.0438.jar
-[  21] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.2)
-[  22] [Active     ] [    1] A modern JSON library for Kotlin and Java (1.7.0)
-[  23] [Active     ] [    1] MessagePack serializer implementation for Java (0.8.17)
-[  24] [Active     ] [    1] Netty/Buffer (4.1.38.Final)
-[  25] [Active     ] [    1] netty-channel-fsm-osgi (0.3.0)
-[  26] [Active     ] [    1] Netty/Codec (4.1.38.Final)
-[  27] [Active     ] [    1] Netty/Codec/HTTP (4.1.38.Final)
-[  28] [Active     ] [    1] Netty/Common (4.1.38.Final)
-[  29] [Active     ] [    1] Netty/Handler (4.1.38.Final)
-[  30] [Active     ] [    1] Netty/Resolver (4.1.38.Final)
-[  31] [Active     ] [    1] Netty/Transport (4.1.38.Final)
-[  32] [Active     ] [    1] Apache Felix Shell Service (1.4.3)
-[  33] [Active     ] [    1] Apache Felix Shell TUI (1.4.1)
-[  34] [Active     ] [    1] Apache ServiceMix :: Bundles :: jsr305 (3.0.2.1)
-[  35] [Active     ] [    1] Apache ServiceMix :: Bundles :: okhttp (3.14.1.1)
-[  36] [Active     ] [    1] Apache ServiceMix :: Bundles :: okio (1.15.0.1)
-[  37] [Active     ] [    1] Apache ServiceMix :: Bundles :: retrofit (2.5.0.2)
-[  38] [Active     ] [    1] Paho MQTT Client (1.2.1)
-[  39] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
-[  40] [Active     ] [    1] Pi4J :: Java Library (Core) (1.2)
-[  41] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.6)
-[  42] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.6)
-[  43] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
-[  44] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.14)
-[  45] [Active     ] [    1] sdk-client (0.3.3)
-[  46] [Active     ] [    1] sdk-core (0.3.3)
-[  47] [Active     ] [    1] slf4j-api (1.7.26)
-[  48] [Resolved   ] [    1] slf4j-jdk14 (1.7.26)
-[  49] [Active     ] [    1] stack-client (0.3.3)
-[  50] [Active     ] [    1] stack-core (0.3.3)
-[  51] [Active     ] [    1] strict-machine-osgi (0.1.0)
+[  13] [Active     ] [    1] java driver for hc-sr501 - pir motion detector sensor module (0.1.1)
+[  14] [Active     ] [    1] Java client for InfluxDB (2.15)
+[  15] [Active     ] [    1] jSerialComm (2.5.1)
+[  16] [Active     ] [    1] Jackson-annotations (2.9.9)
+[  17] [Active     ] [    1] Jackson-core (2.9.9)
+[  18] [Active     ] [    1] jackson-databind (2.9.9.1)
+[  19] [Active     ] [    1] JavaBeans Activation Framework (1.2.0)
+[  20] [Active     ] [    1] jaxb-api (2.4.0.b1808300359)
+[  21] [Active     ] [    1] file:/home/pi/rainy-felix/bundle/jaxb-runtime-2.4.0-b180830.0438.jar
+[  22] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.2)
+[  23] [Active     ] [    1] A modern JSON library for Kotlin and Java (1.7.0)
+[  24] [Active     ] [    1] MessagePack serializer implementation for Java (0.8.17)
+[  25] [Active     ] [    1] Netty/Buffer (4.1.38.Final)
+[  26] [Active     ] [    1] netty-channel-fsm-osgi (0.3.0)
+[  27] [Active     ] [    1] Netty/Codec (4.1.38.Final)
+[  28] [Active     ] [    1] Netty/Codec/HTTP (4.1.38.Final)
+[  29] [Active     ] [    1] Netty/Common (4.1.38.Final)
+[  30] [Active     ] [    1] Netty/Handler (4.1.38.Final)
+[  31] [Active     ] [    1] Netty/Resolver (4.1.38.Final)
+[  32] [Active     ] [    1] Netty/Transport (4.1.38.Final)
+[  33] [Active     ] [    1] Apache Felix Shell Service (1.4.3)
+[  34] [Active     ] [    1] Apache Felix Shell TUI (1.4.1)
+[  35] [Active     ] [    1] Apache ServiceMix :: Bundles :: jsr305 (3.0.2.1)
+[  36] [Active     ] [    1] Apache ServiceMix :: Bundles :: okhttp (3.14.1.1)
+[  37] [Active     ] [    1] Apache ServiceMix :: Bundles :: okio (1.15.0.1)
+[  38] [Active     ] [    1] Apache ServiceMix :: Bundles :: retrofit (2.5.0.2)
+[  39] [Active     ] [    1] Paho MQTT Client (1.2.1)
+[  40] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
+[  41] [Active     ] [    1] Pi4J :: Java Library (Core) (1.2)
+[  42] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.6)
+[  43] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.7)
+[  44] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
+[  45] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.15)
+[  46] [Active     ] [    1] java driver for rcwl-0516 - microwave presence sensor module (0.1.1)
+[  47] [Active     ] [    1] sdk-client (0.3.3)
+[  48] [Active     ] [    1] sdk-core (0.3.3)
+[  49] [Active     ] [    1] slf4j-api (1.7.26)
+[  50] [Resolved   ] [    1] slf4j-jdk14 (1.7.26)
+[  51] [Active     ] [    1] stack-client (0.3.3)
+[  52] [Active     ] [    1] stack-core (0.3.3)
+[  53] [Active     ] [    1] strict-machine-osgi (0.1.0)
 -> 
 ```
 
@@ -557,12 +604,14 @@ The sample of the output log is as follows.
 [hci0] B0:B4:48:B9:92:86 mag[y]:420.0 
 [hci0] B0:B4:48:B9:92:86 mag[z]:302.0
 [GPIO_10] pcs:1373.6702 ugm3:2.1420693
+[GPIO_18] detect:true
+[GPIO_12] detect:true
 ```
 In order to reduce writing to the SD card, it is usually recommended to set it to `INFO`.
 
 <h3 id="check_database">Check the database name for each device created in InfluxDB</h3>
 
-Check from the log file `logs/rainy.log.0`. In the following example, databases `RP3B_01__dev_ttyAMA0` for MH-Z19B, `B0_B4_48_B9_92_86` and `B0_B4_48_ED_B6_04` for CC2650, `milo_digitalpetri_com_62541_milo` for Public Demo Server of Eclipse Milo and `RP3B_01_GPIO_10` for PPD42NS were created. Note that InfluxDB will not do anything if the database already exists.
+Check from the log file `logs/rainy.log.0`. In the following example, databases `RP3B_01__dev_ttyAMA0` for MH-Z19B, `B0_B4_48_B9_92_86` and `B0_B4_48_ED_B6_04` for CC2650, `milo_digitalpetri_com_62541_milo` for Public Demo Server of Eclipse Milo, `RP3B_01_GPIO_10` for PPD42NS, `RP3B_01_GPIO_18` for RCWL-0516 and `RP3B_01_GPIO_12` for HC-SR501 were created. Note that InfluxDB will not do anything if the database already exists.
 ```
 execute - CREATE DATABASE RP3B_01__dev_ttyAMA0
 ...
@@ -573,6 +622,10 @@ execute - CREATE DATABASE B0_B4_48_ED_B6_04
 execute - CREATE DATABASE milo_digitalpetri_com_62541_milo
 ...
 execute - CREATE DATABASE RP3B_01_GPIO_10
+...
+execute - CREATE DATABASE RP3B_01_GPIO_18
+...
+execute - CREATE DATABASE RP3B_01_GPIO_12
 ```
 These database names are required for the visualization tools Grafana and Chronograf to connect to InfluxDB.
 
@@ -646,9 +699,11 @@ The following bundles I created follow the MIT license.
 - [cc2650-driver 0.1.0](https://github.com/s5uishida/cc2650-driver)
 - [mh-z19b-driver 0.1.2](https://github.com/s5uishida/mh-z19b-driver)
 - [ppd42ns-driver 0.1.6](https://github.com/s5uishida/ppd42ns-driver)
-- [rainy-activator 0.1.6](https://github.com/s5uishida/rainy-activator)
+- [rcwl-0516-driver 0.1.1](https://github.com/s5uishida/rcwl-0516-driver)
+- [hc-sr501-driver 0.1.1](https://github.com/s5uishida/hc-sr501-driver)
+- [rainy-activator 0.1.7](https://github.com/s5uishida/rainy-activator)
 - [rainy-opcua 0.1.4](https://github.com/s5uishida/rainy-opcua)
-- [rainy 0.1.14](https://github.com/s5uishida/rainy)
+- [rainy 0.1.15](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
