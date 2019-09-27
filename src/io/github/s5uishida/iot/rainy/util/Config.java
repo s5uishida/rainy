@@ -9,6 +9,8 @@ public class Config extends AbstractConfig {
 	public static final String CC2650_KEY		= "cc2650";
 	public static final String MHZ19B_KEY		= "mhz19b";
 	public static final String PPD42NS_KEY		= "ppd42ns";
+	public static final String RCWL0516_KEY		= "rcwl0516";
+	public static final String HCSR501_KEY		= "hcsr501";
 	public static final String OPCUA_KEY			= "opcua";
 
 	private static Config config;
@@ -38,6 +40,14 @@ public class Config extends AbstractConfig {
 
 	public boolean getPPD42NS() {
 		return getConfig(PPD42NS_KEY, false);
+	}
+
+	public boolean getRCWL0516() {
+		return getConfig(RCWL0516_KEY, false);
+	}
+
+	public boolean getHCSR501() {
+		return getConfig(HCSR501_KEY, false);
 	}
 
 	public boolean getOPCUA() {
