@@ -100,13 +100,11 @@ class RCWL0516Handler implements IRCWL0516Handler {
 
 	@Override
 	public void handle(String pinName, boolean detect, Date date) {
-		String dateString = sdf.format(date);
-
 		RCWL0516Data rcwl0516Data = new RCWL0516Data();
 
 		rcwl0516Data.clientID = clientID;
 		rcwl0516Data.deviceID = pinName;
-		rcwl0516Data.samplingDate = dateString;
+		rcwl0516Data.samplingDate = sdf.format(date);
 		rcwl0516Data.samplingTimeMillis = date.getTime();
 
 		rcwl0516Data.detection = new Detection();
@@ -114,7 +112,7 @@ class RCWL0516Handler implements IRCWL0516Handler {
 
 		String logPrefix = "[" + pinName + "] ";
 
-		LOG.debug(logPrefix + "detect:{} date:{}", detect, dateString);
+		LOG.debug(logPrefix + "detect:{}", detect);
 
 		for (IDataSender sender : senders) {
 			try {

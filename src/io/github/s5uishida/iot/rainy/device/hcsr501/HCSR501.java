@@ -100,13 +100,11 @@ class HCSR501Handler implements IHCSR501Handler {
 
 	@Override
 	public void handle(String pinName, boolean detect, Date date) {
-		String dateString = sdf.format(date);
-
 		HCSR501Data hcsr501Data = new HCSR501Data();
 
 		hcsr501Data.clientID = clientID;
 		hcsr501Data.deviceID = pinName;
-		hcsr501Data.samplingDate = dateString;
+		hcsr501Data.samplingDate = sdf.format(date);
 		hcsr501Data.samplingTimeMillis = date.getTime();
 
 		hcsr501Data.detection = new Detection();
@@ -114,7 +112,7 @@ class HCSR501Handler implements IHCSR501Handler {
 
 		String logPrefix = "[" + pinName + "] ";
 
-		LOG.debug(logPrefix + "detect:{} date:{}", detect, dateString);
+		LOG.debug(logPrefix + "detect:{}", detect);
 
 		for (IDataSender sender : senders) {
 			try {
