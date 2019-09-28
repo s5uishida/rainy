@@ -108,7 +108,7 @@ class HCSR501Handler implements IHCSR501Handler {
 		hcsr501Data.samplingTimeMillis = date.getTime();
 
 		hcsr501Data.detection = new Detection();
-		hcsr501Data.detection.value = detect;
+		hcsr501Data.detection.value = detect ? 1 : 0;
 
 		String logPrefix = "[" + pinName + "] ";
 

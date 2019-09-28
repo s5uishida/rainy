@@ -108,7 +108,7 @@ class RCWL0516Handler implements IRCWL0516Handler {
 		rcwl0516Data.samplingTimeMillis = date.getTime();
 
 		rcwl0516Data.detection = new Detection();
-		rcwl0516Data.detection.value = detect;
+		rcwl0516Data.detection.value = detect ? 1 : 0;
 
 		String logPrefix = "[" + pinName + "] ";
 
