@@ -23,11 +23,11 @@ The following figure is overview which the monitoring is running together with r
 
 The following image shows the hardware configuration.
 
-<img src="./images/rainy_hardware_1.png" title="./images/rainy_hardware_1.png" width=600px></img>
+<img src="./images/rainy_hardware_1_1.png" title="./images/rainy_hardware_1_1.png" width=600px></img>
 
 The image of the hardware configuration when using a USB serial adapter for MH-Z19B is as follows.
 
-<img src="./images/rainy_hardware_0.png" title="./images/rainy_hardware_0.png" width=600px></img>
+<img src="./images/rainy_hardware_0_1.png" title="./images/rainy_hardware_0_1.png" width=600px></img>
 
 ---
 <h2>Table of Contents</h2>
