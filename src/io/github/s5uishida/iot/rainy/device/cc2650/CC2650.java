@@ -56,9 +56,6 @@ public class CC2650 implements IDevice {
 	private static final Logger LOG = LoggerFactory.getLogger(CC2650.class);
 	private static final CC2650Config config = CC2650Config.getInstance();
 
-	private static final int SCAN_PERIOD_MILLIS = 5000;
-	private static final int SCAN_INTERVAL_MILLIS = 5000;
-
 	private final BlockingQueue<BluetoothDevice> deviceQueue = new LinkedBlockingQueue<BluetoothDevice>();
 	private final ConcurrentMap<String, CC2650Driver> deviceMap = new ConcurrentHashMap<String, CC2650Driver>();
 
@@ -79,8 +76,7 @@ public class CC2650 implements IDevice {
 		Map<DiscoveryFilter, Object> filter = new HashMap<DiscoveryFilter, Object>();
 		filter.put(DiscoveryFilter.Transport, DiscoveryTransport.LE);
 		cc2650ScanHandler = new CC2650ScanHandler(deviceQueue);
-		scanProcess = new ScanProcess(adapterDeviceName, cc2650ScanHandler, filter,
-				SCAN_PERIOD_MILLIS, SCAN_INTERVAL_MILLIS);
+		scanProcess = new ScanProcess(adapterDeviceName, cc2650ScanHandler, filter);
 
 		manager = scanProcess.getDeviceManager();
 
