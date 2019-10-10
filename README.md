@@ -519,8 +519,8 @@ START LEVEL 1
 [   0] [Active     ] [    0] System Bundle (6.0.3)
 [   1] [Active     ] [    1] bcpkix (1.62)
 [   2] [Active     ] [    1] bcprov (1.62)
-[   3] [Active     ] [    1] bluetooth scanner (0.1.1)
-[   4] [Active     ] [    1] bluez-dbus-osgi (0.1.2.201908052042)
+[   3] [Active     ] [    1] bluetooth scanner (0.1.2)
+[   4] [Active     ] [    1] bluez-dbus-osgi (0.1.2.201910102015)
 [   5] [Active     ] [    1] bsd-parser-core (0.3.3)
 [   6] [Active     ] [    1] bsd-parser-gson (0.3.3)
 [   7] [Active     ] [    1] java driver for ti sensortag cc2650 (0.1.0)
@@ -561,7 +561,7 @@ START LEVEL 1
 [  42] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.6)
 [  43] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.7)
 [  44] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
-[  45] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.16)
+[  45] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.17)
 [  46] [Active     ] [    1] java driver for rcwl-0516 - microwave presence sensor module (0.1.1)
 [  47] [Active     ] [    1] sdk-client (0.3.3)
 [  48] [Active     ] [    1] sdk-core (0.3.3)
@@ -695,7 +695,7 @@ Client mosqsub|2095-u1804 received PUBLISH (d0, q0, r0, m0, 'rainy/B0_B4_48_ED_B
 <h2 id="bundle_list">Bundle list</h2>
 
 The following bundles I created follow the MIT license.
-- [bluetooth-scanner 0.1.1](https://github.com/s5uishida/bluetooth-scanner)
+- [bluetooth-scanner 0.1.2](https://github.com/s5uishida/bluetooth-scanner)
 - [cc2650-driver 0.1.0](https://github.com/s5uishida/cc2650-driver)
 - [mh-z19b-driver 0.1.2](https://github.com/s5uishida/mh-z19b-driver)
 - [ppd42ns-driver 0.1.6](https://github.com/s5uishida/ppd42ns-driver)
@@ -703,7 +703,7 @@ The following bundles I created follow the MIT license.
 - [hc-sr501-driver 0.1.1](https://github.com/s5uishida/hc-sr501-driver)
 - [rainy-activator 0.1.7](https://github.com/s5uishida/rainy-activator)
 - [rainy-opcua 0.1.4](https://github.com/s5uishida/rainy-opcua)
-- [rainy 0.1.16](https://github.com/s5uishida/rainy)
+- [rainy 0.1.17](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
