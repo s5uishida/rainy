@@ -119,18 +119,20 @@ class PPD42NSReadScheduledTask implements Runnable {
 		Date date = new Date();
 		String dateString = sdf.format(date);
 
+		PPD42NSObservationData data;
+		try {
+			data = ppd42ns.read();
+		} catch (IOException e) {
+			LOG.warn("caught - {}", e.toString());
+			return;
+		}
+
 		PPD42NSData ppd42nsData = new PPD42NSData();
 
 		ppd42nsData.clientID = clientID;
 		ppd42nsData.deviceID = ppd42ns.getName();
 		ppd42nsData.samplingDate = dateString;
 		ppd42nsData.samplingTimeMillis = date.getTime();
-
-		PPD42NSObservationData data = ppd42ns.read();
-		if (data == null) {
-			LOG.info(ppd42ns.getLogPrefix() + "read timeout.");
-			return;
-		}
 
 		ppd42nsData.pcs = new Pcs();
 		ppd42nsData.pcs.value = data.getPcs();
