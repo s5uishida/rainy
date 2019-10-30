@@ -128,15 +128,15 @@ In addition, the step to install Mosquitto on Raspberry Pi 3B is the same as abo
 
 I am using [Grafana](https://grafana.com/) on Ubuntu 18.04. The installation is as follows from [here](https://grafana.com/grafana/download?platform=linux).
 ```
-# wget https://dl.grafana.com/oss/release/grafana_6.3.4_amd64.deb
-# dpkg -i grafana_6.3.4_amd64.deb
+# wget https://dl.grafana.com/oss/release/grafana_6.4.3_amd64.deb
+# dpkg -i grafana_6.4.3_amd64.deb
 # systemctl enable grafana-server.service
 # systemctl start grafana-server.service
 ```
 In addition, the step to install Grafana on Raspberry Pi 3B is as follows.
 ```
-# wget https://dl.grafana.com/oss/release/grafana_6.3.4_armhf.deb
-# dpkg -i grafana_6.3.4_armhf.deb
+# wget https://dl.grafana.com/oss/release/grafana_6.4.3_armhf.deb
+# dpkg -i grafana_6.4.3_armhf.deb
 # systemctl enable grafana-server.service
 # systemctl start grafana-server.service
 ```
