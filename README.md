@@ -560,7 +560,7 @@ START LEVEL 1
 [  41] [Active     ] [    1] Pi4J :: Java Library (Core) (1.2)
 [  42] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.7)
 [  43] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.7)
-[  44] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.4)
+[  44] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.5)
 [  45] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.18)
 [  46] [Active     ] [    1] java driver for rcwl-0516 - microwave presence sensor module (0.1.1)
 [  47] [Active     ] [    1] sdk-client (0.3.4)
@@ -702,7 +702,7 @@ The following bundles I created follow the MIT license.
 - [rcwl-0516-driver 0.1.1](https://github.com/s5uishida/rcwl-0516-driver)
 - [hc-sr501-driver 0.1.1](https://github.com/s5uishida/hc-sr501-driver)
 - [rainy-activator 0.1.7](https://github.com/s5uishida/rainy-activator)
-- [rainy-opcua 0.1.4](https://github.com/s5uishida/rainy-opcua)
+- [rainy-opcua 0.1.5](https://github.com/s5uishida/rainy-opcua)
 - [rainy 0.1.18](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
