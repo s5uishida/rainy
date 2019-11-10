@@ -537,7 +537,7 @@ START LEVEL 1
 [  18] [Active     ] [    1] jackson-databind (2.9.9.1)
 [  19] [Active     ] [    1] JavaBeans Activation Framework (1.2.0)
 [  20] [Active     ] [    1] jaxb-api (2.3.1)
-[  21] [Active     ] [    1] file:/home/pi/rainy-felix/bundle/jaxb-runtime-2.3.1.jar
+[  21] [Active     ] [    1] file:/home/pi/rainy-felix/bundle/jaxb-runtime-2.3.2.jar
 [  22] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.2)
 [  23] [Active     ] [    1] A modern JSON library for Kotlin and Java (1.7.0)
 [  24] [Active     ] [    1] MessagePack serializer implementation for Java (0.8.17)
@@ -726,7 +726,7 @@ Please check each license for the following bundles used in addition to these.
 - [jSerialComm 2.5.1](https://mvnrepository.com/artifact/com.fazecast/jSerialComm/2.5.1)
 - [Netty 4.1.38](https://netty.io/index.html) netty-buffer-4.1.38.Final.jar, netty-codec-4.1.38.Final.jar, netty-codec-http-4.1.38.Final.jar, netty-common-4.1.38.Final.jar, netty-handler-4.1.38.Final.jar, netty-resolver-4.1.38.Final.jar, netty-transport-4.1.38.Final.jar
 - [JAXB API 2.3.1](https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api/2.3.1)
-- [JAXB Runtime 2.3.1](https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime/2.3.1)
+- [JAXB Runtime 2.3.2](https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime/2.3.2)
 - [JavaBeans Activation Framework (JAF) 1.2.0](https://mvnrepository.com/artifact/com.sun.activation/javax.activation/1.2.0)
 - [strict-machine-osgi 0.1](https://github.com/s5uishida/strict-machine-osgi)
 - [netty-channel-fsm-osgi 0.3](https://github.com/s5uishida/netty-channel-fsm-osgi)
