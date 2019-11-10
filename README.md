@@ -536,8 +536,8 @@ START LEVEL 1
 [  17] [Active     ] [    1] Jackson-core (2.9.9)
 [  18] [Active     ] [    1] jackson-databind (2.9.9.1)
 [  19] [Active     ] [    1] JavaBeans Activation Framework (1.2.0)
-[  20] [Active     ] [    1] jaxb-api (2.4.0.b1808300359)
-[  21] [Active     ] [    1] file:/home/pi/rainy-felix/bundle/jaxb-runtime-2.4.0-b180830.0438.jar
+[  20] [Active     ] [    1] jaxb-api (2.3.1)
+[  21] [Active     ] [    1] file:/home/pi/rainy-felix/bundle/jaxb-runtime-2.3.1.jar
 [  22] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.2)
 [  23] [Active     ] [    1] A modern JSON library for Kotlin and Java (1.7.0)
 [  24] [Active     ] [    1] MessagePack serializer implementation for Java (0.8.17)
