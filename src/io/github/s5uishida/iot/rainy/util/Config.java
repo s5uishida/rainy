@@ -6,6 +6,8 @@ package io.github.s5uishida.iot.rainy.util;
  */
 public class Config extends AbstractConfig {
 	public static final String CLIENT_ID_KEY		= "clientID";
+	public static final String BME280_KEY		= "bme280";
+	public static final String BH1750FVI_KEY		= "bh1750fvi";
 	public static final String CC2650_KEY		= "cc2650";
 	public static final String MHZ19B_KEY		= "mhz19b";
 	public static final String PPD42NS_KEY		= "ppd42ns";
@@ -32,6 +34,14 @@ public class Config extends AbstractConfig {
 
 	public boolean getCC2650() {
 		return getConfig(CC2650_KEY, false);
+	}
+
+	public boolean getBME280() {
+		return getConfig(BME280_KEY, false);
+	}
+
+	public boolean getBH1750FVI() {
+		return getConfig(BH1750FVI_KEY, false);
 	}
 
 	public boolean getMHZ19B() {
