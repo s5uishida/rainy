@@ -36,7 +36,7 @@ public class BH1750FVIConfig extends AbstractConfig {
 	public static BH1750FVIConfig getInstance() {
 		if (config == null) {
 			config = new BH1750FVIConfig(ConfigParams.CONFIG_DIR_PARAM, ConfigParams.BH1750FVI_CONFIG_FILE);
-			List<String> i2cBusAddresses = Arrays.asList(config.getConfig(I2C_BUS_ADDRESS_KEY, "1:76").split("\\s+"));
+			List<String> i2cBusAddresses = Arrays.asList(config.getConfig(I2C_BUS_ADDRESS_KEY, "1:23").split("\\s+"));
 			for (String i2cBusAddress : i2cBusAddresses) {
 				String[] items = i2cBusAddress.split(":");
 				if (items.length < 2 || items.length > 2) {
