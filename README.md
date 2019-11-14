@@ -15,9 +15,9 @@ rainy is a tiny tool for IoT data collection and monitoring, and supports the fo
   Optical  
   **If you do not have CC2650, you can substitute this sensor with BH1750FVI.**
 - [MH-Z19B](https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf) - [java driver](https://github.com/s5uishida/mh-z19b-driver) by [jSerialComm](https://github.com/Fazecast/jSerialComm)  
-  CO2 concentration
+  CO2 gas concentration
 - [PPD42NS](http://wiki.seeedstudio.com/Grove-Dust_Sensor/) - [java driver](https://github.com/s5uishida/ppd42ns-driver) by [Pi4J](https://pi4j.com/)  
-  Dust concentration
+  PM2.5 dust concentration
 - [RCWL-0516](https://www.epitran.it/ebayDrive/datasheet/19.pdf) - [java driver](https://github.com/s5uishida/rcwl-0516-driver) by [Pi4J](https://pi4j.com/)  
   Motion detector (Microwave)
 - [HC-SR501](https://www.mpja.com/download/31227sc.pdf) - [java driver](https://github.com/s5uishida/hc-sr501-driver) by [Pi4J](https://pi4j.com/)  
@@ -771,15 +771,15 @@ Client mosqsub|2095-u1804 received PUBLISH (d0, q0, r0, m0, 'rainy/B0_B4_48_ED_B
 
 The following bundles I created follow the MIT license.
 - [bluetooth-scanner 0.1.4](https://github.com/s5uishida/bluetooth-scanner)
+- [cc2650-driver 0.1.2](https://github.com/s5uishida/cc2650-driver)
 - [bme280-driver 0.1.0](https://github.com/s5uishida/bme280-driver)
 - [bh1750fvi-driver 0.1.0](https://github.com/s5uishida/bh1750fvi-driver)
-- [cc2650-driver 0.1.2](https://github.com/s5uishida/cc2650-driver)
 - [mh-z19b-driver 0.1.2](https://github.com/s5uishida/mh-z19b-driver)
 - [ppd42ns-driver 0.1.7](https://github.com/s5uishida/ppd42ns-driver)
 - [rcwl-0516-driver 0.1.1](https://github.com/s5uishida/rcwl-0516-driver)
 - [hc-sr501-driver 0.1.1](https://github.com/s5uishida/hc-sr501-driver)
-- [rainy-activator 0.1.8](https://github.com/s5uishida/rainy-activator)
 - [rainy-opcua 0.1.5](https://github.com/s5uishida/rainy-opcua)
+- [rainy-activator 0.1.8](https://github.com/s5uishida/rainy-activator)
 - [rainy 0.1.21](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
