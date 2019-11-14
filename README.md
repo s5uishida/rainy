@@ -1,9 +1,30 @@
 # rainy - a tiny tool for iot data collection and monitoring
-rainy is a tiny tool for IoT data collection and monitoring.
-rainy supports [TI SensorTag CC2650](http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide), [MH-Z19B](https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf), [PPD42NS](http://wiki.seeedstudio.com/Grove-Dust_Sensor/), [RCWL-0516](https://github.com/s5uishida/rcwl-0516-driver) and [HC-SR501](https://github.com/s5uishida/hc-sr501-driver) as IoT devices, communicates with CC2650 by [bluez-dbus](https://github.com/hypfvieh/bluez-dbus), and communicates with MH-Z19B by [jSerialComm](https://github.com/Fazecast/jSerialComm),
-and communicates with PPD42NS/RCWL-0516/HC-SR501 by [Pi4J](https://pi4j.com/) and acquires each data.
-And it corresponds to OPC-UA which is a protocol of industrial automation.
-I use [Eclipse Milo](https://github.com/eclipse/milo) for the OPC-UA Protocol Stack and SDK (Java).
+rainy is a tiny tool for IoT data collection and monitoring, and supports the following devices and protocols:  
+- [TI SensorTag CC2650](http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide) - [java driver](https://github.com/s5uishida/cc2650-driver) by [bluez-dbus](https://github.com/hypfvieh/bluez-dbus)
+  - IR Temperature (Object / Ambience)
+  - Relative humidity
+  - Barometric pressure
+  - Optical
+  - Movement (Gyroscope / Accelerometer / Magnetometer)
+- [BME280](http://static.cactus.io/docs/sensors/barometric/bme280/BST-BME280_DS001-10.pdf) - [java driver](https://github.com/s5uishida/bme280-driver) by [Pi4J](https://pi4j.com/)
+  - Temperature
+  - Relative humidity
+  - Barometric pressure  
+  **If you do not have CC2650, you can substitute these sensors with BME280.**
+- [BH1750FVI](https://www.mouser.com/datasheet/2/348/bh1750fvi-e-186247.pdf) - [java driver](https://github.com/s5uishida/bh1750fvi-driver) by [Pi4J](https://pi4j.com/)  
+  Optical  
+  **If you do not have CC2650, you can substitute this sensor with BH1750FVI.**
+- [MH-Z19B](https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z19b-co2-ver1_0.pdf) - [java driver](https://github.com/s5uishida/mh-z19b-driver) by [jSerialComm](https://github.com/Fazecast/jSerialComm)  
+  CO2 concentration
+- [PPD42NS](http://wiki.seeedstudio.com/Grove-Dust_Sensor/) - [java driver](https://github.com/s5uishida/ppd42ns-driver) by [Pi4J](https://pi4j.com/)  
+  Dust concentration
+- [RCWL-0516](https://www.epitran.it/ebayDrive/datasheet/19.pdf) - [java driver](https://github.com/s5uishida/rcwl-0516-driver) by [Pi4J](https://pi4j.com/)  
+  Motion detector (Microwave)
+- [HC-SR501](https://www.mpja.com/download/31227sc.pdf) - [java driver](https://github.com/s5uishida/hc-sr501-driver) by [Pi4J](https://pi4j.com/)  
+  Motion detector (PIR)
+- [OPC-UA](https://opcfoundation.org/developer-tools/specifications-unified-architecture) - [java driver](https://github.com/s5uishida/rainy-opcua) by [Eclipse Milo](https://github.com/eclipse/milo)  
+  Protocol of industrial automation
+
 These data can be sent to [InfluxDB](https://www.influxdata.com/) (Time Series Database) for visualization, or sent to MQTT Broker to be used as a data source for any other purposes.
 
 rainy runs on [Apache Felix](https://felix.apache.org/) (OSGi). I think that rainy can be embedded in the environment without OSGi.
@@ -18,16 +39,13 @@ The following figure is overview of rainy.
 <img src="./images/rainy_overview_0.png" title="./images/rainy_overview_0.png" width=800px></img>
 
 The following figure is overview which the monitoring is running together with rainy on same Raspberry Pi 3B.
+I checked easily that it also works with Raspberry Pi 4B.
 
 <img src="./images/rainy_overview_2.png" title="./images/rainy_overview_2.png" width=800px></img>
 
 The following image shows the hardware configuration.
 
-<img src="./images/rainy_hardware_1_1.png" title="./images/rainy_hardware_1_1.png" width=600px></img>
-
-The image of the hardware configuration when using a USB serial adapter for MH-Z19B is as follows.
-
-<img src="./images/rainy_hardware_0_1.png" title="./images/rainy_hardware_0_1.png" width=600px></img>
+<img src="./images/rainy_hardware_1.png" title="./images/rainy_hardware_1_1.png" width=700px></img>
 
 ---
 <h2>Table of Contents</h2>
@@ -52,6 +70,8 @@ The image of the hardware configuration when using a USB serial adapter for MH-Z
     - [MQTT - mqtt.properties](#mqtt_properties)
   - [Setting sensors and protocols](#setting_sensors)
     - [CC2650 - cc2650.properties](#cc2650_properties)
+    - [BME280 - bme280.properties](#bme280_properties)
+    - [BH1750FVI - bh1750fvi.properties](#bh1750fvi_properties)
     - [MH-Z19B - mhz19b.properties](#mhz19b_properties)
     - [PPD42NS - ppd42ns.properties](#ppd42ns_properties)
     - [RCWL-0516 - rcwl0516.properties](#rcwl0516_properties)
@@ -79,13 +99,16 @@ The purpose of this tool is briefly as follows.
 - Real-time monitoring and convert these information to MQTT as a data source for any other purposes.
 - Runs as Java / OSGi application on Raspberry Pi 3B (arm) and Ubuntu machine (amd64).
 
+The concept is as follows.
+
+<img src="./images/rainy_concept_0.png" title="./images/rainy_concept_0.png" width=700px></img>
+
 Although I think the functionality and performance of this tool are not sufficient for formal operation, it may be an easy-to-try tool.
 
 <h2 id="setup_os">Setup OS</h2>
 
-Please refer to [here1](https://github.com/s5uishida/mh-z19b-driver) and
-[here2](https://github.com/s5uishida/ppd42ns-driver) for setting RaspberryPi 3B as an environment for running rainy.
-Both Bluetooth and serial communication / GPIO can be enabled.
+Please refer to [here](https://github.com/s5uishida/bme280-driver) for setting RaspberryPi 3B as an environment for running rainy.
+Both Bluetooth, serial communication, GPIO and I2C can be enabled.
 
 <h2 id="setup_sending_data">Setup sending data</h2>
 
@@ -232,9 +255,13 @@ TLS_PRIVATE_KEY=/etc/rainy/cert.key
 - **`clientID`**  
   Set a unique client identifier for running rainy.
 - **`cc2650`**  
-  Set to `true` when using CC2650. default is `false`.
+  Set to `true` when using CC2650. default is `false`.  
+- **`bme280`**  
+  Set to `true` when using BME280. default is `false`.  
+- **`bh1750fvi`**  
+  Set to `true` when using BH1750FVI. default is `false`.  
 - **`mhz19b`**  
-  Set to `true` when using MH-Z19B. default is `false`.
+  Set to `true` when using MH-Z19B. default is `false`.  
 - **`ppd42ns`**  
   Set to `true` when using PPD42NS. default is `false`.  
 - **`rcwl0516`**  
@@ -244,7 +271,7 @@ TLS_PRIVATE_KEY=/etc/rainy/cert.key
 - **`opcua`**  
   Set to `true` when using OPC-UA. default is `false`.
 
-**Note. This tool uses Pi4J for PPD42NS/RCWL-0516/HC-SR501, so PPD42NS/RCWL-0516/HC-SR501 can only be used with Raspberry Pi series (arm). Therefore, their feature of this tool does not work on amd64 Linux machines, so set them to `false` on amd64 Linux machines.**  
+**Note. This tool uses Pi4J for BME280/BH1750FVI/PPD42NS/RCWL-0516/HC-SR501, so these devices can only be used with Raspberry Pi series (arm). Therefore, their feature of this tool does not work on amd64 Linux machines, so set them to `false` on amd64 Linux machines.**  
 
 <h3 id="setting_connection_sending_data">Setting the connection for sending data</h3>
   
@@ -346,6 +373,48 @@ B0:B4:48:B9:92:86 (unknown)
 B0:B4:48:B9:92:86 CC2650 SensorTag
 ```
 After launching `hcitool` command, press the power button of CC2650 and the scan results will be displayed as above.
+
+<h4 id="bme280_properties">BME280 - bme280.properties</h4>
+
+[Here](https://github.com/s5uishida/bme280-driver) is also helpful.
+
+- **`i2cBusAddress`**  
+  Set the I2C bus number and address. default is `1:76`.
+- **`influxDB`**  
+  Set to `true` when sending data to InfluxDB. default is `false`.
+- **`mqtt`**  
+  Set to `true` when sending data to MQTT broker. default is `false`.
+- `prettyPrinting`  
+  Set to `true` when indenting the log output of JSON format data. default is `false`.
+  It is also necessary to change the following log level of `conf/logging.properties`.  
+  ```
+  #io.github.s5uishida.level=INFO
+  -->
+  io.github.s5uishida.level=FINE
+  ```
+- `readCrontab`  
+  Set the schedule for sensing data in crontab format. default is every minute.
+
+<h4 id="bh1750fvi_properties">BH1750FVI - bh1750fvi.properties</h4>
+
+[Here](https://github.com/s5uishida/bh1750fvi-driver) is also helpful.
+
+- **`i2cBusAddress`**  
+  Set the I2C bus number and address. default is `1:23`.
+- **`influxDB`**  
+  Set to `true` when sending data to InfluxDB. default is `false`.
+- **`mqtt`**  
+  Set to `true` when sending data to MQTT broker. default is `false`.
+- `prettyPrinting`  
+  Set to `true` when indenting the log output of JSON format data. default is `false`.
+  It is also necessary to change the following log level of `conf/logging.properties`.  
+  ```
+  #io.github.s5uishida.level=INFO
+  -->
+  io.github.s5uishida.level=FINE
+  ```
+- `readCrontab`  
+  Set the schedule for sensing data in crontab format. default is every minute.
 
 <h4 id="mhz19b_properties">MH-Z19B - mhz19b.properties</h4>
 
@@ -508,68 +577,65 @@ For reference, there is [toem impulse OPC/UA Extension (Eclipse pulug-in)](https
 ```
 # cd /path/to/rainy-felix/bin
 # sh rainy-start.sh
-WARNING: An illegal reflective access operation has occurred
-WARNING: Illegal reflective access by org.apache.felix.framework.ext.ClassPathExtenderFactory$DefaultClassLoaderExtender (file:/path/to/rainy-felix/bin/felix.jar) to method java.net.URLClassLoader.addURL(java.net.URL)
-WARNING: Please consider reporting this to the maintainers of org.apache.felix.framework.ext.ClassPathExtenderFactory$DefaultClassLoaderExtender
-WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
-WARNING: All illegal access operations will be denied in a future release
 -> ps
 START LEVEL 1
    ID   State         Level  Name
 [   0] [Active     ] [    0] System Bundle (6.0.3)
 [   1] [Active     ] [    1] bcpkix (1.62)
 [   2] [Active     ] [    1] bcprov (1.62)
-[   3] [Active     ] [    1] bluetooth scanner (0.1.4)
-[   4] [Active     ] [    1] bluez-dbus-osgi (0.1.2.201911022022)
-[   5] [Active     ] [    1] bsd-parser-core (0.3.4)
-[   6] [Active     ] [    1] bsd-parser-gson (0.3.4)
-[   7] [Active     ] [    1] java driver for ti sensortag cc2650 (0.1.2)
-[   8] [Active     ] [    1] Apache Commons Lang (3.9.0)
-[   9] [Active     ] [    1] cron4j-osgi (2.2.5)
-[  10] [Active     ] [    1] dbus-java-osgi (3.2.1.SNAPSHOT)
-[  11] [Active     ] [    1] Gson (2.8.5)
-[  12] [Active     ] [    1] Guava: Google Core Libraries for Java (26.0.0.jre)
-[  13] [Active     ] [    1] java driver for hc-sr501 - pir motion detector sensor module (0.1.1)
-[  14] [Active     ] [    1] Java client for InfluxDB (2.15)
-[  15] [Active     ] [    1] jSerialComm (2.5.1)
-[  16] [Active     ] [    1] Jackson-annotations (2.9.9)
-[  17] [Active     ] [    1] Jackson-core (2.9.9)
-[  18] [Active     ] [    1] jackson-databind (2.9.9.1)
-[  19] [Active     ] [    1] JavaBeans Activation Framework (1.2.0)
-[  20] [Active     ] [    1] jaxb-api (2.3.1)
-[  21] [Active     ] [    1] file:/home/pi/rainy-felix/bundle/jaxb-runtime-2.3.2.jar
-[  22] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.2)
-[  23] [Active     ] [    1] A modern JSON library for Kotlin and Java (1.7.0)
-[  24] [Active     ] [    1] MessagePack serializer implementation for Java (0.8.17)
-[  25] [Active     ] [    1] Netty/Buffer (4.1.38.Final)
-[  26] [Active     ] [    1] netty-channel-fsm-osgi (0.3.0)
-[  27] [Active     ] [    1] Netty/Codec (4.1.38.Final)
-[  28] [Active     ] [    1] Netty/Codec/HTTP (4.1.38.Final)
-[  29] [Active     ] [    1] Netty/Common (4.1.38.Final)
-[  30] [Active     ] [    1] Netty/Handler (4.1.38.Final)
-[  31] [Active     ] [    1] Netty/Resolver (4.1.38.Final)
-[  32] [Active     ] [    1] Netty/Transport (4.1.38.Final)
-[  33] [Active     ] [    1] Apache Felix Shell Service (1.4.3)
-[  34] [Active     ] [    1] Apache Felix Shell TUI (1.4.1)
-[  35] [Active     ] [    1] Apache ServiceMix :: Bundles :: jsr305 (3.0.2.1)
-[  36] [Active     ] [    1] Apache ServiceMix :: Bundles :: okhttp (3.14.1.1)
-[  37] [Active     ] [    1] Apache ServiceMix :: Bundles :: okio (1.15.0.1)
-[  38] [Active     ] [    1] Apache ServiceMix :: Bundles :: retrofit (2.5.0.2)
-[  39] [Active     ] [    1] Paho MQTT Client (1.2.1)
-[  40] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
-[  41] [Active     ] [    1] Pi4J :: Java Library (Core) (1.2)
-[  42] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.7)
-[  43] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.7)
-[  44] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.5)
-[  45] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.20)
-[  46] [Active     ] [    1] java driver for rcwl-0516 - microwave presence sensor module (0.1.1)
-[  47] [Active     ] [    1] sdk-client (0.3.4)
-[  48] [Active     ] [    1] sdk-core (0.3.4)
-[  49] [Active     ] [    1] slf4j-api (1.7.26)
-[  50] [Resolved   ] [    1] slf4j-jdk14 (1.7.26)
-[  51] [Active     ] [    1] stack-client (0.3.4)
-[  52] [Active     ] [    1] stack-core (0.3.4)
-[  53] [Active     ] [    1] strict-machine-osgi (0.1.0)
+[   3] [Active     ] [    1] java driver for bh1750fvi - ambient light sensor (0.1.0)
+[   4] [Active     ] [    1] bluetooth scanner (0.1.4)
+[   5] [Active     ] [    1] bluez-dbus-osgi (0.1.2.201911022022)
+[   6] [Active     ] [    1] java driver for bme280 - combined humidity, pressure and temperature sensor (0.1.0)
+[   7] [Active     ] [    1] bsd-parser-core (0.3.4)
+[   8] [Active     ] [    1] bsd-parser-gson (0.3.4)
+[   9] [Active     ] [    1] java driver for ti sensortag cc2650 (0.1.2)
+[  10] [Active     ] [    1] Apache Commons Lang (3.9.0)
+[  11] [Active     ] [    1] cron4j-osgi (2.2.5)
+[  12] [Active     ] [    1] dbus-java-osgi (3.2.1.SNAPSHOT)
+[  13] [Active     ] [    1] Gson (2.8.5)
+[  14] [Active     ] [    1] Guava: Google Core Libraries for Java (26.0.0.jre)
+[  15] [Active     ] [    1] java driver for hc-sr501 - pir motion detector sensor module (0.1.1)
+[  16] [Active     ] [    1] Java client for InfluxDB (2.15)
+[  17] [Active     ] [    1] jSerialComm (2.5.1)
+[  18] [Active     ] [    1] Jackson-annotations (2.9.9)
+[  19] [Active     ] [    1] Jackson-core (2.9.9)
+[  20] [Active     ] [    1] jackson-databind (2.9.9.1)
+[  21] [Active     ] [    1] JavaBeans Activation Framework (1.2.0)
+[  22] [Active     ] [    1] jaxb-api (2.3.1)
+[  23] [Active     ] [    1] file:/home/pi/rainy-felix/bundle/jaxb-runtime-2.3.2.jar
+[  24] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.2)
+[  25] [Active     ] [    1] A modern JSON library for Kotlin and Java (1.7.0)
+[  26] [Active     ] [    1] MessagePack serializer implementation for Java (0.8.17)
+[  27] [Active     ] [    1] Netty/Buffer (4.1.38.Final)
+[  28] [Active     ] [    1] netty-channel-fsm-osgi (0.3.0)
+[  29] [Active     ] [    1] Netty/Codec (4.1.38.Final)
+[  30] [Active     ] [    1] Netty/Codec/HTTP (4.1.38.Final)
+[  31] [Active     ] [    1] Netty/Common (4.1.38.Final)
+[  32] [Active     ] [    1] Netty/Handler (4.1.38.Final)
+[  33] [Active     ] [    1] Netty/Resolver (4.1.38.Final)
+[  34] [Active     ] [    1] Netty/Transport (4.1.38.Final)
+[  35] [Active     ] [    1] Apache Felix Shell Service (1.4.3)
+[  36] [Active     ] [    1] Apache Felix Shell TUI (1.4.1)
+[  37] [Active     ] [    1] Apache ServiceMix :: Bundles :: jsr305 (3.0.2.1)
+[  38] [Active     ] [    1] Apache ServiceMix :: Bundles :: okhttp (3.14.1.1)
+[  39] [Active     ] [    1] Apache ServiceMix :: Bundles :: okio (1.15.0.1)
+[  40] [Active     ] [    1] Apache ServiceMix :: Bundles :: retrofit (2.5.0.2)
+[  41] [Active     ] [    1] Paho MQTT Client (1.2.1)
+[  42] [Active     ] [    1] OSGi LogService implemented over SLF4J (1.7.26)
+[  43] [Active     ] [    1] Pi4J :: Java Library (Core) (1.2)
+[  44] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.7)
+[  45] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.8)
+[  46] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.5)
+[  47] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.21)
+[  48] [Active     ] [    1] java driver for rcwl-0516 - microwave presence sensor module (0.1.1)
+[  49] [Active     ] [    1] sdk-client (0.3.4)
+[  50] [Active     ] [    1] sdk-core (0.3.4)
+[  51] [Active     ] [    1] slf4j-api (1.7.26)
+[  52] [Resolved   ] [    1] slf4j-jdk14 (1.7.26)
+[  53] [Active     ] [    1] stack-client (0.3.4)
+[  54] [Active     ] [    1] stack-core (0.3.4)
+[  55] [Active     ] [    1] strict-machine-osgi (0.1.0)
 -> 
 ```
 
@@ -589,43 +655,51 @@ io.github.s5uishida.level=FINE
 ```
 The sample of the output log is as follows.
 ```
-[/dev/ttyAMA0] co2:850 
-[hci0] B0:B4:48:B9:92:86 obj:28.28125 amb:32.28125 
-[hci0] B0:B4:48:B9:92:86 humidity:59.362793 
-[hci0] B0:B4:48:B9:92:86 pressure:1012.27 
-[hci0] B0:B4:48:B9:92:86 optical:227.28 
-[hci0] B0:B4:48:B9:92:86 gyr[x]:-1.3198851 
-[hci0] B0:B4:48:B9:92:86 gyr[y]:-0.2593994 
-[hci0] B0:B4:48:B9:92:86 gyr[z]:0.7476806 
-[hci0] B0:B4:48:B9:92:86 acc[x]:0.0056152344 
-[hci0] B0:B4:48:B9:92:86 acc[y]:-0.007080078 
-[hci0] B0:B4:48:B9:92:86 acc[z]:0.9707031 
-[hci0] B0:B4:48:B9:92:86 mag[x]:127.0 
-[hci0] B0:B4:48:B9:92:86 mag[y]:420.0 
-[hci0] B0:B4:48:B9:92:86 mag[z]:302.0
-[GPIO_10] pcs:1373.6702 ugm3:2.1420693
+[/dev/ttyAMA0] co2:1110 
+[I2C_1_76] temperature:20.84 
+[I2C_1_76] humidity:52.66211 
+[I2C_1_76] pressure:1012.5222 
+[I2C_1_23] optical:82.5 
+[hci0] B0:B4:48:ED:B6:04 obj:15.8125 amb:21.75 
+[hci0] B0:B4:48:ED:B6:04 humidity:56.78711 
+[hci0] B0:B4:48:ED:B6:04 pressure:1012.96 
+[hci0] B0:B4:48:ED:B6:04 optical:84.84 
+[hci0] B0:B4:48:ED:B6:04 gyr[x]:-8.888245 
+[hci0] B0:B4:48:ED:B6:04 gyr[y]:-7.5759883 
+[hci0] B0:B4:48:ED:B6:04 gyr[z]:-0.06866455 
+[hci0] B0:B4:48:ED:B6:04 acc[x]:0.010375977 
+[hci0] B0:B4:48:ED:B6:04 acc[y]:-0.0040283203 
+[hci0] B0:B4:48:ED:B6:04 acc[z]:0.24835205 
+[hci0] B0:B4:48:ED:B6:04 mag[x]:183.0 
+[hci0] B0:B4:48:ED:B6:04 mag[y]:403.0 
+[hci0] B0:B4:48:ED:B6:04 mag[z]:-192.0 
+[GPIO_10] pcs:4248.701 ugm3:6.6253257
 [GPIO_18] detect:true
-[GPIO_12] detect:true
+[GPIO_19] detect:true
 ```
 In order to reduce writing to the SD card, it is usually recommended to set it to `INFO`.
 
 <h3 id="check_database">Check the database name for each device created in InfluxDB</h3>
 
-Check from the log file `logs/rainy.log.0`. In the following example, databases `RP3B_01__dev_ttyAMA0` for MH-Z19B, `B0_B4_48_B9_92_86` and `B0_B4_48_ED_B6_04` for CC2650, `milo_digitalpetri_com_62541_milo` for Public Demo Server of Eclipse Milo, `RP3B_01_GPIO_10` for PPD42NS, `RP3B_01_GPIO_18` for RCWL-0516 and `RP3B_01_GPIO_12` for HC-SR501 were created. Note that InfluxDB will not do anything if the database already exists.
+Check from the log file `logs/rainy.log.0`. The following is an example. Note that InfluxDB will not do anything if the database already exists.
 ```
-execute - CREATE DATABASE RP3B_01__dev_ttyAMA0
+execute - CREATE DATABASE RP3B_01__dev_ttyAMA0               <-- MH-Z19B
 ...
-execute - CREATE DATABASE B0_B4_48_B9_92_86
+execute - CREATE DATABASE RP3B_01_I2C_1_76                   <-- BME280
 ...
-execute - CREATE DATABASE B0_B4_48_ED_B6_04
+execute - CREATE DATABASE RP3B_01_I2C_1_23                   <-- BH1750FVI
 ...
-execute - CREATE DATABASE milo_digitalpetri_com_62541_milo
+execute - CREATE DATABASE B0_B4_48_B9_92_86                  <-- CC2650
 ...
-execute - CREATE DATABASE RP3B_01_GPIO_10
+execute - CREATE DATABASE B0_B4_48_ED_B6_04                  <-- CC2650
 ...
-execute - CREATE DATABASE RP3B_01_GPIO_18
+execute - CREATE DATABASE milo_digitalpetri_com_62541_milo   <-- Public Demo Server of Eclipse Milo
 ...
-execute - CREATE DATABASE RP3B_01_GPIO_12
+execute - CREATE DATABASE RP3B_01_GPIO_10                    <-- PPD42NS
+...
+execute - CREATE DATABASE RP3B_01_GPIO_18                    <-- RCWL-0516
+...
+execute - CREATE DATABASE RP3B_01_GPIO_19                    <-- HC-SR501
 ```
 These database names are required for the visualization tools Grafana and Chronograf to connect to InfluxDB.
 
@@ -689,21 +763,24 @@ Client mosqsub|2095-u1804 received PUBLISH (d0, q0, r0, m0, 'rainy/B0_B4_48_ED_B
 - Only one Bluetooth adapter can be used.
 - Only a few CC2650 (Bluetooth devices) can be used at the same time. (Restriction of Bluetooth chip)
 - When the connection with CC2650 is lost, it may not recover automatically.
-- This tool uses Pi4J for PPD42NS, so PPD42NS can only be used with Raspberry Pi series (arm). Therefore, the PPD42NS feature of this tool does not work on amd64 Linux machines.
+- This tool uses Pi4J for BME280/BH1750FVI/PPD42NS/RCWL-0516/HC-SR501, so these devices can only be used with Raspberry Pi series (arm). Therefore, the the features of these devices of this tool does not work on amd64 Linux machines.
+- To use Pi4J 1.2's I2C functionality, sun.misc.SharedSecrets.class is required, but this class can only be used up to Java 8 and cannot be used since Java 9. Therefore, Java 8 is required to use BME280 and BH1750FVI.
 - Depending on the combination of the number of monitored items of OPC-UA servers and the publishing interval, the load on InfluxDB may become too large.
 
 <h2 id="bundle_list">Bundle list</h2>
 
 The following bundles I created follow the MIT license.
 - [bluetooth-scanner 0.1.4](https://github.com/s5uishida/bluetooth-scanner)
+- [bme280-driver 0.1.0](https://github.com/s5uishida/bme280-driver)
+- [bh1750fvi-driver 0.1.0](https://github.com/s5uishida/bh1750fvi-driver)
 - [cc2650-driver 0.1.2](https://github.com/s5uishida/cc2650-driver)
 - [mh-z19b-driver 0.1.2](https://github.com/s5uishida/mh-z19b-driver)
 - [ppd42ns-driver 0.1.7](https://github.com/s5uishida/ppd42ns-driver)
 - [rcwl-0516-driver 0.1.1](https://github.com/s5uishida/rcwl-0516-driver)
 - [hc-sr501-driver 0.1.1](https://github.com/s5uishida/hc-sr501-driver)
-- [rainy-activator 0.1.7](https://github.com/s5uishida/rainy-activator)
+- [rainy-activator 0.1.8](https://github.com/s5uishida/rainy-activator)
 - [rainy-opcua 0.1.5](https://github.com/s5uishida/rainy-opcua)
-- [rainy 0.1.20](https://github.com/s5uishida/rainy)
+- [rainy 0.1.21](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
