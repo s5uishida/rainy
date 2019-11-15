@@ -31,7 +31,7 @@ rainy runs on [Apache Felix](https://felix.apache.org/) (OSGi). I think that rai
 
 I releases this in the form of the Eclipse plug-in project and **this tool -** [**rainy-felix.zip**](https://github.com/s5uishida/rainy/releases).
 The list of my source codes and third party bundles is [Bundle list](#bundle_list).
-You need Java 8 or higher.
+You need Java 8.
 I have confirmed that it works in Raspberry Pi 3B ([Raspbian Buster Lite OS](https://www.raspberrypi.org/downloads/raspbian/) (2019-07-10)).
 
 The following figure is overview of rainy.
