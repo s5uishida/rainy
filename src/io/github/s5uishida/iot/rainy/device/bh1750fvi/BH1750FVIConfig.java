@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.pi4j.io.i2c.I2CBus;
 
 import io.github.s5uishida.iot.device.bh1750fvi.driver.BH1750FVIDriver;
+import io.github.s5uishida.iot.rainy.device.I2cBusAddress;
 import io.github.s5uishida.iot.rainy.util.AbstractConfig;
 import io.github.s5uishida.iot.rainy.util.ConfigParams;
 
@@ -87,34 +88,5 @@ public class BH1750FVIConfig extends AbstractConfig {
 
 	public String getReadCrontab() {
 		return getConfig(READ_CRONTAB_KEY, "* * * * *");
-	}
-}
-
-class I2cBusAddress {
-	public final int bus;
-	public final byte address;
-
-	public I2cBusAddress(int bus, byte address) {
-		this.bus = bus;
-		this.address = address;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (object == null) {
-			return false;
-		}
-
-		if (!(object instanceof I2cBusAddress)) {
-			return false;
-		}
-
-		I2cBusAddress i2cBusAddress = (I2cBusAddress)object;
-		return (this.bus == i2cBusAddress.bus) && ((int)(this.address & 0xff) == (int)(i2cBusAddress.address & 0xff));
-	}
-
-	@Override
-	public int hashCode() {
-		return bus * 256 + address;
 	}
 }

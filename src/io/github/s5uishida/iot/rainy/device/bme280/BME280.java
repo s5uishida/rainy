@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.github.s5uishida.iot.device.bme280.driver.BME280Driver;
+import io.github.s5uishida.iot.rainy.device.I2cBusAddress;
 import io.github.s5uishida.iot.rainy.device.IDevice;
 import io.github.s5uishida.iot.rainy.device.bme280.data.BME280Data;
 import io.github.s5uishida.iot.rainy.device.bme280.data.Humidity;
@@ -45,7 +46,7 @@ public class BME280 implements IDevice {
 		}
 
 		for (I2cBusAddress i2cBusAddress : config.getI2cBusAddress()) {
-			BME280Driver bme280 = BME280Driver.getInstance(i2cBusAddress.bus, i2cBusAddress.address);
+			BME280Driver bme280 = BME280Driver.getInstance(i2cBusAddress.getBus(), i2cBusAddress.getAddress());
 			bme280List.add(bme280);
 		}
 

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.github.s5uishida.iot.device.bh1750fvi.driver.BH1750FVIDriver;
+import io.github.s5uishida.iot.rainy.device.I2cBusAddress;
 import io.github.s5uishida.iot.rainy.device.IDevice;
 import io.github.s5uishida.iot.rainy.device.bh1750fvi.data.BH1750FVIData;
 import io.github.s5uishida.iot.rainy.device.bh1750fvi.data.Optical;
@@ -43,7 +44,7 @@ public class BH1750FVI implements IDevice {
 		}
 
 		for (I2cBusAddress i2cBusAddress : config.getI2cBusAddress()) {
-			BH1750FVIDriver bh1750fvi = BH1750FVIDriver.getInstance(i2cBusAddress.bus, i2cBusAddress.address);
+			BH1750FVIDriver bh1750fvi = BH1750FVIDriver.getInstance(i2cBusAddress.getBus(), i2cBusAddress.getAddress());
 			bh1750fviList.add(bh1750fvi);
 		}
 
