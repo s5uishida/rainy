@@ -29,7 +29,7 @@ public class MqttConfig extends AbstractConfig {
 	}
 
 	public String getBrokerUri() {
-		return getConfig(BROKER_URI_KEY, null);
+		return getConfig(BROKER_URI_KEY, "tcp://localhost:1883");
 	}
 
 	public String getUserName() {

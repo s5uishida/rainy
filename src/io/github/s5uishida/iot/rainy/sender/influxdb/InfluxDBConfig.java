@@ -29,7 +29,7 @@ public class InfluxDBConfig extends AbstractConfig {
 	}
 
 	public String getInfluxDBUrl() {
-		return getConfig(INFLUXDB_URL_KEY, null);
+		return getConfig(INFLUXDB_URL_KEY, "http://localhost:8086");
 	}
 
 	public String getUserName() {
