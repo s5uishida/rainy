@@ -481,6 +481,8 @@ When connecting MH-Z19B to a USB serial adapter, you should specify `/dev/ttyUSB
   io.github.s5uishida.level=FINE
   ```
 
+When a motion is detected, an event occurs immediately. If `mqtt` is set to `true`, this event can be received from the MQTT broker.
+
 <h4 id="hcsr501_properties">HC-SR501 - hcsr501.properties</h4>
 
 [Here](https://github.com/s5uishida/hc-sr501-driver) is also helpful.
@@ -499,6 +501,8 @@ When connecting MH-Z19B to a USB serial adapter, you should specify `/dev/ttyUSB
   -->
   io.github.s5uishida.level=FINE
   ```
+  
+When a motion is detected, an event occurs immediately. If `mqtt` is set to `true`, this event can be received from the MQTT broker.
 
 <h4 id="opcua_properties">OPC-UA - opcua.properties</h4>
 
