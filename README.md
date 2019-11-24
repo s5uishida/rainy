@@ -277,7 +277,8 @@ TLS_PRIVATE_KEY=/etc/rainy/cert.key
   
 <h4 id="influxdb_properties">InfluxDB - influxdb.properties</h4>
 
-- **`influxDBUrl`**
+- **`influxDBUrl`**  
+  default is `http://localhost:8086`.
 - **`userName`**
 - **`password`**
 - `actions`  
@@ -289,7 +290,8 @@ TLS_PRIVATE_KEY=/etc/rainy/cert.key
 
 <h4 id="mqtt_properties">MQTT - mqtt.properties</h4>
 
-- **`brokerUri`**
+- **`brokerUri`**  
+  default is `tcp://localhost:1883`.
 - `userName`
 - `password`
 - **`clientID`**  
