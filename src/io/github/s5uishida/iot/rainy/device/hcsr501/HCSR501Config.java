@@ -37,7 +37,7 @@ public class HCSR501Config extends AbstractConfig {
 	public static HCSR501Config getInstance() {
 		if (config == null) {
 			config = new HCSR501Config(ConfigParams.CONFIG_DIR_PARAM, ConfigParams.HCSR501_CONFIG_FILE);
-			List<String> gpioPins = Arrays.asList(config.getConfig(GPIO_PIN_KEY, HCSR501Driver.getName(RaspiPin.GPIO_12)).split("\\s+"));
+			List<String> gpioPins = Arrays.asList(config.getConfig(GPIO_PIN_KEY, HCSR501Driver.getName(RaspiPin.GPIO_19)).split("\\s+"));
 			for (String gpioPin : gpioPins) {
 				if (gpioPin.equals(HCSR501Driver.getName(RaspiPin.GPIO_18))) {
 					if (!gpioPinList.contains(RaspiPin.GPIO_18)) {
