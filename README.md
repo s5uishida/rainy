@@ -488,7 +488,7 @@ When a motion is detected, an event occurs immediately. If `mqtt` is set to `tru
 [Here](https://github.com/s5uishida/hc-sr501-driver) is also helpful.
 
 - **`gpioPin`**  
-  Set to `GPIO_18`, `GPIO_19`, `GPIO_12` or `GPIO_13`. default is `GPIO_12`.
+  Set to `GPIO_18`, `GPIO_19`, `GPIO_12` or `GPIO_13`. default is `GPIO_19`.
 - **`influxDB`**  
   Set to `true` when sending data to InfluxDB. default is `false`.
 - **`mqtt`**  
@@ -631,7 +631,7 @@ START LEVEL 1
 [  44] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.7)
 [  45] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.8)
 [  46] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.5)
-[  47] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.22)
+[  47] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.23)
 [  48] [Active     ] [    1] java driver for rcwl-0516 - microwave presence sensor module (0.1.1)
 [  49] [Active     ] [    1] sdk-client (0.3.4)
 [  50] [Active     ] [    1] sdk-core (0.3.4)
@@ -784,7 +784,7 @@ The following bundles I created follow the MIT license.
 - [hc-sr501-driver 0.1.1](https://github.com/s5uishida/hc-sr501-driver)
 - [rainy-opcua 0.1.5](https://github.com/s5uishida/rainy-opcua)
 - [rainy-activator 0.1.8](https://github.com/s5uishida/rainy-activator)
-- [rainy 0.1.22](https://github.com/s5uishida/rainy)
+- [rainy 0.1.23](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
