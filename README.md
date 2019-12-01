@@ -442,6 +442,12 @@ When connecting MH-Z19B to a USB serial adapter, you should specify `/dev/ttyUSB
   ```
 - `readCrontab`  
   Set the schedule for sensing data in crontab format. default is every minute.
+- `autoCalibration`  
+  Set whether to calibrate automatically every 24 hours after powered on. default is `false`.
+- `zeroCalibration`  
+  Set whether to calibrate to `400` ppm. default is `false`.
+- `detectionRange`  
+  Set the detection range to `2000` or `5000` ppm. default is `5000`ppm.
 
 <h4 id="ppd42ns_properties">PPD42NS - ppd42ns.properties</h4>
 
@@ -610,7 +616,7 @@ START LEVEL 1
 [  21] [Active     ] [    1] JavaBeans Activation Framework (1.2.0)
 [  22] [Active     ] [    1] jaxb-api (2.3.1)
 [  23] [Active     ] [    1] file:/home/pi/rainy-felix/bundle/jaxb-runtime-2.3.2.jar
-[  24] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.2)
+[  24] [Active     ] [    1] java driver for mh-z19b - intelligent infrared co2 module (0.1.3)
 [  25] [Active     ] [    1] A modern JSON library for Kotlin and Java (1.7.0)
 [  26] [Active     ] [    1] MessagePack serializer implementation for Java (0.8.17)
 [  27] [Active     ] [    1] Netty/Buffer (4.1.38.Final)
@@ -633,7 +639,7 @@ START LEVEL 1
 [  44] [Active     ] [    1] java driver for ppd42ns - dust sensor module (0.1.7)
 [  45] [Active     ] [    1] osgi activator of rainy - a tiny tool for iot data collection and monitoring (0.1.8)
 [  46] [Active     ] [    1] OPC-UA bundle of rainy - a tiny tool for iot data collection and monitoring (0.1.5)
-[  47] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.23)
+[  47] [Active     ] [    1] rainy - a tiny tool for iot data collection and monitoring (0.1.24)
 [  48] [Active     ] [    1] java driver for rcwl-0516 - microwave presence sensor module (0.1.1)
 [  49] [Active     ] [    1] sdk-client (0.3.4)
 [  50] [Active     ] [    1] sdk-core (0.3.4)
@@ -780,13 +786,13 @@ The following bundles I created follow the MIT license.
 - [cc2650-driver 0.1.2](https://github.com/s5uishida/cc2650-driver)
 - [bme280-driver 0.1.2](https://github.com/s5uishida/bme280-driver)
 - [bh1750fvi-driver 0.1.2](https://github.com/s5uishida/bh1750fvi-driver)
-- [mh-z19b-driver 0.1.2](https://github.com/s5uishida/mh-z19b-driver)
+- [mh-z19b-driver 0.1.3](https://github.com/s5uishida/mh-z19b-driver)
 - [ppd42ns-driver 0.1.7](https://github.com/s5uishida/ppd42ns-driver)
 - [rcwl-0516-driver 0.1.1](https://github.com/s5uishida/rcwl-0516-driver)
 - [hc-sr501-driver 0.1.1](https://github.com/s5uishida/hc-sr501-driver)
 - [rainy-opcua 0.1.5](https://github.com/s5uishida/rainy-opcua)
 - [rainy-activator 0.1.8](https://github.com/s5uishida/rainy-activator)
-- [rainy 0.1.23](https://github.com/s5uishida/rainy)
+- [rainy 0.1.24](https://github.com/s5uishida/rainy)
 
 Please check each license for the following bundles used in addition to these.
 - [SLF4J 1.7.26](https://www.slf4j.org/)
