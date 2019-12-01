@@ -17,6 +17,9 @@ public class MHZ19BConfig extends AbstractConfig {
 	public static final String MQTT_KEY									= "mqtt";
 	public static final String PRETTY_PRINTING_KEY						= "prettyPrinting";
 	public static final String READ_CRONTAB_KEY							= "readCrontab";
+	public static final String AUTO_CALIBRATION_KEY						= "autoCalibration";
+	public static final String ZERO_CALIBRATION_KEY						= "zeroCalibration";
+	public static final String DETECTION_RANGE_KEY						= "detectionRange";
 
 	private static MHZ19BConfig config;
 	private static List<String> portNameList = new ArrayList<String>();
@@ -56,5 +59,21 @@ public class MHZ19BConfig extends AbstractConfig {
 
 	public String getReadCrontab() {
 		return getConfig(READ_CRONTAB_KEY, "* * * * *");
+	}
+
+	public boolean getAutoCalibration() {
+		return getConfig(AUTO_CALIBRATION_KEY, false);
+	}
+
+	public boolean getZeroCalibration() {
+		return getConfig(ZERO_CALIBRATION_KEY, false);
+	}
+
+	public int getDetectionRange() {
+		int range = getConfig(DETECTION_RANGE_KEY, 5000);
+		if (range != 2000 && range != 5000) {
+			range = 5000;
+		}
+		return range;
 	}
 }

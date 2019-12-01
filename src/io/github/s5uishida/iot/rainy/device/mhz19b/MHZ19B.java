@@ -24,6 +24,9 @@ public class MHZ19B implements IDevice {
 	private static final Logger LOG = LoggerFactory.getLogger(MHZ19B.class);
 	private static final MHZ19BConfig config = MHZ19BConfig.getInstance();
 
+	private static final int DETECTION_RANGE_2000 = 2000;
+	private static final int DETECTION_RANGE_5000 = 5000;
+
 	private final String clientID;
 	private final List<MHZ19BDriver> mhz19bList = new ArrayList<MHZ19BDriver>();
 	private final List<IDataSender> senders = new ArrayList<IDataSender>();
@@ -67,7 +70,19 @@ public class MHZ19B implements IDevice {
 		for (MHZ19BDriver mhz19b : mhz19bList) {
 			try {
 				mhz19b.open();
-				mhz19b.setDetectionRange5000();
+
+				int range = config.getDetectionRange();
+				if (range == DETECTION_RANGE_2000) {
+					mhz19b.setDetectionRange2000();
+				} else if (range == DETECTION_RANGE_5000) {
+					mhz19b.setDetectionRange5000();
+				}
+
+				if (config.getZeroCalibration()) {
+					mhz19b.setCalibrateZeroPoint();
+				}
+
+				mhz19b.setAutoCalibration(config.getAutoCalibration());
 			} catch (IOException e) {
 				LOG.warn("caught - {}", e.toString());
 			}
