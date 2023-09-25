@@ -91,7 +91,9 @@ The following image shows the hardware configuration.
 
 ---
 
-<h2 id="purpose">Purpose</h2>
+<a id="purpose"></a>
+
+## Purpose
 
 The purpose of this tool is briefly as follows.
 
@@ -105,16 +107,22 @@ The concept is as follows.
 
 Although I think the functionality and performance of this tool are not sufficient for formal operation, it may be an easy-to-try tool.
 
-<h2 id="setup_os">Setup OS</h2>
+<a id="setup_os"></a>
+
+## Setup OS
 
 Please refer to [here](https://github.com/s5uishida/bme280-driver) for setting RaspberryPi 3B as an environment for running rainy.
 Both Bluetooth, serial communication, GPIO and I2C can be enabled.
 
-<h2 id="setup_sending_data">Setup sending data</h2>
+<a id="setup_sending_data"></a>
+
+## Setup sending data
 
 rainy supports InfluxDB and MQTT broker as sending data.
 
-<h3 id="install_influxdb">Install InfluxDB and startup</h3>
+<a id="install_influxdb"></a>
+
+### Install InfluxDB and startup
 
 I am using [InfluxDB](https://www.influxdata.com/) on Ubuntu 18.04.
 The installation is as follows from [here](https://portal.influxdata.com/downloads/).
@@ -132,7 +140,9 @@ In addition, the step to install InfluxDB on Raspberry Pi 3B is as follows.
 # systemctl start influxdb.service
 ```
 
-<h3 id="install_mosquitto">Install Mosquitto (MQTT Broker) and startup</h3>
+<a id="install_mosquitto"></a>
+
+### Install Mosquitto (MQTT Broker) and startup
 
 I am using [Mosquitto](https://mosquitto.org/) as MQTT broker on Ubuntu 18.04.
 The installation is as follows.
@@ -145,9 +155,13 @@ The installation is as follows.
 ```
 In addition, the step to install Mosquitto on Raspberry Pi 3B is the same as above.
 
-<h2 id="install_visualization">Setup visualization tools</h2>
+<a id="install_visualization"></a>
 
-<h3 id="install_grafana">Install Grafana and startup</h3>
+## Setup visualization tools
+
+<a id="install_grafana"></a>
+
+### Install Grafana and startup
 
 I am using [Grafana](https://grafana.com/) on Ubuntu 18.04. The installation is as follows from [here](https://grafana.com/grafana/download?platform=linux).
 ```
@@ -164,7 +178,9 @@ In addition, the step to install Grafana on Raspberry Pi 3B is as follows.
 # systemctl start grafana-server.service
 ```
 
-<h3 id="install_chronograf">Install Chronograf and startup</h3>
+<a id="install_chronograf"></a>
+
+### Install Chronograf and startup
 
 I am using [Chronograf](https://www.influxdata.com/time-series-platform/chronograf/) on Ubuntu 18.04. The installation is as follows from [here](https://portal.influxdata.com/downloads/).
 ```
@@ -181,17 +197,23 @@ In addition, the step to install Chronograf on Raspberry Pi 3B is as follows.
 # systemctl start chronograf.service
 ```
 
-<h3 id="test_https_connection">Testing HTTPS connection with self-signed certificate</h3>
+<a id="test_https_connection"></a>
+
+### Testing HTTPS connection with self-signed certificate
 
 In general, it is not recommended to use a self-signed certificate for formal operation, but it is sufficient for testing purposes.
 
-<h4 id="create_self_signed_cert">Create a self-signed certificate and private key with file names cert.pem and cert.key</h4>
+<a id="create_self_signed_cert"></a>
+
+#### Create a self-signed certificate and private key with file names cert.pem and cert.key
 
 ```
 # openssl req -x509 -newkey rsa:4096 -sha256 -nodes -keyout cert.key -out cert.pem -subj "/CN=localhost" -days 365
 ```
 
-<h4 id="create_directory">Create /etc/rainy directory and place these files there</h4>
+<a id="create_directory"></a>
+
+#### Create /etc/rainy directory and place these files there
 
 ```
 # mkdir /etc/rainy
@@ -200,7 +222,9 @@ In general, it is not recommended to use a self-signed certificate for formal op
 # chmod 0644 cert.pem cert.key
 ```
 
-<h4 id="set_grafana_https">Setting Grafana HTTPS connetion</h4>
+<a id="set_grafana_https"></a>
+
+#### Setting Grafana HTTPS connetion
 
 See [here](https://grafana.com/docs/installation/configuration/) for details.
 
@@ -233,7 +257,9 @@ See [here](https://grafana.com/docs/installation/configuration/) for details.
 # systemctl restart grafana-server.service
 ```
 
-<h4 id="set_chronograf_https">Setting Chronograf HTTPS connetion</h4>
+<a id="set_chronograf_https"></a>
+
+#### Setting Chronograf HTTPS connetion
 
 See [here](https://docs.influxdata.com/chronograf/v1.7/administration/managing-security/) for details.
 
@@ -248,9 +274,13 @@ TLS_PRIVATE_KEY=/etc/rainy/cert.key
 # systemctl restart chronograf.service
 ```
 
-<h2 id="configuration">Configuration - rainy/conf</h2>
+<a id="configuration"></a>
 
-<h3 id="rainy_properties">rainy.properties</h3>
+## Configuration - rainy/conf
+
+<a id="rainy_properties"></a>
+
+### rainy.properties
 
 - **`clientID`**  
   Set a unique client identifier for running rainy.
@@ -273,9 +303,13 @@ TLS_PRIVATE_KEY=/etc/rainy/cert.key
 
 **Note. This tool uses Pi4J for BME280/BH1750FVI/PPD42NS/RCWL-0516/HC-SR501, so these devices can only be used with Raspberry Pi series (arm). Therefore, their feature of this tool does not work on amd64 Linux machines, so set them to `false` on amd64 Linux machines.**  
 
-<h3 id="setting_connection_sending_data">Setting the connection for sending data</h3>
+<a id="setting_connection_sending_data"></a>
+
+### Setting the connection for sending data
   
-<h4 id="influxdb_properties">InfluxDB - influxdb.properties</h4>
+<a id="influxdb_properties"></a>
+
+#### InfluxDB - influxdb.properties
 
 - **`influxDBUrl`**  
   default is `http://localhost:8086`.
@@ -288,7 +322,9 @@ TLS_PRIVATE_KEY=/etc/rainy/cert.key
 - `dataOnly`  
   Set to `true` when collecting only data. default is `true`.
 
-<h4 id="mqtt_properties">MQTT - mqtt.properties</h4>
+<a id="mqtt_properties"></a>
+
+#### MQTT - mqtt.properties
 
 - **`brokerUri`**  
   default is `tcp://localhost:1883`.
@@ -303,7 +339,9 @@ TLS_PRIVATE_KEY=/etc/rainy/cert.key
 
 <h3 id="setting_sensors">Setting sensors and protocols<h3>
 
-<h4 id="cc2650_properties">CC2650 - cc2650.properties</h4>
+<a id="cc2650_properties"></a>
+
+#### CC2650 - cc2650.properties
 
 [Here](https://github.com/s5uishida/cc2650-driver) is also helpful.
 - **`bluetoothAdapter`**  
@@ -376,7 +414,9 @@ B0:B4:48:B9:92:86 CC2650 SensorTag
 ```
 After launching `hcitool` command, press the power button of CC2650 and the scan results will be displayed as above.
 
-<h4 id="bme280_properties">BME280 - bme280.properties</h4>
+<a id="bme280_properties"></a>
+
+#### BME280 - bme280.properties
 
 [Here](https://github.com/s5uishida/bme280-driver) is also helpful.
 
@@ -397,7 +437,9 @@ After launching `hcitool` command, press the power button of CC2650 and the scan
 - `readCrontab`  
   Set the schedule for sensing data in crontab format. default is every minute.
 
-<h4 id="bh1750fvi_properties">BH1750FVI - bh1750fvi.properties</h4>
+<a id="bh1750fvi_properties"></a>
+
+#### BH1750FVI - bh1750fvi.properties
 
 [Here](https://github.com/s5uishida/bh1750fvi-driver) is also helpful.
 
@@ -418,7 +460,9 @@ After launching `hcitool` command, press the power button of CC2650 and the scan
 - `readCrontab`  
   Set the schedule for sensing data in crontab format. default is every minute.
 
-<h4 id="mhz19b_properties">MH-Z19B - mhz19b.properties</h4>
+<a id="mhz19b_properties"></a>
+
+#### MH-Z19B - mhz19b.properties
 
 [Here](https://github.com/s5uishida/mh-z19b-driver) is also helpful.
 
@@ -449,7 +493,9 @@ When connecting MH-Z19B to a USB serial adapter, you should specify `/dev/ttyUSB
 - `detectionRange`  
   Set the detection range to `2000` or `5000` ppm. default is `5000`ppm.
 
-<h4 id="ppd42ns_properties">PPD42NS - ppd42ns.properties</h4>
+<a id="ppd42ns_properties"></a>
+
+#### PPD42NS - ppd42ns.properties
 
 [Here](https://github.com/s5uishida/ppd42ns-driver) is also helpful.
 
@@ -470,7 +516,9 @@ When connecting MH-Z19B to a USB serial adapter, you should specify `/dev/ttyUSB
 - `readCrontab`  
   Set the schedule for sensing data in crontab format. default is every minute.
 
-<h4 id="rcwl0516_properties">RCWL-0516 - rcwl0516.properties</h4>
+<a id="rcwl0516_properties"></a>
+
+#### RCWL-0516 - rcwl0516.properties
 
 [Here](https://github.com/s5uishida/rcwl-0516-driver) is also helpful.
 
@@ -491,7 +539,9 @@ When connecting MH-Z19B to a USB serial adapter, you should specify `/dev/ttyUSB
 
 When a motion is detected, an event occurs immediately. If `mqtt` is set to `true`, this event can be received from the MQTT broker.
 
-<h4 id="hcsr501_properties">HC-SR501 - hcsr501.properties</h4>
+<a id="hcsr501_properties"></a>
+
+#### HC-SR501 - hcsr501.properties
 
 [Here](https://github.com/s5uishida/hc-sr501-driver) is also helpful.
 
@@ -512,7 +562,9 @@ When a motion is detected, an event occurs immediately. If `mqtt` is set to `tru
   
 When a motion is detected, an event occurs immediately. If `mqtt` is set to `true`, this event can be received from the MQTT broker.
 
-<h4 id="opcua_properties">OPC-UA - opcua.properties</h4>
+<a id="opcua_properties"></a>
+
+#### OPC-UA - opcua.properties
 
 - **`influxDB`**  
   Set to `true` when sending data to InfluxDB. default is `false`.
@@ -531,7 +583,9 @@ When a motion is detected, an event occurs immediately. If `mqtt` is set to `tru
 - `keyStorePassword`
 - `certificate`
 
-<h5 id="opcua_server_properties">OPC-UA server - conf/opcua/milo-public-demo.properties</h5>
+<a id="opcua_server_properties"></a>
+
+##### OPC-UA server - conf/opcua/milo-public-demo.properties
 
 The following is an example of [Public Demo Server of Eclipse Milo](https://github.com/eclipse/milo).
 - **`use`**  
@@ -582,7 +636,9 @@ This is an example server-properties file of connecting to the server ([milo-exa
   
 For reference, there is [toem impulse OPC/UA Extension (Eclipse pulug-in)](https://toem.de/index.php/projects/impulse-opcua) as a tool for easily checking the address space of OPC-UA server.
 
-<h2 id="run_rainy">Run rainy</h2>
+<a id="run_rainy"></a>
+
+## Run rainy
 
 - start  
   Start rainy as follows.
@@ -657,7 +713,9 @@ START LEVEL 1
 -> stop 0
 ```
 
-<h3 id="output_sensor_value">Output sensor values to the log file</h3>
+<a id="output_sensor_value"></a>
+
+### Output sensor values to the log file
 
 If you change the following logging level of `conf/logging.properties` to `INFO --> FINE` and restart rainy, the sensor values will be output to the log file `logs/rainy.log.0`.
 ```
@@ -691,7 +749,9 @@ The sample of the output log is as follows.
 ```
 In order to reduce writing to the SD card, it is usually recommended to set it to `INFO`.
 
-<h3 id="check_database">Check the database name for each device created in InfluxDB</h3>
+<a id="check_database"></a>
+
+### Check the database name for each device created in InfluxDB
 
 Check from the log file `logs/rainy.log.0`. The following is an example. Note that InfluxDB will not do anything if the database already exists.
 ```
@@ -715,11 +775,15 @@ execute - CREATE DATABASE RP3B_01_GPIO_19                    <-- HC-SR501
 ```
 These database names are required for the visualization tools Grafana and Chronograf to connect to InfluxDB.
 
-<h2 id="create_dashboards">Create dashboards with visualization tools</h2>
+<a id="create_dashboards"></a>
+
+## Create dashboards with visualization tools
 
 Visualization tools can be connected to InfluxDB to monitor time-series sensor data.
 
-<h3 id="case_grafana">Case Grafana</h3>
+<a id="case_grafana"></a>
+
+### Case Grafana
 
 Please refer to Getting started of [Grafana site](https://grafana.com/docs/) for how to use Grafana.  
 The following figure is a sample image of a dashboard.
@@ -734,7 +798,9 @@ The following figure is a sample monitoring image with environmental information
 
 <img src="./images/rainy_floor_env_1.png" title="./images/rainy_floor_env_1.png" width=800px></img>
 
-<h3 id="case_chronograf">Case Chronograf</h3>
+<a id="case_chronograf"></a>
+
+### Case Chronograf
 
 Please refer to Getting started of [Chronograf site](https://docs.influxdata.com/chronograf/v1.7/) for how to use Chronograf.  
 The following figure is a sample image of a dashboard.
@@ -756,7 +822,9 @@ The upper displays `1,VendorServerInfo/ProcessCpuLoad`, `1,VendorServerInfo/Syst
 
 If you put data into InfluxDB which is a time series DB, you can easily create a dashboard using Grafana or Chronograf.
 
-<h2 id="check_mqtt_data">Check the data sent to MQTT broker</h2>
+<a id="check_mqtt_data"></a>
+
+## Check the data sent to MQTT broker
 
 Check the data sent to the MQTT broker using the MQTT client command as follows:
 ```
@@ -770,7 +838,9 @@ Client mosqsub|2095-u1804 received PUBLISH (d0, q0, r0, m0, 'rainy/B0_B4_48_ED_B
 {"deviceID":"B0:B4:48:ED:B6:04","clientID":"RP3B-01","samplingDate":"2019-08-09 12:56:00.009","samplingTimeMillis":1565351760009,"samplingTimeNanos":0,"firmwareVersion":"1.30 (May 23 2016)","batteryLevel":{"value":72,"unit":"%"},"objectTemperature":{"value":27.46875,"unit":"deg C"},"ambientTemperature":{"value":32.03125,"unit":"deg C"},"humidity":{"value":34.61914,"unit":"%"},"pressure":{"value":1009.16,"unit":"hPa"},"optical":{"value":203.84,"unit":"lux"},"gyroscope":{"x":-10.589599,"y":-7.8887935,"z":-2.281189,"unit":"deg/s"},"accelerometer":{"x":-0.029785156,"y":-0.06347656,"z":1.1887207,"unit":"G"},"magnetometer":{"x":138.0,"y":125.0,"z":-199.0,"unit":"uT"}}
 ```
 
-<h2 id="limitations">Limitations</h2>
+<a id="limitations"></a>
+
+## Limitations
 
 - Only one Bluetooth adapter can be used.
 - Only a few CC2650 (Bluetooth devices) can be used at the same time. (Restriction of Bluetooth chip)
@@ -779,7 +849,9 @@ Client mosqsub|2095-u1804 received PUBLISH (d0, q0, r0, m0, 'rainy/B0_B4_48_ED_B
 - To use Pi4J 1.2's I2C functionality, sun.misc.SharedSecrets.class is required, but this class can only be used up to Java 8 and cannot be used since Java 9. Therefore, Java 8 is required to use BME280 and BH1750FVI.
 - Depending on the combination of the number of monitored items of OPC-UA servers and the publishing interval, the load on InfluxDB may become too large.
 
-<h2 id="bundle_list">Bundle list</h2>
+<a id="bundle_list"></a>
+
+## Bundle list
 
 The following bundles I created follow the MIT license.
 - [bluetooth-scanner 0.1.4](https://github.com/s5uishida/bluetooth-scanner)
@@ -833,7 +905,9 @@ Please check each license for the following bundles used in addition to these.
 
 I would like to thank the authors of these very useful codes, and all the contributors.
 
-<h2 id="ps">P.S.</h2>
+<a id="ps"></a>
+
+## P.S.
 
 If Raspberry Pi 4B (4GB memory model), InfluxDB and Grafana may be able to run together with rainy in enough resources.
 In this case, from sensor data collection to monitoring, it may be possible to run with one RP4.
